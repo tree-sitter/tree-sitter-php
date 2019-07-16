@@ -272,7 +272,7 @@ module.exports = grammar({
 
     method_declaration: $ => choice(
       seq(repeat($._method_modifier), $.function_definition),
-      seq(repeat1($._method_modifier), $._function_definition_header, $._semicolon)
+      seq(repeat($._method_modifier), $._function_definition_header, $._semicolon)
     ),
 
     constructor_declaration: $ => seq(
