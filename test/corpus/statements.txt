@@ -224,8 +224,8 @@ Try statements
 
 try {
 } catch (MyException $exception) {
-  print "There shouldn't be an exception: " . $exception->getException();
-  print "\n";
+} catch (OtherException $e) {
+} finally {
 }
 
 try {
@@ -240,11 +240,27 @@ try {
 
 (program
   (try_statement
-    (compound_statement)
-    (catch_clause (qualified_name (name)) (variable_name (name)) (compound_statement (expression_statement (print_intrinsic (binary_expression (string) (member_call_expression (variable_name (name)) (name) (arguments))))) (expression_statement (print_intrinsic (string))))))
+    body: (compound_statement)
+    (catch_clause
+      type: (type_name (name))
+      name: (variable_name (name))
+      body: (compound_statement))
+    (catch_clause
+      type: (type_name (name))
+      name: (variable_name (name))
+      body: (compound_statement))
+    (finally_clause
+      body: (compound_statement)))
   (try_statement
-    (compound_statement (expression_statement (function_call_expression (qualified_name (name)) (arguments))))
-    (catch_clause (qualified_name (name)) (variable_name (name)) (compound_statement (expression_statement (print_intrinsic (binary_expression (string) (member_call_expression (variable_name (name)) (name) (arguments))))) (expression_statement (print_intrinsic (string)))))))
+    body: (compound_statement
+      (expression_statement (function_call_expression (qualified_name (name)) (arguments))))
+    (catch_clause
+      type: (type_name (name))
+      name: (variable_name (name))
+      body: (compound_statement
+        (expression_statement (print_intrinsic (binary_expression
+          (string) (member_call_expression (variable_name (name)) (name) (arguments)))))
+        (expression_statement (print_intrinsic (string)))))))
 
 ==============================
 Foreach statements
