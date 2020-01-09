@@ -1,4 +1,17 @@
 ==========================
+Dynamic variable names
+==========================
+
+<?php
+$$k = $v;
+
+---
+
+(program (expression_statement (assignment_expression
+  (simple_variable (variable_name (name)))
+  (variable_name (name)))))
+
+==========================
 Exponentiation
 ==========================
 
@@ -7,7 +20,10 @@ $foo = 2 ** 2;
 
 ---
 
-(program (expression_statement (assignment_expression (variable_name (name)) (exponentiation_expression (integer) (integer)))))
+(program
+  (expression_statement (assignment_expression
+    (variable_name (name))
+    (exponentiation_expression (integer) (integer)))))
 
 ==========================
 Reserved Identifiers as Names
@@ -18,7 +34,12 @@ $foo = new self();
 
 ---
 
-(program (expression_statement (assignment_expression (variable_name (name)) (object_creation_expression (qualified_name (name)) (arguments)))))
+(program
+  (expression_statement (assignment_expression
+    (variable_name (name))
+    (object_creation_expression
+      (qualified_name (name))
+      (arguments)))))
 
 ==========================
 Unary op with assignment expressions
@@ -30,73 +51,34 @@ if (!$foo = $bar) {
 }
 
 ---
-(program (if_statement (unary_op_expression (assignment_expression (variable_name (name)) (variable_name (name)))) (compound_statement)))
-
-==========================
-Trait use clauses
-==========================
-
-<?php
-
-trait AbstractTrait
-{
-    use LoggerAwareTrait;
-    use LoggerAwareTrait, OtherTrait {}
-    use LoggerAwareTrait, OtherTrait;
-}
-
----
-
-(program (trait_declaration (name) (trait_use_clause (qualified_name (name))) (trait_use_clause (qualified_name (name)) (qualified_name (name)) (trait_use_specification)) (trait_use_clause (qualified_name (name)) (qualified_name (name)))))
-
-==========================
-Heredocs
-==========================
-
-<?php
-
-<<<HERE
-foo #{bar} HERE;
-
-<<<HERE
-foo #{bar}
-HERE;
-
-?>
-
-<?php
-
-<<<HERE
-foo #{bar} HERE;
-
-<<<HERE
-foo #{bar}
-HERE;
-
-<<<  HERE
-foo #{bar}
-HERE;
-
----
 (program
-  (expression_statement (heredoc))
-  (expression_statement (heredoc))
-  (text_interpolation)
-  (expression_statement (heredoc))
-  (expression_statement (heredoc))
-  (expression_statement (heredoc)))
+  (if_statement
+    (unary_op_expression
+      (assignment_expression
+        (variable_name (name))
+        (variable_name (name))))
+    (compound_statement)))
 
-==========================
+=================================
 Cast expressions in assignments
-==========================
+=================================
 
 <?php
 
 (int) $foo = (integer)$bar;
+(int) $foo += 5;
 
 ---
 
-(program (expression_statement (assignment_expression (cast_expression (cast_type) (variable_name (name))) (cast_expression (cast_type) (variable_name (name))))))
+(program
+  (expression_statement
+    (assignment_expression
+      (cast_expression (cast_type) (variable_name (name)))
+      (cast_expression (cast_type) (variable_name (name)))))
+   (expression_statement
+    (augmented_assignment_expression
+      (cast_expression (cast_type) (variable_name (name)))
+      (integer))))
 
 ==========================
 Reserved words as function calls
@@ -107,60 +89,13 @@ $foo = new static($this->current());
 
 ---
 
-(program (expression_statement (assignment_expression (variable_name (name)) (object_creation_expression (qualified_name (name)) (arguments (member_call_expression (variable_name (name)) (name) (arguments)))))))
-
-
-==========================
-Trait use clauses
-==========================
-
-<?php
-class AbstractCache
-{
-    use AbstractTrait {
-        deleteItems as private;
-        AbstractTrait::deleteItem as delete;
-        AbstractTrait::hasItem as has;
-    }
-}
-
-
----
-
-(program (class_declaration (name) (trait_use_clause (qualified_name (name)) (trait_use_specification (trait_alias_as_clause (name) (visibility_modifier)) (trait_alias_as_clause (class_constant_access_expression (qualified_name (name)) (name)) (name)) (trait_alias_as_clause (class_constant_access_expression (qualified_name (name)) (name)) (name))))))
-
-==========================
-Floats
-==========================
-
-<?php
-
-1.0;
-1E432;
-1.0E-3432;
-1423.0E3432;
-.5;
-
-
----
-
-(program (expression_statement (float)) (expression_statement (float)) (expression_statement (float)) (expression_statement (float)) (expression_statement (float)))
-
-==========================
-Nowdocs
-==========================
-
-<?php
-
-<<<'PHP'
-<?php echo phpversion().PHP_SAPI;
-PHP
-
-?>
-
----
-
-(program (expression_statement (heredoc)))
+(program
+  (expression_statement (assignment_expression
+    (variable_name (name))
+    (object_creation_expression
+      (qualified_name (name))
+      (arguments
+        (member_call_expression (variable_name (name)) (name) (arguments)))))))
 
 ==========================
 Scoped self call expressions
@@ -172,22 +107,11 @@ m::self();
 
 ---
 
-(program (expression_statement (scoped_call_expression (qualified_name (name)) (name) (arguments))))
-
-==========================
-Namespace names in namespaces
-==========================
-
-<?php
-
-namespace Be \ ta {
-    class A {}
-    class B {}
-}
-
----
-
-(program (namespace_definition (namespace_name (name) (name)) (compound_statement (class_declaration (name)) (class_declaration (name)))))
+(program (expression_statement
+  (scoped_call_expression
+    (qualified_name (name))
+    (name)
+    (arguments))))
 
 ==========================
 Destructuring
@@ -198,8 +122,14 @@ Destructuring
 
 ---
 
-(program (expression_statement (assignment_expression (array_creation_expression (array_element_initializer (variable_name (name))) (array_element_initializer (variable_name (name)))) (scoped_call_expression (qualified_name (name)) (name) (arguments (variable_name (name)))))))
-
+(program (expression_statement (assignment_expression
+  (array_creation_expression
+    (array_element_initializer (variable_name (name)))
+    (array_element_initializer (variable_name (name))))
+  (scoped_call_expression
+    (qualified_name (name))
+    (name)
+    (arguments (variable_name (name)))))))
 
 ================================================================
 Precedence of assignment, `or`, `xor`, and `and`
@@ -217,49 +147,33 @@ $x = true and true or true xor true and true;
 (program (expression_statement
     (binary_expression
       (assignment_expression
-        (variable_name
-          (name))
-        (qualified_name
-          (name)))
-      (qualified_name
-        (name))))
+        (variable_name (name))
+        (boolean))
+      (boolean)))
   (expression_statement
     (binary_expression
       (assignment_expression
-        (variable_name
-          (name))
-        (qualified_name
-          (name)))
-      (qualified_name
-        (name))))
+        (variable_name (name))
+        (boolean))
+      (boolean)))
   (expression_statement
     (binary_expression
       (assignment_expression
-        (variable_name
-          (name))
-        (qualified_name
-          (name)))
-      (qualified_name
-        (name))))
+        (variable_name (name))
+        (boolean))
+      (boolean)))
   (expression_statement
     (binary_expression
       (binary_expression
         (assignment_expression
-          (variable_name
-            (name))
-          (qualified_name
-            (name)))
-        (qualified_name
-          (name)))
+          (variable_name (name))
+          (boolean))
+        (boolean))
       (binary_expression
-        (qualified_name
-          (name))
+        (boolean)
         (binary_expression
-          (qualified_name
-            (name))
-          (qualified_name
-            (name)))))))
-
+          (boolean)
+          (boolean))))))
 
 ============================================
 Associativity of conditional
@@ -274,15 +188,11 @@ true ? false : true ? "a" : "b";
 (program (expression_statement
     (conditional_expression
       (conditional_expression
-        (qualified_name
-          (name))
-        (qualified_name
-          (name))
-        (qualified_name
-          (name)))
+        (boolean)
+        (boolean)
+        (boolean))
       (string)
       (string))))
-
 
 =================================================
 Associativity of null-coalescence
@@ -296,13 +206,10 @@ NULL ?? NULL ?? 1;
 
 (program (expression_statement
     (binary_expression
-      (qualified_name
-        (name))
+      (qualified_name (name))
       (binary_expression
-        (qualified_name
-          (name))
+        (qualified_name (name))
         (integer)))))
-
 
 =========================================
 Associativity of negation
@@ -328,7 +235,6 @@ Associativity of negation
           (name))
         (qualified_name
           (name))))))
-
 
 ====================================
 Augmented assignment
@@ -374,6 +280,24 @@ $i .= "a" . "b";
           (name))
         (string)))))
 
+=======================================
+Nested assignemnts
+==============================
+
+<?php
+$c = $d[0] = $d[2] = $i;
+
+---
+
+(program
+  (expression_statement
+    (assignment_expression
+      (variable_name (name))
+      (assignment_expression
+        (subscript_expression (variable_name (name)) (integer))
+        (assignment_expression
+          (subscript_expression (variable_name (name)) (integer))
+          (variable_name (name)))))))
 
 ===============================================
 All binary op precedence levels
@@ -462,3 +386,62 @@ All binary op precedence levels
           (integer))
         (integer))
       (integer))))
+
+==============================
+Arrays
+==============================
+
+<?php
+print_r([1, 2, 3]);
+print_r(["foo" => "orange", "bar" => "apple", "baz" => "lemon"]);
+?>
+
+---
+
+(program
+  (expression_statement (function_call_expression
+    (qualified_name (name))
+    (arguments
+      (array_creation_expression
+        (array_element_initializer (integer))
+        (array_element_initializer (integer))
+        (array_element_initializer (integer))))))
+  (expression_statement
+    (function_call_expression
+      (qualified_name (name))
+      (arguments
+        (array_creation_expression
+          (array_element_initializer (string) (string))
+          (array_element_initializer (string) (string))
+          (array_element_initializer (string) (string)))))))
+
+===============================================
+Anonymous functions
+===============================================
+
+<?php
+header_register_callback(
+  function() { echo "sent";}
+);
+
+ob_start(function($buffer) use (&$storage) { $storage .= $buffer; }, 20);
+
+---
+
+(program
+  (expression_statement
+    (function_call_expression
+      (qualified_name (name))
+      (arguments
+        (anonymous_function_creation_expression
+          parameters: (formal_parameters)
+          body: (compound_statement
+            (echo_statement (string)))))))
+  (expression_statement
+    (function_call_expression
+      (qualified_name (name))
+      (arguments
+        (anonymous_function_creation_expression
+          parameters: (formal_parameters (simple_parameter name: (variable_name (name))))
+          (anonymous_function_use_clause (variable_name (name)))
+          body: (compound_statement (expression_statement (augmented_assignment_expression (variable_name (name)) (variable_name (name)))))) (integer)))))
