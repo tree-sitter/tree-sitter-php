@@ -195,25 +195,15 @@ module.exports = grammar({
       'trait', $.name, '{', repeat($._trait_member_declaration), '}'
     ),
 
-    _trait_member_declaration: $ => prec.right(choice(
-      $.property_declaration,
-      $.method_declaration,
-      $.constructor_declaration,
-      $.destructor_declaration,
-      $.trait_use_clause
-    )),
-
     interface_declaration: $ => seq(
-      'interface', $.name, optional($.interface_base_clause), '{', repeat($._interface_member_declaration), '}'
+      'interface',
+      $.name,
+      optional($.interface_base_clause),
+      $._declaration_list
     ),
 
     interface_base_clause: $ => seq(
       'extends', commaSep1($.qualified_name)
-    ),
-
-    _interface_member_declaration: $ => choice(
-      $.class_const_declaration,
-      $.method_declaration
     ),
 
     class_declaration: $ => prec.right(seq(
@@ -222,12 +212,16 @@ module.exports = grammar({
       $.name,
       optional($.class_base_clause),
       optional($.class_interface_clause),
-      '{',
-      repeat($._class_member_declaration),
-      '}',
+      $._declaration_list,
       // TODO: Figure out if this needs to be more general, but it seems to be allowed after class declarations.
       optional($._semicolon)
     )),
+
+    _declaration_list: $ => seq(
+      '{',
+      repeat($._member_declaration),
+      '}'
+    ),
 
     class_modifier: $ => choice(
       'abstract',
@@ -240,7 +234,7 @@ module.exports = grammar({
 
     class_interface_clause: $ => seq('implements', commaSep1($.qualified_name)),
 
-    _class_member_declaration: $ => choice(
+    _member_declaration: $ => choice(
       $.class_const_declaration,
       $.property_declaration,
       $.method_declaration,
@@ -688,7 +682,7 @@ module.exports = grammar({
 
     object_creation_expression: $ => prec.right(PREC.NEW, choice(
       seq('new', $._class_type_designator, optional($.arguments)),
-      seq('new', 'class', optional($.arguments), optional($.class_base_clause), optional($.class_interface_clause), '{', repeat($._class_member_declaration), '}')
+      seq('new', 'class', optional($.arguments), optional($.class_base_clause), optional($.class_interface_clause), $._declaration_list)
     )),
 
     _class_type_designator: $ => choice(
