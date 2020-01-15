@@ -758,7 +758,9 @@ module.exports = grammar({
     parenthesized_expression: $ => seq('(', $._expression, ')'),
 
     class_constant_access_expression: $ => seq(
-      $._scope_resolution_qualifier, '::', choice($.name, alias($._reserved_identifier, $.name))
+      $._scope_resolution_qualifier,
+      '::',
+      choice($.name, alias($._reserved_identifier, $.name))
     ),
 
     print_intrinsic: $ => seq(
@@ -960,6 +962,7 @@ module.exports = grammar({
 
     _dereferencable_expression: $ => prec(PREC.DEREF, choice(
       $._variable,
+      $.class_constant_access_expression,
       $.parenthesized_expression,
       $.array_creation_expression,
       $._string
@@ -1001,10 +1004,13 @@ module.exports = grammar({
 
     variable_name: $ => seq('$', $.name),
 
-    yield_expression: $ => choice(
-      seq('yield', $.array_element_initializer),
-      seq('yield', 'from', $._expression)
-    ),
+    yield_expression: $ => prec.right(seq(
+      'yield',
+      optional(choice(
+        $.array_element_initializer,
+        seq('from', $._expression)
+      ))
+    )),
 
     array_element_initializer: $ => prec.right(choice(
       seq(optional('&'), $._expression),
@@ -1019,9 +1025,9 @@ module.exports = grammar({
       )),
       prec.right(PREC.NULL_COALESCE, seq($._expression, '??', $._expression)),
       ...[
-        ['and', PREC.LOGICAL_AND_2],
-        ['or', PREC.LOGICAL_OR_2],
-        ['xor', PREC.LOGICAL_XOR],
+        [alias(/and|AND/, 'and'), PREC.LOGICAL_AND_2],
+        [alias(/or|OR/, 'or'), PREC.LOGICAL_OR_2],
+        [alias(/xor|XOR/, 'xor'), PREC.LOGICAL_XOR],
         ['||', PREC.LOGICAL_OR_1],
         ['&&', PREC.LOGICAL_AND_1],
         ['|', PREC.BITWISE_OR],

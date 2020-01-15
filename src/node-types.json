@@ -903,6 +903,10 @@
           "named": true
         },
         {
+          "type": "class_constant_access_expression",
+          "named": true
+        },
+        {
           "type": "function_call_expression",
           "named": true
         },
@@ -1853,6 +1857,10 @@
             "named": true
           },
           {
+            "type": "class_constant_access_expression",
+            "named": true
+          },
+          {
             "type": "function_call_expression",
             "named": true
           },
@@ -1954,6 +1962,10 @@
           },
           {
             "type": "cast_expression",
+            "named": true
+          },
+          {
+            "type": "class_constant_access_expression",
             "named": true
           },
           {
@@ -2613,6 +2625,10 @@
             "named": true
           },
           {
+            "type": "class_constant_access_expression",
+            "named": true
+          },
+          {
             "type": "function_call_expression",
             "named": true
           },
@@ -2696,6 +2712,10 @@
           },
           {
             "type": "cast_expression",
+            "named": true
+          },
+          {
+            "type": "class_constant_access_expression",
             "named": true
           },
           {
@@ -2877,6 +2897,10 @@
         },
         {
           "type": "array_creation_expression",
+          "named": true
+        },
+        {
+          "type": "class_constant_access_expression",
           "named": true
         },
         {
@@ -3352,7 +3376,7 @@
     "fields": {},
     "children": {
       "multiple": false,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "_expression",

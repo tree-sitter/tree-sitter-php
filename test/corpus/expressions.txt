@@ -64,6 +64,24 @@ if (!$foo = $bar) {
         (variable_name (name)))))
     (compound_statement)))
 
+===============================
+Capitalized logical operators
+===============================
+
+<?php
+a() OR b() XOR C();
+
+---
+
+(program
+  (php_tag)
+  (expression_statement
+    (binary_expression
+      (function_call_expression (qualified_name (name)) (arguments))
+      (binary_expression
+        (function_call_expression (qualified_name (name)) (arguments))
+        (function_call_expression (qualified_name (name)) (arguments)))))) 
+
 =================================
 Cast expressions in assignments
 =================================
