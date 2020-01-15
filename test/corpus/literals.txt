@@ -14,12 +14,14 @@ FALSE;
 ---
 
 (program
+  (php_tag)
   (expression_statement (boolean))
   (expression_statement (boolean))
   (expression_statement (boolean))
   (expression_statement (boolean))
   (expression_statement (boolean))
-  (expression_statement (boolean)))
+  (expression_statement (boolean))
+  (text_interpolation))
 
 ==========================
 Floats
@@ -33,10 +35,10 @@ Floats
 1423.0E3432;
 .5;
 
-
 ---
 
 (program
+  (php_tag)
   (expression_statement (float))
   (expression_statement (float))
   (expression_statement (float))
@@ -51,7 +53,10 @@ Testing string scanner confirmance
 
 ---
 
-(program (echo_statement (binary_expression (string) (string))))
+(program
+  (php_tag)
+  (echo_statement (binary_expression (string) (string)))
+  (text_interpolation))
 
 ==========================
 Heredocs
@@ -83,9 +88,10 @@ HERE;
 
 ---
 (program
+  (php_tag)
   (expression_statement (heredoc))
   (expression_statement (heredoc))
-  (text_interpolation)
+  (text_interpolation (php_tag))
   (expression_statement (heredoc))
   (expression_statement (heredoc))
   (expression_statement (heredoc)))
@@ -104,7 +110,10 @@ PHP
 
 ---
 
-(program (expression_statement (heredoc)))
+(program
+  (php_tag)
+  (expression_statement (heredoc))
+  (text_interpolation))
 
 ==============================
 Unicode escape sequences
@@ -122,6 +131,7 @@ Unicode escape sequences
 ---
 
 (program
+  (php_tag)
   (expression_statement (string)) (comment)
   (expression_statement (string)) (comment)
   (expression_statement (string)) (comment)

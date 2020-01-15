@@ -532,10 +532,6 @@
         {
           "type": "new_variable",
           "named": true
-        },
-        {
-          "type": "qualified_name",
-          "named": true
         }
       ]
     }
@@ -2060,6 +2056,10 @@
           "named": true
         },
         {
+          "type": "php_tag",
+          "named": true
+        },
+        {
           "type": "text",
           "named": true
         }
@@ -3390,6 +3390,10 @@
   {
     "type": "parent",
     "named": false
+  },
+  {
+    "type": "php_tag",
+    "named": true
   },
   {
     "type": "print",

@@ -7,9 +7,11 @@ $$k = $v;
 
 ---
 
-(program (expression_statement (assignment_expression
-  (simple_variable (variable_name (name)))
-  (variable_name (name)))))
+(program
+  (php_tag)
+  (expression_statement (assignment_expression
+    (simple_variable (variable_name (name)))
+    (variable_name (name)))))
 
 ==========================
 Exponentiation
@@ -21,6 +23,7 @@ $foo = 2 ** 2;
 ---
 
 (program
+  (php_tag)
   (expression_statement (assignment_expression
     (variable_name (name))
     (exponentiation_expression (integer) (integer)))))
@@ -35,6 +38,7 @@ $foo = new self();
 ---
 
 (program
+  (php_tag)
   (expression_statement (assignment_expression
     (variable_name (name))
     (object_creation_expression
@@ -52,6 +56,7 @@ if (!$foo = $bar) {
 
 ---
 (program
+  (php_tag)
   (if_statement
     (unary_op_expression
       (assignment_expression
@@ -71,6 +76,7 @@ Cast expressions in assignments
 ---
 
 (program
+  (php_tag)
   (expression_statement
     (assignment_expression
       (cast_expression (cast_type) (variable_name (name)))
@@ -90,6 +96,7 @@ $foo = new static($this->current());
 ---
 
 (program
+  (php_tag)
   (expression_statement (assignment_expression
     (variable_name (name))
     (object_creation_expression
@@ -107,11 +114,13 @@ m::self();
 
 ---
 
-(program (expression_statement
-  (scoped_call_expression
-    (qualified_name (name))
-    (name)
-    (arguments))))
+(program
+  (php_tag)
+  (expression_statement
+    (scoped_call_expression
+      (qualified_name (name))
+      (name)
+      (arguments))))
 
 ==========================
 Destructuring
@@ -122,14 +131,16 @@ Destructuring
 
 ---
 
-(program (expression_statement (assignment_expression
-  (array_creation_expression
-    (array_element_initializer (variable_name (name)))
-    (array_element_initializer (variable_name (name))))
-  (scoped_call_expression
-    (qualified_name (name))
-    (name)
-    (arguments (variable_name (name)))))))
+(program
+  (php_tag)
+  (expression_statement (assignment_expression
+    (array_creation_expression
+      (array_element_initializer (variable_name (name)))
+      (array_element_initializer (variable_name (name))))
+    (scoped_call_expression
+      (qualified_name (name))
+      (name)
+      (arguments (variable_name (name)))))))
 
 ================================================================
 Precedence of assignment, `or`, `xor`, and `and`
@@ -140,11 +151,12 @@ $x = true and false;
 $x = true or false;
 $x = true xor false;
 $x = true and true or true xor true and true;
-?>
 
 ---
 
-(program (expression_statement
+(program
+  (php_tag)
+  (expression_statement
     (binary_expression
       (assignment_expression
         (variable_name (name))
@@ -185,14 +197,17 @@ true ? false : true ? "a" : "b";
 
 ---
 
-(program (expression_statement
+(program
+  (php_tag)
+  (expression_statement
     (conditional_expression
       (conditional_expression
         (boolean)
         (boolean)
         (boolean))
       (string)
-      (string))))
+      (string)))
+  (text_interpolation))
 
 =================================================
 Associativity of null-coalescence
@@ -204,12 +219,15 @@ NULL ?? NULL ?? 1;
 
 ---
 
-(program (expression_statement
+(program
+  (php_tag)
+  (expression_statement
     (binary_expression
       (qualified_name (name))
       (binary_expression
         (qualified_name (name))
-        (integer)))))
+        (integer))))
+  (text_interpolation))
 
 =========================================
 Associativity of negation
@@ -222,7 +240,9 @@ Associativity of negation
 
 ---
 
-(program (expression_statement
+(program
+  (php_tag)
+  (expression_statement
     (binary_expression
       (unary_op_expression
         (integer))
@@ -234,7 +254,8 @@ Associativity of negation
         (variable_name
           (name))
         (qualified_name
-          (name))))))
+          (name)))))
+  (text_interpolation))
 
 ====================================
 Augmented assignment
@@ -249,7 +270,9 @@ $i .= "a" . "b";
 
 ---
 
-(program (expression_statement
+(program
+  (php_tag)
+  (expression_statement
     (augmented_assignment_expression
       (variable_name
         (name))
@@ -278,7 +301,8 @@ $i .= "a" . "b";
       (augmented_assignment_expression
         (variable_name
           (name))
-        (string)))))
+        (string))))
+  (text_interpolation))
 
 =======================================
 Nested assignemnts
@@ -290,6 +314,7 @@ $c = $d[0] = $d[2] = $i;
 ---
 
 (program
+  (php_tag)
   (expression_statement
     (assignment_expression
       (variable_name (name))
@@ -306,11 +331,12 @@ All binary op precedence levels
 <?php
 1 or 2 xor 3 and $i .= 4 ?? 5 || 6 && 7 | 8 ^ 9 & 10 == 11 > 12 << 13 + 14 * (int) 15 instanceof foo;
 (int) 1 instanceof foo / 3 - 4 >> 5 <= 6 <=> 7 & 8 ^ 9 | 10 && 11 || 12 ?? $i += 13 and 14 xor 15 or 16;
-?>
 
 ---
 
-(program (expression_statement
+(program
+  (php_tag)
+  (expression_statement
     (binary_expression
       (integer)
       (binary_expression
@@ -399,6 +425,7 @@ print_r(["foo" => "orange", "bar" => "apple", "baz" => "lemon"]);
 ---
 
 (program
+  (php_tag)
   (expression_statement (function_call_expression
     (qualified_name (name))
     (arguments
@@ -413,7 +440,8 @@ print_r(["foo" => "orange", "bar" => "apple", "baz" => "lemon"]);
         (array_creation_expression
           (array_element_initializer (string) (string))
           (array_element_initializer (string) (string))
-          (array_element_initializer (string) (string)))))))
+          (array_element_initializer (string) (string))))))
+  (text_interpolation))
 
 ===============================================
 Anonymous functions
@@ -429,6 +457,7 @@ ob_start(function($buffer) use (&$storage) { $storage .= $buffer; }, 20);
 ---
 
 (program
+  (php_tag)
   (expression_statement
     (function_call_expression
       (qualified_name (name))

@@ -32,7 +32,8 @@ module.exports = grammar({
 
   externals: $ => [
     $._automatic_semicolon,
-    $.heredoc
+    $.heredoc,
+    $._eof,
   ],
 
   supertypes: $ => [
@@ -85,25 +86,23 @@ module.exports = grammar({
     program: $ => seq(
       optional($.text),
       optional(seq(
-        /<\?([pP][hH][pP]|=)/,
-        repeat($._statement))),
-      optional(
-        seq(
-        '?>',
-        optional($.text)
+        $.php_tag,
+        repeat($._statement)
       ))
     ),
 
-    text_interpolation: $ => token(seq(
-      '?>',
-      repeat(choice(
-        /[^<]/,
-        /<[^?]/
-      )),
-      /<\?([pP][hH][pP]|=)/
-    )),
+    php_tag: $ => /<\?([pP][hH][pP]|=)?/,
 
-    text: $ => repeat1(choice('<', /[^\s<]+[^<]*/)),
+    text_interpolation: $ => seq(
+      '?>',
+      optional($.text),
+      choice($.php_tag, $._eof)
+    ),
+
+    text: $ => repeat1(choice(
+      token(prec(-1, /</)),
+      /[^\s<]+/
+    )),
 
     _statement: $ => choice(
       $.empty_statement,
@@ -648,7 +647,6 @@ module.exports = grammar({
       choice(':', ';'),
       repeat($._statement)
     ),
-
 
     compound_statement: $ => seq(
       '{',

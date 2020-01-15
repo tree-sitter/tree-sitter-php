@@ -9,6 +9,7 @@ function b(): A\B {}
 ---
 
 (program
+  (php_tag)
   (function_definition
     (name) (formal_parameters)
     (type_name (name))
@@ -30,6 +31,7 @@ function c(): iterable {}
 ---
 
 (program
+  (php_tag)
   (function_definition
     (name) (formal_parameters)
     (primitive_type)
@@ -55,6 +57,7 @@ function b(): ?Something {}
 ---
 
 (program
+  (php_tag)
   (function_definition
     (name) (formal_parameters)
     (optional_type (primitive_type))

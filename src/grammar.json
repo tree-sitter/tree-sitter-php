@@ -24,8 +24,8 @@
               "type": "SEQ",
               "members": [
                 {
-                  "type": "PATTERN",
-                  "value": "<\\?([pP][hH][pP]|=)"
+                  "type": "SYMBOL",
+                  "name": "php_tag"
                 },
                 {
                   "type": "REPEAT",
@@ -40,69 +40,46 @@
               "type": "BLANK"
             }
           ]
+        }
+      ]
+    },
+    "text_interpolation": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "?>"
         },
         {
           "type": "CHOICE",
           "members": [
             {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "?>"
-                },
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "text"
-                    },
-                    {
-                      "type": "BLANK"
-                    }
-                  ]
-                }
-              ]
+              "type": "SYMBOL",
+              "name": "text"
             },
             {
               "type": "BLANK"
             }
           ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "php_tag"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_eof"
+            }
+          ]
         }
       ]
     },
-    "text_interpolation": {
-      "type": "TOKEN",
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "?>"
-          },
-          {
-            "type": "REPEAT",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "PATTERN",
-                  "value": "[^<]"
-                },
-                {
-                  "type": "PATTERN",
-                  "value": "<[^?]"
-                }
-              ]
-            }
-          },
-          {
-            "type": "PATTERN",
-            "value": "<\\?([pP][hH][pP]|=)"
-          }
-        ]
-      }
+    "php_tag": {
+      "type": "PATTERN",
+      "value": "<\\?([pP][hH][pP]|=)?"
     },
     "text": {
       "type": "REPEAT1",
@@ -110,12 +87,19 @@
         "type": "CHOICE",
         "members": [
           {
-            "type": "STRING",
-            "value": "<"
+            "type": "TOKEN",
+            "content": {
+              "type": "PREC",
+              "value": -1,
+              "content": {
+                "type": "PATTERN",
+                "value": "<"
+              }
+            }
           },
           {
             "type": "PATTERN",
-            "value": "[^\\s<]+[^<]*"
+            "value": "[^\\s<]+"
           }
         ]
       }
@@ -5975,6 +5959,10 @@
     {
       "type": "SYMBOL",
       "name": "heredoc"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_eof"
     }
   ],
   "inline": [

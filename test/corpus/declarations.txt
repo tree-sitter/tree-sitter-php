@@ -16,11 +16,10 @@ class Exception_foo implements ThrowableInterface {
 	}
 }
 
-?>
-
 ---
 
 (program
+	(php_tag)
   (interface_declaration
     name: (name)
     body: (declaration_list
@@ -69,6 +68,7 @@ class AbstractCache
 ---
 
 (program
+	(php_tag)
   (trait_declaration
     (name)
     (declaration_list
@@ -99,6 +99,7 @@ namespace Be \ ta {
 ---
 
 (program
+	(php_tag)
   (namespace_definition
     name: (namespace_name (name) (name))
     body: (compound_statement
@@ -126,11 +127,10 @@ class foo {
   }
 }
 
-?>
-
 ---
 
 (program
+	(php_tag)
   (class_declaration
   name: (name)
 	body: (declaration_list
@@ -170,6 +170,7 @@ class A extends B {
 ---
 
 (program
+	(php_tag)
 	(class_declaration
 		name: (name)
 		(class_base_clause (qualified_name (name)))
@@ -187,6 +188,7 @@ function test(int $a, string ...$b)
 ---
 
 (program
+	(php_tag)
 	(function_definition
 		name: (name)
 		parameters: (formal_parameters
@@ -210,6 +212,7 @@ function a($arg = self::bar) {
 ---
 
 (program
+	(php_tag)
 	(function_definition
 		(name)
 		(formal_parameters
@@ -231,6 +234,7 @@ function blah()
 ---
 
 (program
+	(php_tag)
 	(function_definition
 		(name)
 		(formal_parameters)
