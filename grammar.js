@@ -71,7 +71,8 @@ module.exports = grammar({
     $._literal,
     $._intrinsic,
     $._class_type_designator,
-    $._simple_variable
+    $._simple_variable,
+    $._type_name,
   ],
 
   extras: $ => [
@@ -128,8 +129,6 @@ module.exports = grammar({
     ),
 
     empty_statement: $ => prec(-1, ';'),
-
-    _semicolon: $ => choice($._automatic_semicolon, ';'),
 
     function_static_declaration: $ => seq(
       'static', commaSep1($.static_variable_declaration), $._semicolon
@@ -393,14 +392,16 @@ module.exports = grammar({
 
     _type: $ => choice(
       $.optional_type,
-      alias($.qualified_name, $.type_name),
+      $._type_name,
       $.primitive_type
     ),
+
+    _type_name: $ => alias($.qualified_name, $.type_name),
 
     optional_type: $ => seq(
       '?',
       choice(
-        alias($.qualified_name, $.type_name),
+        $._type_name,
         $.primitive_type
       )
     ),
@@ -455,19 +456,22 @@ module.exports = grammar({
 
     try_statement:  $ => seq(
       'try',
-      $.compound_statement,
-      choice(
-        seq(repeat1($.catch_clause), $.finally_clause),
-        repeat1($.catch_clause),
-        repeat1($.finally_clause))
+      field('body', $.compound_statement),
+      repeat1(choice($.catch_clause, $.finally_clause))
     ),
 
     catch_clause: $ => seq(
-      'catch', '(', $.qualified_name, $.variable_name, ')', $.compound_statement
+      'catch',
+      '(',
+      field('type', $._type_name),
+      field('name', $.variable_name),
+      ')',
+      field('body', $.compound_statement)
     ),
 
     finally_clause: $ => seq(
-      'finally', $.compound_statement
+      'finally',
+      field('body', $.compound_statement)
     ),
 
     _jump_statement: $ => choice(
@@ -700,11 +704,11 @@ module.exports = grammar({
 
     _primary_expression: $ => choice(
       $._variable,
+      $._literal,
       $.class_constant_access_expression,
       $.qualified_name,
-      $._literal,
       $.array_creation_expression,
-      $._intrinsic,
+      $.print_intrinsic,
       $.anonymous_function_creation_expression,
       $.object_creation_expression,
       $.update_expression,
@@ -716,30 +720,6 @@ module.exports = grammar({
 
     class_constant_access_expression: $ => seq(
       $._scope_resolution_qualifier, '::', choice($.name, alias($._reserved_identifier, $.name))
-    ),
-
-    _intrinsic: $ => choice(
-      $.empty_intrinsic,
-      $.eval_intrinsic,
-      $.exit_intrinsic,
-      $.isset_intrinsic,
-      $.print_intrinsic
-    ),
-
-    empty_intrinsic: $ => seq(
-      'empty', '(', $._expression, ')'
-    ),
-
-    eval_intrinsic: $ => seq(
-      'eval', '(', $._expression, ')'
-    ),
-
-    exit_intrinsic: $ => prec.right(seq(
-      choice('exit', 'die'), optional(seq('(', optional($._expression), ')'))
-    )),
-
-    isset_intrinsic: $ => seq(
-      'isset', '(', commaSep1($._variable), ')'
     ),
 
     print_intrinsic: $ => seq(
@@ -1059,6 +1039,8 @@ module.exports = grammar({
         '/'
       )
     )),
+
+    _semicolon: $ => choice($._automatic_semicolon, ';')
   }
 })
 
