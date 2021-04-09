@@ -275,7 +275,7 @@ Try statements
 
 try {
 } catch (MyException $exception) {
-} catch (OtherException $e) {
+} catch (OtherException|YetAnotherException $e) {
 } finally {
 }
 
@@ -297,7 +297,10 @@ try {
       name: (variable_name (name))
       body: (compound_statement))
     (catch_clause
-      type: (type_name (name))
+      type: (type_list
+        (type_name (name))
+        (type_name (name))
+      )
       name: (variable_name (name))
       body: (compound_statement))
     (finally_clause
