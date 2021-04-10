@@ -901,10 +901,6 @@
           {
             "type": "type_list",
             "named": true
-          },
-          {
-            "type": "type_name",
-            "named": true
           }
         ]
       }

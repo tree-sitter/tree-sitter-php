@@ -54,6 +54,7 @@ module.exports = grammar({
     [$._primary_expression, $._array_destructing],
     [$._array_destructing, $.array_creation_expression],
 
+    [$.type_list],
     [$.namespace_name],
 
     [$.namespace_name_as_prefix],
@@ -484,13 +485,13 @@ module.exports = grammar({
     catch_clause: $ => seq(
       keyword('catch'),
       '(',
-      field('type', choice($._type_name, $.type_list)),
+      field('type', $.type_list),
       field('name', $.variable_name),
       ')',
       field('body', $.compound_statement)
     ),
 
-    type_list: $ => prec.right(pipeSep1($._type_name)),
+    type_list: $ => choice($._type_name, prec.right(pipeSep1($._type_name))),
 
     finally_clause: $ => seq(
       keyword('finally'),
@@ -1144,6 +1145,10 @@ function commaSep(rule) {
 
 function pipeSep1(rule) {
   return seq(rule, repeat(seq('|', rule)));
+}
+
+function pipeSep(rule) {
+  return optional(commaSep1(rule));
 }
 
 function double_quote_chars() {
