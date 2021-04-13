@@ -491,7 +491,7 @@ module.exports = grammar({
       field('body', $.compound_statement)
     ),
 
-    type_list: $ => choice($._type_name, prec.right(pipeSep1($._type_name))),
+    type_list: $ => pipeSep1($._type_name),
 
     finally_clause: $ => seq(
       keyword('finally'),
