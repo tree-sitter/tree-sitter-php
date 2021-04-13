@@ -486,7 +486,7 @@ module.exports = grammar({
       keyword('catch'),
       '(',
       field('type', $.type_list),
-      field('name', $.variable_name),
+      optional(field('name', $.variable_name)),
       ')',
       field('body', $.compound_statement)
     ),

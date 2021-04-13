@@ -274,7 +274,7 @@ Try statements
 <?php
 
 try {
-} catch (MyException $exception) {
+} catch (MyException) {
 } catch (OtherException|YetAnotherException $e) {
 } finally {
 }
@@ -296,7 +296,6 @@ try {
       type: (type_list
         (type_name (name))
       )
-      name: (variable_name (name))
       body: (compound_statement))
     (catch_clause
       type: (type_list
