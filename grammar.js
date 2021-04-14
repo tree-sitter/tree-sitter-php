@@ -54,7 +54,6 @@ module.exports = grammar({
     [$._primary_expression, $._array_destructing],
     [$._array_destructing, $.array_creation_expression],
 
-    [$.type_list],
     [$.namespace_name],
 
     [$.namespace_name_as_prefix],
