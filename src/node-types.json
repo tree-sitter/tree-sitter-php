@@ -74,6 +74,10 @@
         "named": true
       },
       {
+        "type": "encapsed_string",
+        "named": true
+      },
+      {
         "type": "float",
         "named": true
       },
@@ -1092,6 +1096,10 @@
           "named": true
         },
         {
+          "type": "encapsed_string",
+          "named": true
+        },
+        {
           "type": "function_call_expression",
           "named": true
         },
@@ -1577,6 +1585,41 @@
     "fields": {}
   },
   {
+    "type": "encapsed_string",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "dynamic_variable_name",
+          "named": true
+        },
+        {
+          "type": "escape_sequence",
+          "named": true
+        },
+        {
+          "type": "member_access_expression",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "subscript_expression",
+          "named": true
+        },
+        {
+          "type": "variable_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "exponentiation_expression",
     "named": true,
     "fields": {},
@@ -1738,6 +1781,10 @@
           },
           {
             "type": "dynamic_variable_name",
+            "named": true
+          },
+          {
+            "type": "encapsed_string",
             "named": true
           },
           {
@@ -2211,6 +2258,10 @@
             "named": true
           },
           {
+            "type": "encapsed_string",
+            "named": true
+          },
+          {
             "type": "function_call_expression",
             "named": true
           },
@@ -2324,6 +2375,10 @@
           },
           {
             "type": "dynamic_variable_name",
+            "named": true
+          },
+          {
+            "type": "encapsed_string",
             "named": true
           },
           {
@@ -2701,6 +2756,10 @@
             "named": true
           },
           {
+            "type": "encapsed_string",
+            "named": true
+          },
+          {
             "type": "function_call_expression",
             "named": true
           },
@@ -2814,6 +2873,10 @@
           },
           {
             "type": "dynamic_variable_name",
+            "named": true
+          },
+          {
+            "type": "encapsed_string",
             "named": true
           },
           {
@@ -3289,6 +3352,10 @@
             "named": true
           },
           {
+            "type": "encapsed_string",
+            "named": true
+          },
+          {
             "type": "function_call_expression",
             "named": true
           },
@@ -3388,6 +3455,10 @@
           },
           {
             "type": "dynamic_variable_name",
+            "named": true
+          },
+          {
+            "type": "encapsed_string",
             "named": true
           },
           {
@@ -3551,6 +3622,11 @@
     }
   },
   {
+    "type": "string",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "subscript_expression",
     "named": true,
     "fields": {},
@@ -3572,6 +3648,10 @@
         },
         {
           "type": "dynamic_variable_name",
+          "named": true
+        },
+        {
+          "type": "encapsed_string",
           "named": true
         },
         {
@@ -4138,6 +4218,10 @@
     "named": false
   },
   {
+    "type": "\"",
+    "named": false
+  },
+  {
     "type": "#[",
     "named": false
   },
@@ -4163,6 +4247,10 @@
   },
   {
     "type": "&=",
+    "named": false
+  },
+  {
+    "type": "'",
     "named": false
   },
   {
@@ -4478,6 +4566,10 @@
     "named": false
   },
   {
+    "type": "escape_sequence",
+    "named": true
+  },
+  {
     "type": "extends",
     "named": false
   },
@@ -4599,11 +4691,11 @@
   },
   {
     "type": "null",
-    "named": false
+    "named": true
   },
   {
     "type": "null",
-    "named": true
+    "named": false
   },
   {
     "type": "object",
@@ -4668,10 +4760,6 @@
   {
     "type": "strict_types",
     "named": false
-  },
-  {
-    "type": "string",
-    "named": true
   },
   {
     "type": "string",
