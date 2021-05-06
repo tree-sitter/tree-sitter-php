@@ -142,7 +142,7 @@ class foo {
 	    body: (compound_statement
 				(expression_statement (assignment_expression
 	        left: (subscript_expression (variable_name (name)) (string))
-	        right: (variable_name (name))))
+	        right: (by_ref (variable_name (name)))))
 				(expression_statement (assignment_expression
 	        left: (member_access_expression
 						object: (variable_name (name))
