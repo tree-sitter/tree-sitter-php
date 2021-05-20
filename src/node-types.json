@@ -1493,7 +1493,7 @@
     "fields": {},
     "children": {
       "multiple": false,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "_expression",
@@ -2238,7 +2238,7 @@
         ]
       },
       "object": {
-        "multiple": false,
+        "multiple": true,
         "required": true,
         "types": [
           {
@@ -3660,6 +3660,10 @@
         },
         {
           "type": "heredoc",
+          "named": true
+        },
+        {
+          "type": "integer",
           "named": true
         },
         {
