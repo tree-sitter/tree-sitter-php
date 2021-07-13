@@ -144,7 +144,7 @@ HERE);
 
 read(<<<  HERE
 foo #{bar}
-HERE, true);
+HERE , true);
 
 ---
 (program
