@@ -5516,18 +5516,6 @@
           ]
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "STRING",
-              "value": ","
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
           "type": "STRING",
           "value": ")"
         }
@@ -5678,18 +5666,6 @@
                   }
                 ]
               }
-            }
-          ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "STRING",
-              "value": ","
-            },
-            {
-              "type": "BLANK"
             }
           ]
         },
@@ -7944,12 +7920,6 @@
     ],
     [
       "if_statement"
-    ],
-    [
-      "_list_destructing"
-    ],
-    [
-      "_array_destructing"
     ],
     [
       "namespace_name"

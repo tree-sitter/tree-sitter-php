@@ -58,10 +58,6 @@ module.exports = grammar({
     [$.union_type, $._return_type],
     [$.if_statement],
 
-    // Needed to support both trailing comma and optional arguments: list($a, $b,) and list( , , $a), same applies for the [] version
-    [$._list_destructing],
-    [$._array_destructing],
-
     [$.namespace_name],
 
     [$.namespace_name_as_prefix],
@@ -1018,7 +1014,6 @@ module.exports = grammar({
         choice(alias($._list_destructing, $.list_literal), $._variable),
         seq($._expression, '=>', choice(alias($._list_destructing, $.list_literal), $._variable))
       ))),
-      optional(','),
       ')'
     ),
 
@@ -1028,7 +1023,6 @@ module.exports = grammar({
         choice(alias($._array_destructing, $.list_literal), $._variable),
         seq($._expression, '=>', choice(alias($._array_destructing, $.list_literal), $._variable))
       ))),
-      optional(','),
       ']'
     ),
 
