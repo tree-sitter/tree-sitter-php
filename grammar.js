@@ -254,11 +254,11 @@ module.exports = grammar({
 
     enum_declaration_list: $ => seq(
       '{',
-      repeat($._enum_member_declartaion),
+      repeat($._enum_member_declaration),
       '}',
     ),
 
-    _enum_member_declartaion: $ => choice(
+    _enum_member_declaration: $ => choice(
       $.enum_case,
       $.method_declaration,
       $.use_declaration,
@@ -268,7 +268,7 @@ module.exports = grammar({
       optional(field('attributes', $.attribute_list)),
       'case',
       field('name', $.name),
-      optional(field('value', seq('=', choice($.string, $.integer)))),
+      optional(seq('=', field('value', choice($.string, $.integer)))),
       $._semicolon
     ),
 
