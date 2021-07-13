@@ -676,6 +676,7 @@ module.exports = grammar({
 
     _foreach_value: $ => choice(
       $._expression,
+      $.by_ref,
       $.list_literal
     ),
 
@@ -861,7 +862,11 @@ module.exports = grammar({
       $.parenthesized_expression,
       $.throw_expression,
       $.arrow_function,
-      $.by_ref,
+    ),
+
+    _referencable_expression: $ => choice(
+      $._variable,
+      $.object_creation_expression,
     ),
 
     parenthesized_expression: $ => seq('(', $._expression, ')'),
@@ -880,7 +885,7 @@ module.exports = grammar({
     _variable_by_ref: $ => seq('&', $.variable_name),
     by_ref: $ => seq(
       '&',
-      $._expression,
+      $._referencable_expression,
     ),
 
     anonymous_function_creation_expression: $ => seq(
@@ -1086,7 +1091,7 @@ module.exports = grammar({
 
     argument: $ => seq(
       optional(seq(field('name', $.name), ':')),
-      choice($.variadic_unpacking, $._expression)
+      choice($.variadic_unpacking, $._expression, $.by_ref)
     ),
 
     member_call_expression: $ => prec(PREC.CALL, seq(
@@ -1196,7 +1201,8 @@ module.exports = grammar({
 
     array_element_initializer: $ => prec.right(choice(
       $._expression,
-      seq($._expression, '=>', $._expression),
+      $.by_ref,
+      seq($._expression, '=>', choice($._expression, $.by_ref)),
       $.variadic_unpacking
     )),
 

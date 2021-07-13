@@ -116,10 +116,6 @@
         "named": true
       },
       {
-        "type": "by_ref",
-        "named": true
-      },
-      {
         "type": "cast_expression",
         "named": true
       },
@@ -427,6 +423,10 @@
           "named": true
         },
         {
+          "type": "by_ref",
+          "named": true
+        },
+        {
           "type": "variadic_unpacking",
           "named": true
         }
@@ -473,6 +473,10 @@
       "types": [
         {
           "type": "_expression",
+          "named": true
+        },
+        {
+          "type": "by_ref",
           "named": true
         },
         {
@@ -1000,7 +1004,47 @@
       "required": true,
       "types": [
         {
-          "type": "_expression",
+          "type": "cast_expression",
+          "named": true
+        },
+        {
+          "type": "dynamic_variable_name",
+          "named": true
+        },
+        {
+          "type": "function_call_expression",
+          "named": true
+        },
+        {
+          "type": "member_access_expression",
+          "named": true
+        },
+        {
+          "type": "member_call_expression",
+          "named": true
+        },
+        {
+          "type": "nullsafe_member_access_expression",
+          "named": true
+        },
+        {
+          "type": "nullsafe_member_call_expression",
+          "named": true
+        },
+        {
+          "type": "object_creation_expression",
+          "named": true
+        },
+        {
+          "type": "scoped_call_expression",
+          "named": true
+        },
+        {
+          "type": "scoped_property_access_expression",
+          "named": true
+        },
+        {
+          "type": "subscript_expression",
           "named": true
         },
         {
@@ -1859,6 +1903,10 @@
       "types": [
         {
           "type": "_expression",
+          "named": true
+        },
+        {
+          "type": "by_ref",
           "named": true
         },
         {
@@ -3167,6 +3215,10 @@
       "types": [
         {
           "type": "_expression",
+          "named": true
+        },
+        {
+          "type": "by_ref",
           "named": true
         },
         {
