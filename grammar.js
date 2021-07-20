@@ -52,7 +52,6 @@ module.exports = grammar({
     [$.variadic_parameter, $.name],
     [$.static_modifier, $._reserved_identifier],
 
-    [$._primary_expression, $._array_destructing],
     [$._array_destructing, $.array_creation_expression],
 
     [$.union_type, $._return_type],
@@ -846,7 +845,7 @@ module.exports = grammar({
       'clone', $._primary_expression
     ),
 
-    _primary_expression: $ => choice(
+    _primary_expression: $ => prec.right(choice(
       $._variable,
       $._literal,
       $.class_constant_access_expression,
@@ -862,7 +861,7 @@ module.exports = grammar({
       $.parenthesized_expression,
       $.throw_expression,
       $.arrow_function,
-    ),
+    )),
 
     _referencable_expression: $ => choice(
       $._variable,
@@ -1200,8 +1199,8 @@ module.exports = grammar({
     )),
 
     array_element_initializer: $ => prec.right(choice(
-      $._expression,
       $.by_ref,
+      $._expression,
       seq($._expression, '=>', choice($._expression, $.by_ref)),
       $.variadic_unpacking
     )),

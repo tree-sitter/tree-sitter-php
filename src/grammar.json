@@ -4362,69 +4362,73 @@
       ]
     },
     "_primary_expression": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_variable"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_literal"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "class_constant_access_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "qualified_name"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "name"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "array_creation_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "print_intrinsic"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "anonymous_function_creation_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "arrow_function"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "object_creation_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "update_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "shell_command_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "parenthesized_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "throw_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "arrow_function"
-        }
-      ]
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_variable"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_literal"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "class_constant_access_expression"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "qualified_name"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "name"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "array_creation_expression"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "print_intrinsic"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "anonymous_function_creation_expression"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "arrow_function"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "object_creation_expression"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "update_expression"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "shell_command_expression"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "parenthesized_expression"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "throw_expression"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "arrow_function"
+          }
+        ]
+      }
     },
     "_referencable_expression": {
       "type": "CHOICE",
@@ -5563,7 +5567,7 @@
       "members": [
         {
           "type": "STRING",
-          "value": "["
+          "value": "[#"
         },
         {
           "type": "SEQ",
@@ -6766,11 +6770,11 @@
         "members": [
           {
             "type": "SYMBOL",
-            "name": "_expression"
+            "name": "by_ref"
           },
           {
             "type": "SYMBOL",
-            "name": "by_ref"
+            "name": "_expression"
           },
           {
             "type": "SEQ",
@@ -7946,10 +7950,6 @@
     [
       "static_modifier",
       "_reserved_identifier"
-    ],
-    [
-      "_primary_expression",
-      "_array_destructing"
     ],
     [
       "_array_destructing",

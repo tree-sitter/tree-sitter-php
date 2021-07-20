@@ -1140,6 +1140,10 @@ function foo(&) {}
 
 $target = &$GLOBALS['_' . \strtoupper($array)];
 
+$a = &$x;
+
+[&$x];
+
 ---
 
 (program
@@ -1342,6 +1346,19 @@ $target = &$GLOBALS['_' . \strtoupper($array)];
             )
           )
         )
+      )
+    )
+  )
+  (expression_statement
+    (assignment_expression
+      (variable_name (name))
+      (by_ref (variable_name (name)))
+    )
+  )
+  (expression_statement
+    (array_creation_expression
+      (array_element_initializer
+        (by_ref (variable_name (name)))
       )
     )
   )
