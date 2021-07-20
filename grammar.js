@@ -52,7 +52,6 @@ module.exports = grammar({
     [$.variadic_parameter, $.name],
     [$.static_modifier, $._reserved_identifier],
 
-    [$._primary_expression, $._array_destructing],
     [$._array_destructing, $.array_creation_expression],
 
     [$.union_type, $._return_type],
@@ -409,7 +408,7 @@ module.exports = grammar({
 
     _function_definition_header: $ => seq(
       keyword('function'),
-      optional('&'),
+      optional($.reference_modifier),
       field('name', choice($.name, alias($._reserved_identifier, $.name))),
       field('parameters', $.formal_parameters),
       optional($._return_type)
@@ -418,7 +417,7 @@ module.exports = grammar({
     arrow_function: $ => seq(
       optional($.static_modifier),
       keyword('fn'),
-      optional('&'),
+      optional($.reference_modifier),
       field('parameters', $.formal_parameters),
       optional($._return_type),
       '=>',
@@ -445,7 +444,7 @@ module.exports = grammar({
     simple_parameter: $ => seq(
       optional(field('attributes', $.attribute_list)),
       field('type', optional($._type)),
-      optional('&'),
+      optional($.reference_modifier),
       field('name', $.variable_name),
       optional(seq(
         '=',
@@ -456,7 +455,7 @@ module.exports = grammar({
     variadic_parameter: $ => seq(
       optional(field('attributes', $.attribute_list)),
       field('type', optional($._type)),
-      optional('&'),
+      optional($.reference_modifier),
       '...',
       field('name', $.variable_name)
     ),
@@ -675,7 +674,8 @@ module.exports = grammar({
     foreach_pair: $ => seq($._expression, '=>', $._foreach_value),
 
     _foreach_value: $ => choice(
-      seq(optional('&'), $._expression),
+      $._expression,
+      $.by_ref,
       $.list_literal
     ),
 
@@ -845,7 +845,7 @@ module.exports = grammar({
       'clone', $._primary_expression
     ),
 
-    _primary_expression: $ => choice(
+    _primary_expression: $ => prec.right(choice(
       $._variable,
       $._literal,
       $.class_constant_access_expression,
@@ -861,6 +861,11 @@ module.exports = grammar({
       $.parenthesized_expression,
       $.throw_expression,
       $.arrow_function,
+    )),
+
+    _referencable_expression: $ => choice(
+      $._variable,
+      $.object_creation_expression,
     ),
 
     parenthesized_expression: $ => seq('(', $._expression, ')'),
@@ -875,10 +880,17 @@ module.exports = grammar({
       'print', $._expression
     ),
 
+    reference_modifier: $ => '&',
+    _variable_by_ref: $ => seq('&', $.variable_name),
+    by_ref: $ => seq(
+      '&',
+      $._referencable_expression,
+    ),
+
     anonymous_function_creation_expression: $ => seq(
       optional(keyword('static')),
       keyword('function'),
-      optional('&'),
+      optional($.reference_modifier),
       field('parameters', $.formal_parameters),
       optional($.anonymous_function_use_clause),
       optional($._return_type),
@@ -888,7 +900,7 @@ module.exports = grammar({
     anonymous_function_use_clause: $ => seq(
       keyword('use'),
       '(',
-      commaSep1(seq(optional('&'), $.variable_name)),
+      commaSep1(choice(alias($._variable_by_ref, $.by_ref), $.variable_name)),
       optional(','),
       ')'
     ),
@@ -947,8 +959,7 @@ module.exports = grammar({
         $.list_literal,
       )),
       '=',
-      optional('&'),
-      field('right', $._expression)
+      field('right', choice($._expression, $.by_ref)),
     )),
 
     conditional_expression: $ => prec.left(PREC.TERNARY, seq(
@@ -1011,8 +1022,8 @@ module.exports = grammar({
       'list',
       '(',
       commaSep1(optional(choice(
-        choice(alias($._list_destructing, $.list_literal), $._variable),
-        seq($._expression, '=>', choice(alias($._list_destructing, $.list_literal), $._variable))
+        choice(alias($._list_destructing, $.list_literal), $._variable, $.by_ref),
+        seq($._expression, '=>', choice(alias($._list_destructing, $.list_literal), $._variable, $.by_ref))
       ))),
       ')'
     ),
@@ -1020,8 +1031,8 @@ module.exports = grammar({
     _array_destructing: $ => seq(
       '[',
       commaSep1(optional(choice(
-        choice(alias($._array_destructing, $.list_literal), $._variable),
-        seq($._expression, '=>', choice(alias($._array_destructing, $.list_literal), $._variable))
+        choice(alias($._array_destructing, $.list_literal), $._variable, $.by_ref),
+        seq($._expression, '=>', choice(alias($._array_destructing, $.list_literal), $._variable, $.by_ref))
       ))),
       ']'
     ),
@@ -1079,7 +1090,7 @@ module.exports = grammar({
 
     argument: $ => seq(
       optional(seq(field('name', $.name), ':')),
-      choice($.variadic_unpacking, $._expression)
+      choice($.variadic_unpacking, $._expression, $.by_ref)
     ),
 
     member_call_expression: $ => prec(PREC.CALL, seq(
@@ -1188,8 +1199,9 @@ module.exports = grammar({
     )),
 
     array_element_initializer: $ => prec.right(choice(
-      seq(optional('&'), $._expression),
-      seq($._expression, '=>', optional('&'), $._expression),
+      $.by_ref,
+      $._expression,
+      seq($._expression, '=>', choice($._expression, $.by_ref)),
       $.variadic_unpacking
     )),
 
