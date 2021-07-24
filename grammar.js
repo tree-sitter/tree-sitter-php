@@ -53,6 +53,8 @@ module.exports = grammar({
     [$.static_modifier, $._reserved_identifier],
 
     [$._array_destructing, $.array_creation_expression],
+    [$._array_destructing_element, $.array_element_initializer],
+    [$._primary_expression, $._array_destructing_element],
 
     [$.union_type, $._return_type],
     [$.if_statement],
@@ -496,7 +498,7 @@ module.exports = grammar({
     ),
 
     cast_type: $ => choice(
-      'array',
+      keyword('array'),
       'binary',
       'bool',
       'boolean',
@@ -507,7 +509,7 @@ module.exports = grammar({
       'object',
       'real',
       'string',
-      'unset'
+      keyword('unset')
     ),
 
     _return_type: $ => seq(':', field('return_type', $._type)),
@@ -546,7 +548,7 @@ module.exports = grammar({
       $.null
     ),
 
-    float: $ => /\d*(_\d+)*((\.\d*(_\d+)*)?([eE][\+-]?\d+(_\d+)*)|(\.\d\d*(_\d+)*)([eE][\+-]?\d+(_\d+)*)?)/,
+    float: $ => /\d*(_\d+)*((\.\d*(_\d+)*)?([eE][\+-]?\d+(_\d+)*)|(\.\d*(_\d+)*)([eE][\+-]?\d+(_\d+)*)?)/,
 
     try_statement: $ => seq(
       keyword('try'),
@@ -845,7 +847,7 @@ module.exports = grammar({
       'clone', $._primary_expression
     ),
 
-    _primary_expression: $ => prec.right(choice(
+    _primary_expression: $ => prec.left(choice(
       $._variable,
       $._literal,
       $.class_constant_access_expression,
@@ -1030,11 +1032,13 @@ module.exports = grammar({
 
     _array_destructing: $ => seq(
       '[',
-      commaSep1(optional(choice(
-        choice(alias($._array_destructing, $.list_literal), $._variable, $.by_ref),
-        seq($._expression, '=>', choice(alias($._array_destructing, $.list_literal), $._variable, $.by_ref))
-      ))),
+      commaSep1(optional($._array_destructing_element)),
       ']'
+    ),
+
+    _array_destructing_element: $ => choice(
+      choice(alias($._array_destructing, $.list_literal), $._variable, $.by_ref),
+      seq($._expression, '=>', choice(alias($._array_destructing, $.list_literal), $._variable, $.by_ref))
     ),
 
     _callable_variable: $ => choice(
@@ -1142,7 +1146,7 @@ module.exports = grammar({
     )),
 
     array_creation_expression: $ => choice(
-      seq('array', '(', commaSep($.array_element_initializer), optional(','), ')'),
+      seq(keyword('array'), '(', commaSep($.array_element_initializer), optional(','), ')'),
       seq('[', commaSep($.array_element_initializer), optional(','), ']')
     ),
 
@@ -1198,7 +1202,7 @@ module.exports = grammar({
       ))
     )),
 
-    array_element_initializer: $ => prec.right(choice(
+    array_element_initializer: $ => prec.left(choice(
       $.by_ref,
       $._expression,
       seq($._expression, '=>', choice($._expression, $.by_ref)),
