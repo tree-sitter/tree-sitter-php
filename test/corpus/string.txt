@@ -614,3 +614,95 @@ okay to do';
   (expression_statement (string))
   (expression_statement (string))
 )
+
+=========================================
+String parsing bug fails
+=========================================
+
+<?php
+
+function x($a, $b) {
+    echo(" '$b' ");
+    echo " '$a' ";
+}
+
+---
+
+(program 
+  (php_tag) 
+  (function_definition 
+    (name) 
+    (formal_parameters 
+      (simple_parameter 
+        (variable_name (name))
+      ) 
+      (simple_parameter 
+        (variable_name (name))
+      )
+    ) 
+    (compound_statement 
+      (echo_statement 
+        (parenthesized_expression 
+          (encapsed_string 
+            (string) 
+            (variable_name (name)) 
+            (string)
+          )
+        )
+      ) 
+      (echo_statement 
+        (encapsed_string 
+          (string) 
+          (variable_name (name)) 
+          (string)
+        )
+      )
+    )
+  )
+)
+
+=========================================
+String parsing bug ok
+=========================================
+
+<?php
+
+function x($a, $b) {
+    echo(" '$a' ");
+    echo " '$b' ";
+}
+
+---
+
+(program 
+  (php_tag) 
+  (function_definition 
+    (name) 
+    (formal_parameters 
+      (simple_parameter 
+        (variable_name (name))
+      ) 
+      (simple_parameter 
+        (variable_name (name))
+      )
+    ) 
+    (compound_statement 
+      (echo_statement 
+        (parenthesized_expression 
+          (encapsed_string 
+            (string) 
+            (variable_name (name)) 
+            (string)
+          )
+        )
+      ) 
+      (echo_statement 
+        (encapsed_string 
+          (string) 
+          (variable_name (name)) 
+          (string)
+        )
+      )
+    )
+  )
+)
