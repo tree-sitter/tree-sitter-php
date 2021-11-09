@@ -1136,10 +1136,10 @@ module.exports = grammar({
     ),
 
     subscript_expression: $ => seq(
-      $._dereferencable_expression,
+      field("dereferencable", $._dereferencable_expression),
       choice(
-        seq('[', optional($._expression), ']'),
-        seq('{', $._expression, '}')
+        seq('[', field("index", optional($._expression)), ']'),
+        seq('{', field("index", $._expression), '}')
       )
     ),
 
