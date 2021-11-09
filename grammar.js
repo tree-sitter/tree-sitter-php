@@ -837,13 +837,16 @@ module.exports = grammar({
       $._primary_expression,
       $.exponentiation_expression,
       $.unary_op_expression,
-      $.cast_expression
+      $.cast_expression,
+      $.silence_expression
     ),
+    
+    silence_expression: $ => 
+      seq('@', field('expr', $._expression)),
 
-    unary_op_expression: $ => choice(
-      seq('@', $._expression),
-      prec.left(PREC.NEG, seq(choice('+', '-', '~', '!'), $._expression))
-    ),
+
+    unary_op_expression: $ => 
+      prec.left(PREC.NEG,seq(field('operator', choice('+', '-', '~', '!')), field('expr', $._expression))),
 
     exponentiation_expression: $ => prec.right(PREC.EXPONENTIAL, seq(
       field('left', choice($.clone_expression, $._primary_expression, $.unary_op_expression, $.match_expression)),
