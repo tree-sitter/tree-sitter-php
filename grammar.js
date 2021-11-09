@@ -1283,9 +1283,9 @@ module.exports = grammar({
     )),
 
     array_element_initializer: $ => prec.right(choice(
-      choice($.by_ref, $._expression),
-      seq($._expression, '=>', choice($.by_ref, $._expression)),
-      $.variadic_unpacking
+      field("value", choice($.by_ref, $._expression)),
+      seq(field("key", $._expression), '=>', field("value", choice($.by_ref, $._expression))),
+      field("spread", $.variadic_unpacking)
     )),
 
     binary_expression: $ => choice(
