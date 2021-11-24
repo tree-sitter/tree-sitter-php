@@ -1231,11 +1231,11 @@ module.exports = grammar({
       repeat(
         choice(
           $.escape_sequence,
-          seq($.variable_name, alias($.encapsed_string_chars_after_variable, $.string)),
-          alias($.encapsed_string_chars, $.string),
+          seq($.variable_name, alias($.encapsed_string_chars_after_variable, $.string_part)),
+          alias($.encapsed_string_chars, $.string_part),
           $._simple_string_part,
           $._complex_string_part,
-          alias('\\u', $.string),
+          alias('\\u', $.string_part),
         ),
       ),
       '"',
