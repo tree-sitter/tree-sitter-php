@@ -637,11 +637,11 @@ module.exports = grammar({
     for_statement: $ => seq(
       keyword('for'),
       '(',
-      optional($._expressions),
+      field("initialize", optional($._expressions)),
       ';',
-      optional($._expressions),
+      field("condition", optional($._expressions)),
       ';',
-      optional($._expressions),
+      field("increment", optional($._expressions)),
       ')',
       choice(
         $._semicolon,
