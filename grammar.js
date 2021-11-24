@@ -877,9 +877,9 @@ module.exports = grammar({
     parenthesized_expression: $ => seq('(', $._expression, ')'),
 
     class_constant_access_expression: $ => seq(
-      $._scope_resolution_qualifier,
+      field("class", $._scope_resolution_qualifier),
       '::',
-      choice($.name, alias($._reserved_identifier, $.name))
+      field("constant", choice($.name, alias($._reserved_identifier, $.name)))
     ),
 
     print_intrinsic: $ => seq(
