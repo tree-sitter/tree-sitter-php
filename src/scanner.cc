@@ -118,7 +118,7 @@ struct Scanner {
   static bool is_escapable_sequence(TSLexer *lexer) {
     // Note: remember to also update the escape_sequence rule in the
     // main grammar whenever changing this method
-    auto letter = lexer->lookahead;
+    int32_t letter = lexer->lookahead;
 
     if (letter == 'n' ||
         letter == 'r' ||
@@ -376,6 +376,6 @@ bool tree_sitter_php_external_scanner_scan(void *payload, TSLexer *lexer,
   return scanner->scan(lexer, valid_symbols);
 }
 
-void tree_sitter_php_external_scanner_reset(void *p) {}
+void tree_sitter_php_external_scanner_reset(void *) {}
 
 }
