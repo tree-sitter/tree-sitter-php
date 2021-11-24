@@ -522,7 +522,7 @@ module.exports = grammar({
     _return_type: $ => seq(':', field('return_type', $._type)),
 
     const_element: $ => seq(
-      choice($.name, alias($._reserved_identifier, $.name)), '=', $._expression
+      field('name', choice($.name, alias($._reserved_identifier, $.name))), '=', field('value', $._expression)
     ),
 
     echo_statement: $ => seq(
