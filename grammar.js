@@ -662,11 +662,11 @@ module.exports = grammar({
     foreach_statement: $ => seq(
       keyword('foreach'),
       '(',
-      $._expression,
+      field('traversable', $._expression),
       keyword('as'),
       choice(
-        alias($.foreach_pair, $.pair),
-        $._foreach_value
+        seq(field('key', $._expression), '=>', field('value', $._foreach_value)),
+        field('value', $._foreach_value)
       ),
       ')',
       choice(
@@ -679,8 +679,6 @@ module.exports = grammar({
         )
       )
     ),
-
-    foreach_pair: $ => seq($._expression, '=>', $._foreach_value),
 
     _foreach_value: $ => choice(
       $.by_ref,
