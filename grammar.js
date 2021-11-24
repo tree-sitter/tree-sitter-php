@@ -934,10 +934,10 @@ module.exports = grammar({
     ),
 
     update_expression: $ => prec.left(PREC.INC, choice(
-      seq($._variable, '++'),
-      seq($._variable, '--'),
-      seq('++', $._variable),
-      seq('--', $._variable)
+      seq(field('expr', $._variable), field('postfix', '++')),
+      seq(field('expr', $._variable), field('postfix', '--')),
+      seq(field('prefix', '++'), field('expr', $._variable)),
+      seq(field('prefix', '--'), field('expr', $._variable))
     )),
 
     shell_command_expression: $ => token(seq(
