@@ -328,9 +328,9 @@ module.exports = grammar({
 
     property_declaration: $ => seq(
       optional(field('attributes', $.attribute_list)),
-      repeat1($._modifier),
+      field('modifiers', repeat1($._modifier)),
       optional(field('type', $._type)),
-      commaSep1($.property_element),
+      field('properties', commaSep1($.property_element)),
       $._semicolon
     ),
 
@@ -343,12 +343,9 @@ module.exports = grammar({
     )),
 
     property_element: $ => seq(
-      $.variable_name, optional($.property_initializer)
+      field('name', $.variable_name), optional(seq('=', field('initializer', $._expression)))
     ),
 
-    property_initializer: $ => seq(
-      '=', $._expression
-    ),
 
     method_declaration: $ => seq(
       optional(field('attributes', $.attribute_list)),
