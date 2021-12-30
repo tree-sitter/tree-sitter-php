@@ -3528,6 +3528,46 @@
           }
         ]
       },
+      "modifiers": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "abstract_modifier",
+            "named": true
+          },
+          {
+            "type": "final_modifier",
+            "named": true
+          },
+          {
+            "type": "static_modifier",
+            "named": true
+          },
+          {
+            "type": "var_modifier",
+            "named": true
+          },
+          {
+            "type": "visibility_modifier",
+            "named": true
+          }
+        ]
+      },
+      "properties": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "property_element",
+            "named": true
+          }
+        ]
+      },
       "type": {
         "multiple": false,
         "required": false,
@@ -3538,70 +3578,32 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "abstract_modifier",
-          "named": true
-        },
-        {
-          "type": "final_modifier",
-          "named": true
-        },
-        {
-          "type": "property_element",
-          "named": true
-        },
-        {
-          "type": "static_modifier",
-          "named": true
-        },
-        {
-          "type": "var_modifier",
-          "named": true
-        },
-        {
-          "type": "visibility_modifier",
-          "named": true
-        }
-      ]
     }
   },
   {
     "type": "property_element",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "property_initializer",
-          "named": true
-        },
-        {
-          "type": "variable_name",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "property_initializer",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "_expression",
-          "named": true
-        }
-      ]
+    "fields": {
+      "initializer": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "variable_name",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -5200,11 +5202,11 @@
   },
   {
     "type": "float",
-    "named": true
+    "named": false
   },
   {
     "type": "float",
-    "named": false
+    "named": true
   },
   {
     "type": "fn",
@@ -5364,11 +5366,11 @@
   },
   {
     "type": "string",
-    "named": true
+    "named": false
   },
   {
     "type": "string",
-    "named": false
+    "named": true
   },
   {
     "type": "string_part",
