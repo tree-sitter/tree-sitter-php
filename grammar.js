@@ -65,6 +65,8 @@ module.exports = grammar({
     [$._primary_expression, $._array_destructing_element],
 
     [$.union_type, $._return_type],
+    [$.union_type, $.intersection_type],
+    [$.intersection_type],
     [$.if_statement],
 
     [$.namespace_name],
@@ -149,7 +151,7 @@ module.exports = grammar({
 
     empty_statement: $ => prec(-1, ';'),
 
-    reference_modifier: $ => '&',
+    reference_modifier: $ => token('&'),
 
     function_static_declaration: $ => seq(
       keyword('static'),
@@ -481,7 +483,7 @@ module.exports = grammar({
       field('name', $.variable_name)
     ),
 
-    _type: $ => $.union_type,
+    _type: $ => choice($.union_type, $.intersection_type),
 
     _types: $ => choice(
       $.optional_type,
@@ -502,6 +504,8 @@ module.exports = grammar({
     bottom_type: $ => 'never',
 
     union_type: $ => prec.right(pipeSep1($._types)),
+
+    intersection_type: $ => ampSep1($._types),
 
     primitive_type: $ => choice(
       'array',
@@ -1498,8 +1502,8 @@ function pipeSep1(rule) {
   return seq(rule, repeat(seq('|', rule)));
 }
 
-function pipeSep(rule) {
-  return optional(commaSep1(rule));
+function ampSep1(rule) {
+  return seq(rule, repeat(seq(token('&'), rule)));
 }
 
 function backtick_chars() {

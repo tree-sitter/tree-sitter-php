@@ -332,6 +332,10 @@
     "named": true,
     "subtypes": [
       {
+        "type": "intersection_type",
+        "named": true
+      },
+      {
         "type": "union_type",
         "named": true
       }
@@ -2481,6 +2485,29 @@
       "types": [
         {
           "type": "base_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "intersection_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "named_type",
+          "named": true
+        },
+        {
+          "type": "optional_type",
+          "named": true
+        },
+        {
+          "type": "primitive_type",
           "named": true
         }
       ]
@@ -5407,11 +5434,11 @@
   },
   {
     "type": "null",
-    "named": true
+    "named": false
   },
   {
     "type": "null",
-    "named": false
+    "named": true
   },
   {
     "type": "or",
