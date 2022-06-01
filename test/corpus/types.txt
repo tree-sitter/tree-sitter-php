@@ -52,6 +52,86 @@ function d(): never {}
     (bottom_type)
     (compound_statement)))
 
+
+=======================
+Intersection type
+=======================
+<?php
+
+class Test {
+    public A&B $prop;
+}
+
+function test(A&B $a): A&B {}
+
+function test(Type&MoreTypes &... $b) {}
+
+function test(Type&MoreTypes &$b) {}
+---
+(program
+  (php_tag)
+  (class_declaration
+    (name)
+    (declaration_list
+      (property_declaration
+        (visibility_modifier)
+        (intersection_type
+          (named_type (name))
+          (named_type (name))
+        )
+        (property_element
+          (variable_name (name))
+        )
+      )
+    )
+  )
+  (function_definition
+    (name)
+    (formal_parameters
+      (simple_parameter
+        (intersection_type
+          (named_type (name))
+          (named_type (name))
+        )
+        (variable_name (name))
+      )
+    )
+    (intersection_type
+      (named_type (name))
+      (named_type (name))
+    )
+    (compound_statement)
+  )
+  (function_definition
+    (name)
+    (formal_parameters
+      (variadic_parameter
+        (intersection_type
+          (named_type (name))
+          (named_type (name))
+        )
+        (reference_modifier)
+        (variable_name (name))
+      )
+    )
+    (compound_statement)
+  )
+  (function_definition
+    (name)
+    (formal_parameters
+      (simple_parameter
+        (intersection_type
+          (named_type (name))
+          (named_type (name))
+        )
+        (reference_modifier)
+        (variable_name (name))
+      )
+    )
+    (compound_statement)
+  )
+)
+
 =======================
 Optional types
 =======================

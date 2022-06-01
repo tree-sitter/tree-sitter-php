@@ -230,8 +230,11 @@
       }
     },
     "reference_modifier": {
-      "type": "STRING",
-      "value": "&"
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "&"
+      }
     },
     "function_static_declaration": {
       "type": "SEQ",
@@ -2495,8 +2498,17 @@
       ]
     },
     "_type": {
-      "type": "SYMBOL",
-      "name": "union_type"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "union_type"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "intersection_type"
+        }
+      ]
     },
     "_types": {
       "type": "CHOICE",
@@ -2582,6 +2594,34 @@
           }
         ]
       }
+    },
+    "intersection_type": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_types"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "TOKEN",
+                "content": {
+                  "type": "STRING",
+                  "value": "&"
+                }
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_types"
+              }
+            ]
+          }
+        }
+      ]
     },
     "primitive_type": {
       "type": "CHOICE",
@@ -8806,6 +8846,13 @@
     [
       "union_type",
       "_return_type"
+    ],
+    [
+      "union_type",
+      "intersection_type"
+    ],
+    [
+      "intersection_type"
     ],
     [
       "if_statement"
