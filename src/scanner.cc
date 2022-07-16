@@ -12,6 +12,8 @@ enum TokenType {
   AUTOMATIC_SEMICOLON,
   ENCAPSED_STRING_CHARS,
   ENCAPSED_STRING_CHARS_AFTER_VARIABLE,
+  EXECUTION_STRING_CHARS,
+  EXECUTION_STRING_CHARS_AFTER_VARIABLE,
   ENCAPSED_STRING_CHARS_HEREDOC,
   ENCAPSED_STRING_CHARS_AFTER_VARIABLE_HEREDOC,
   EOF_TOKEN,
@@ -206,7 +208,7 @@ struct Scanner {
     return false;
   }
 
-  bool scan_encapsed_part_string(TSLexer *lexer, bool is_after_variable, bool is_heredoc) {
+  bool scan_encapsed_part_string(TSLexer *lexer, bool is_after_variable, bool is_heredoc, bool is_execution_string) {
     bool has_consumed_content = false;
 
     if (is_heredoc && !open_heredocs.empty()) {
@@ -251,7 +253,13 @@ struct Scanner {
 
       switch (lexer->lookahead) {
         case '"':
-          if (!is_heredoc) {
+          if (!is_heredoc && !is_execution_string) {
+            return has_content;
+          }
+          advance(lexer);
+          break;
+        case '`':
+          if (is_execution_string) {
             return has_content;
           }
           advance(lexer);
@@ -271,6 +279,10 @@ struct Scanner {
           if (lexer->lookahead == '{') {
             advance(lexer);
             break;
+          }
+
+          if (is_execution_string && lexer->lookahead == '`') {
+            return has_content;
           }
 
           if (is_heredoc && lexer->lookahead == '\\') {
@@ -350,22 +362,32 @@ struct Scanner {
 
     if (valid_symbols[ENCAPSED_STRING_CHARS_AFTER_VARIABLE]) {
       lexer->result_symbol = ENCAPSED_STRING_CHARS_AFTER_VARIABLE;
-      return scan_encapsed_part_string(lexer, /* is_after_variable */ true, /* is_heredoc */ false);
+      return scan_encapsed_part_string(lexer, /* is_after_variable */ true, /* is_heredoc */ false, /* is_execution_string */ false);
     }
 
     if (valid_symbols[ENCAPSED_STRING_CHARS]) {
       lexer->result_symbol = ENCAPSED_STRING_CHARS;
-      return scan_encapsed_part_string(lexer, /* is_after_variable */ false, /* is_heredoc */ false);
+      return scan_encapsed_part_string(lexer, /* is_after_variable */ false, /* is_heredoc */ false, /* is_execution_string */ false);
+    }
+
+    if (valid_symbols[EXECUTION_STRING_CHARS_AFTER_VARIABLE]) {
+      lexer->result_symbol = EXECUTION_STRING_CHARS_AFTER_VARIABLE;
+      return scan_encapsed_part_string(lexer, /* is_after_variable */ true, /* is_heredoc */ false, /* is_execution_string */ true);
+    }
+
+    if (valid_symbols[EXECUTION_STRING_CHARS]) {
+      lexer->result_symbol = EXECUTION_STRING_CHARS;
+      return scan_encapsed_part_string(lexer, /* is_after_variable */ false, /* is_heredoc */ false, /* is_execution_string */ true);
     }
 
     if (valid_symbols[ENCAPSED_STRING_CHARS_AFTER_VARIABLE_HEREDOC]) {
       lexer->result_symbol = ENCAPSED_STRING_CHARS_AFTER_VARIABLE_HEREDOC;
-      return scan_encapsed_part_string(lexer, /* is_after_variable */ true, /* is_heredoc */ true);
+      return scan_encapsed_part_string(lexer, /* is_after_variable */ true, /* is_heredoc */ true, /* is_execution_string */ false);
     }
 
     if (valid_symbols[ENCAPSED_STRING_CHARS_HEREDOC]) {
       lexer->result_symbol = ENCAPSED_STRING_CHARS_HEREDOC;
-      return scan_encapsed_part_string(lexer, /* is_after_variable */ false, /* is_heredoc */ true);
+      return scan_encapsed_part_string(lexer, /* is_after_variable */ false, /* is_heredoc */ true, /* is_execution_string */ false);
     }
 
     if (valid_symbols[NOWDOC_STRING]) {
