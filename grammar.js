@@ -36,6 +36,8 @@ module.exports = grammar({
     $._automatic_semicolon,
     $.encapsed_string_chars,
     $.encapsed_string_chars_after_variable,
+    $.execution_string_chars,
+    $.execution_string_chars_after_variable,
     $.encapsed_string_chars_heredoc,
     $.encapsed_string_chars_after_variable_heredoc,
     $._eof,
@@ -957,10 +959,6 @@ module.exports = grammar({
       seq('--', $._variable)
     )),
 
-    shell_command_expression: $ => token(seq(
-      '`', backtick_chars(), '`'
-    )),
-
     cast_expression: $ => prec(PREC.CAST, seq(
       '(', field('type', $.cast_type), ')',
       field('value', choice($._unary_expression, $.include_expression, $.include_once_expression))
@@ -1244,6 +1242,7 @@ module.exports = grammar({
         "\\",
         /\$/,
         '"',
+        '`',
         /[0-7]{1,3}/,
         /x[0-9A-Fa-f]{1,2}/,
         /u{[0-9A-Fa-f]+}/,
@@ -1348,6 +1347,23 @@ module.exports = grammar({
           field('end_tag', $.heredoc_end),
         )
       ),
+    ),
+
+    _interpolated_execution_operator_body: $ => repeat1(
+      choice(
+        $.escape_sequence,
+        seq($.variable_name, alias($.execution_string_chars_after_variable, $.string_value)),
+        alias($.execution_string_chars, $.string_value),
+        $._simple_string_part,
+        $._complex_string_part,
+        alias('\\u', $.string_value),
+      ),
+    ),
+
+    shell_command_expression: $ => seq(
+      '`',
+      optional($._interpolated_execution_operator_body),
+      '`'
     ),
 
     boolean: $ => /[Tt][Rr][Uu][Ee]|[Ff][Aa][Ll][Ss][Ee]/,
@@ -1504,20 +1520,4 @@ function pipeSep1(rule) {
 
 function ampSep1(rule) {
   return seq(rule, repeat(seq(token('&'), rule)));
-}
-
-function backtick_chars() {
-  const dq_simple_escapes = /\\"|\\\\|\\\$|\\e|\\f|\\n|\\r|\\t|\\v/
-  const octal_digit = /[0-7]/
-  const dq_octal_escapes = seq('\\', octal_digit, optional(octal_digit), optional(octal_digit))
-  const hex_digit = /\d|a-f|A-F/
-  const dq_hex_escapes = seq(
-    /\\[xX]/,
-    hex_digit,
-    optional(hex_digit)
-  )
-
-  const dq_unicode_escapes = seq('\\u{', repeat1(hex_digit), '}')
-  const dq_escapes = choice(dq_simple_escapes, dq_octal_escapes, dq_hex_escapes, dq_unicode_escapes)
-  return repeat(choice(dq_escapes, /[^`\\]|\\[^`\\$efnrtv0-7]/))
 }

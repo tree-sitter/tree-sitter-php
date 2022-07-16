@@ -4222,6 +4222,45 @@
     }
   },
   {
+    "type": "shell_command_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "_expression",
+          "named": true
+        },
+        {
+          "type": "dynamic_variable_name",
+          "named": true
+        },
+        {
+          "type": "escape_sequence",
+          "named": true
+        },
+        {
+          "type": "member_access_expression",
+          "named": true
+        },
+        {
+          "type": "string_value",
+          "named": true
+        },
+        {
+          "type": "subscript_expression",
+          "named": true
+        },
+        {
+          "type": "variable_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "simple_parameter",
     "named": true,
     "fields": {
@@ -5185,6 +5224,10 @@
     "named": false
   },
   {
+    "type": "`",
+    "named": false
+  },
+  {
     "type": "abstract",
     "named": false
   },
@@ -5326,11 +5369,11 @@
   },
   {
     "type": "float",
-    "named": true
+    "named": false
   },
   {
     "type": "float",
-    "named": false
+    "named": true
   },
   {
     "type": "fn",
@@ -5434,11 +5477,11 @@
   },
   {
     "type": "null",
-    "named": false
+    "named": true
   },
   {
     "type": "null",
-    "named": true
+    "named": false
   },
   {
     "type": "or",
@@ -5487,10 +5530,6 @@
   {
     "type": "self",
     "named": false
-  },
-  {
-    "type": "shell_command_expression",
-    "named": true
   },
   {
     "type": "static",
