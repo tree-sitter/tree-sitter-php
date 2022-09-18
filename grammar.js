@@ -34,10 +34,16 @@ module.exports = grammar({
 
   externals: $ => [
     $._automatic_semicolon,
-    $.heredoc,
     $.encapsed_string_chars,
     $.encapsed_string_chars_after_variable,
+    $.execution_string_chars,
+    $.execution_string_chars_after_variable,
+    $.encapsed_string_chars_heredoc,
+    $.encapsed_string_chars_after_variable_heredoc,
     $._eof,
+    $.heredoc_start,
+    $.heredoc_end,
+    $.nowdoc_string,
     $.sentinel_error, // Unused token used to indicate error recovery mode
   ],
 
@@ -61,9 +67,12 @@ module.exports = grammar({
     [$._primary_expression, $._array_destructing_element],
 
     [$.union_type, $._return_type],
+    [$.union_type, $.intersection_type],
+    [$.intersection_type],
     [$.if_statement],
 
     [$.namespace_name],
+    [$.heredoc_body],
 
     [$.namespace_name_as_prefix],
     [$.namespace_use_declaration, $.namespace_name_as_prefix]
@@ -144,7 +153,7 @@ module.exports = grammar({
 
     empty_statement: $ => prec(-1, ';'),
 
-    reference_modifier: $ => '&',
+    reference_modifier: $ => token('&'),
 
     function_static_declaration: $ => seq(
       keyword('static'),
@@ -298,6 +307,7 @@ module.exports = grammar({
 
     final_modifier: $ => keyword('final'),
     abstract_modifier: $ => keyword('abstract'),
+    readonly_modifier: $ => keyword('readonly'),
 
     class_interface_clause: $ => seq(
       keyword('implements'),
@@ -339,7 +349,8 @@ module.exports = grammar({
       $.visibility_modifier,
       $.static_modifier,
       $.final_modifier,
-      $.abstract_modifier
+      $.abstract_modifier,
+      $.readonly_modifier
     )),
 
     property_element: $ => seq(
@@ -419,13 +430,17 @@ module.exports = grammar({
       optional($._return_type)
     ),
 
-    arrow_function: $ => seq(
+    _arrow_function_header: $ => seq(
       optional(field('attributes', $.attribute_list)),
       optional($.static_modifier),
       keyword('fn'),
       optional(field('reference_modifier', $.reference_modifier)),
       field('parameters', $.formal_parameters),
       optional($._return_type),
+    ),
+
+    arrow_function: $ => seq(
+      $._arrow_function_header,
       '=>',
       field('body', $._expression)
     ),
@@ -439,6 +454,7 @@ module.exports = grammar({
 
     property_promotion_parameter: $ => seq(
       field('visibility', $.visibility_modifier),
+      field('readonly', optional($.readonly_modifier)),
       field('type', optional($._type)), // Note: callable is not a valid type here, but instead of complicating the parser, we defer this checking to any intelligence using the parser
       field('name', $.variable_name),
       optional(seq(
@@ -466,7 +482,7 @@ module.exports = grammar({
       field('name', $.variable_name)
     ),
 
-    _type: $ => alias($.union_type, $.type_list),
+    _type: $ => choice($.union_type, $.intersection_type),
 
     _types: $ => choice(
       $.optional_type,
@@ -484,7 +500,11 @@ module.exports = grammar({
       )
     ),
 
+    bottom_type: $ => 'never',
+
     union_type: $ => prec.right(pipeSep1($._types)),
+
+    intersection_type: $ => ampSep1($._types),
 
     primitive_type: $ => choice(
       'array',
@@ -516,7 +536,7 @@ module.exports = grammar({
       keyword('unset', false)
     ),
 
-    _return_type: $ => seq(':', field('return_type', $._type)),
+    _return_type: $ => seq(':', field('return_type', choice($._type, $.bottom_type))),
 
     const_element: $ => seq(
       field('name', choice($.name, alias($._reserved_identifier, $.name))), '=', field('value', $._expression)
@@ -841,7 +861,7 @@ module.exports = grammar({
 
 
     unary_op_expression: $ => 
-      prec.left(PREC.NEG,seq(field('operator', choice('+', '-', '~', '!')), field('expr', $._expression))),
+      prec.left(PREC.NEG, seq(field('operator', choice('+', '-', '~', '!')), field('expr', $._expression))),
 
     exponentiation_expression: $ => prec.right(PREC.EXPONENTIAL, seq(
       field('left', choice($.clone_expression, $._primary_expression, $.unary_op_expression, $.match_expression)),
@@ -935,10 +955,6 @@ module.exports = grammar({
       seq(field('expr', $._variable), field('postfix', '--')),
       seq(field('prefix', '++'), field('expr', $._variable)),
       seq(field('prefix', '--'), field('expr', $._variable))
-    )),
-
-    shell_command_expression: $ => token(seq(
-      '`', backtick_chars(), '`'
     )),
 
     cast_expression: $ => prec(PREC.CAST, seq(
@@ -1091,17 +1107,24 @@ module.exports = grammar({
       keyword('static')
     )),
 
+    variadic_placeholder: $ => token('...'),
+
     arguments: $ => seq(
       '(',
-      commaSep($.argument),
-      optional(','),
-      ')'
+      choice(
+        seq(
+          commaSep($.argument),
+          optional(','),
+        ),
+        $.variadic_placeholder,
+      ),
+      ')',
     ),
 
     argument: $ => seq(
       optional(seq(field('name', $.name), ':')),
       optional(field('reference_modifier', $.reference_modifier)),
-      choice($.variadic_unpacking, $._expression)
+      choice(alias($._reserved_identifier, $.name), $.variadic_unpacking, $._expression)
     ),
 
     member_call_expression: $ => prec(PREC.CALL, seq(
@@ -1157,11 +1180,14 @@ module.exports = grammar({
       seq('[', commaSep($.array_element_initializer), optional(','), ']')
     ),
 
-    attribute_list: $ => repeat1(seq(
+    attribute_group: $ => seq(
       '#[',
       commaSep1($.attribute),
+      optional(','),
       ']',
-    )),
+    ),
+
+    attribute_list: $ => repeat1($.attribute_group),
 
     attribute: $ => seq(
       choice($.name, alias($._reserved_identifier, $.name), $.qualified_name),
@@ -1214,44 +1240,135 @@ module.exports = grammar({
         "\\",
         /\$/,
         '"',
+        '`',
         /[0-7]{1,3}/,
         /x[0-9A-Fa-f]{1,2}/,
         /u{[0-9A-Fa-f]+}/,
       )
     )),
 
+    _interpolated_string_body: $ => repeat1(
+      choice(
+        $.escape_sequence,
+        seq($.variable_name, alias($.encapsed_string_chars_after_variable, $.string_value)),
+        alias($.encapsed_string_chars, $.string_value),
+        $._simple_string_part,
+        $._complex_string_part,
+        alias('\\u', $.string_value),
+        alias("'", $.string_value) // Needed to avoid the edge case "$b'" from breaking parsing by trying to apply the $.string rule for some reason
+      ),
+    ),
+
+    _interpolated_string_body_heredoc: $ => repeat1(
+      choice(
+        $.escape_sequence,
+        seq($.variable_name, alias($.encapsed_string_chars_after_variable_heredoc, $.string_value)),
+        alias($.encapsed_string_chars_heredoc, $.string_value),
+        $._simple_string_part,
+        $._complex_string_part,
+        alias('\\u', $.string_value),
+        alias("'", $.string_value), // Needed to avoid the edge case "$b'" from breaking parsing by trying to apply the $.string rule for some reason
+        alias('<?', $.string_value),
+        alias(token(prec(1, '?>')), $.string_value),
+      ),
+    ),
+
     encapsed_string: $ => prec.right(seq(
       choice(
         /[bB]"/,
         '"',
       ),
-      repeat(
-        choice(
-          $.escape_sequence,
-          seq($.variable_name, alias($.encapsed_string_chars_after_variable, $.string_part)),
-          alias($.encapsed_string_chars, $.string_part),
-          $._simple_string_part,
-          $._complex_string_part,
-          alias('\\u', $.string_part),
-        ),
-      ),
+      optional($._interpolated_string_body),
       '"',
     )),
 
-    string: $ => token(seq(
+    string: $ => seq(
       choice(
         /[bB]'/,
         "'"
       ),
-      repeat(/\\'|\\\\|\\?[^'\\]/),
+      $.string_value,
       "'",
-    )),
+    ),
+
+    string_value: $ => token(prec(1, repeat(/\\'|\\\\|\\?[^'\\]/))), // prec(1, ...) is needed to avoid conflict with $.comment
+
+    heredoc_body: $ => seq($._new_line,
+      repeat1(prec.right(
+        seq(optional($._new_line), $._interpolated_string_body_heredoc),
+      )),
+    ),
+
+    heredoc: $ => seq(
+      token('<<<'),
+      field('identifier', choice(
+        $.heredoc_start,
+        seq('"', $.heredoc_start, token.immediate('"'))
+      )),
+      choice(
+        seq(
+          field('value', $.heredoc_body),
+          $._new_line,
+          field('end_tag', $.heredoc_end),
+        ),
+        seq(
+          field('value', optional($.heredoc_body)),
+          field('end_tag', $.heredoc_end),
+        )
+      ),
+    ),
+
+    _new_line: $ => choice(token(/\r?\n/), token(/\r/)),
+
+    nowdoc_body: $ => seq($._new_line,
+      choice(
+        repeat1(
+          $.nowdoc_string
+        ),
+        alias("", $.nowdoc_string)
+      )
+    ),
+
+    nowdoc: $ => seq(
+      token('<<<'),
+      "'",
+      field('identifier', $.heredoc_start),
+      token.immediate("'"),
+      choice(
+        seq(
+          field('value', $.nowdoc_body),
+          $._new_line,
+          field('end_tag', $.heredoc_end),
+        ),
+        seq(
+          field('value', optional($.nowdoc_body)),
+          field('end_tag', $.heredoc_end),
+        )
+      ),
+    ),
+
+    _interpolated_execution_operator_body: $ => repeat1(
+      choice(
+        $.escape_sequence,
+        seq($.variable_name, alias($.execution_string_chars_after_variable, $.string_value)),
+        alias($.execution_string_chars, $.string_value),
+        $._simple_string_part,
+        $._complex_string_part,
+        alias('\\u', $.string_value),
+      ),
+    ),
+
+    shell_command_expression: $ => seq(
+      '`',
+      optional($._interpolated_execution_operator_body),
+      '`'
+    ),
 
     boolean: $ => /[Tt][Rr][Uu][Ee]|[Ff][Aa][Ll][Ss][Ee]/,
 
     null: $ => keyword('null', false),
 
-    _string: $ => choice($.encapsed_string, $.string, $.heredoc),
+    _string: $ => choice($.encapsed_string, $.string, $.heredoc, $.nowdoc),
 
     dynamic_variable_name: $ => choice(
       seq('$', $._variable_name),
@@ -1292,7 +1409,11 @@ module.exports = grammar({
         field('operator', keyword('instanceof')),
         field('right', $._class_type_designator)
       )),
-      prec.right(PREC.NULL_COALESCE, seq($._expression, '??', $._expression)),
+      prec.right(PREC.NULL_COALESCE, seq(
+        field('left', $._expression),
+        field('operator', '??'),
+        field('right', $._expression)
+      )),
       ...[
         [keyword('and'), PREC.LOGICAL_AND_2],
         [keyword('or'), PREC.LOGICAL_OR_2],
@@ -1395,22 +1516,6 @@ function pipeSep1(rule) {
   return seq(rule, repeat(seq('|', rule)));
 }
 
-function pipeSep(rule) {
-  return optional(commaSep1(rule));
-}
-
-function backtick_chars() {
-  const dq_simple_escapes = /\\"|\\\\|\\\$|\\e|\\f|\\n|\\r|\\t|\\v/
-  const octal_digit = /[0-7]/
-  const dq_octal_escapes = seq('\\', octal_digit, optional(octal_digit), optional(octal_digit))
-  const hex_digit = /\d|a-f|A-F/
-  const dq_hex_escapes = seq(
-    /\\[xX]/,
-    hex_digit,
-    optional(hex_digit)
-  )
-
-  const dq_unicode_escapes = seq('\\u{', repeat1(hex_digit), '}')
-  const dq_escapes = choice(dq_simple_escapes, dq_octal_escapes, dq_hex_escapes, dq_unicode_escapes)
-  return repeat(choice(dq_escapes, /[^`\\]|\\[^`\\$efnrtv0-7]/))
+function ampSep1(rule) {
+  return seq(rule, repeat(seq(token('&'), rule)));
 }
