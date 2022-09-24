@@ -17,7 +17,7 @@
   name: (name) @function.method)
 
 (function_call_expression
-  function: (qualified_name (name)) @function)
+  function: [(qualified_name (name)) (name)] @function)
 
 (scoped_call_expression
   name: (name) @function)
@@ -54,9 +54,14 @@
 (variable_name) @variable
 
 ; Basic tokens
-
-(string) @string
-(heredoc) @string
+[
+  (string)
+  (string_value)
+  (encapsed_string)
+  (heredoc)
+  (heredoc_body)
+  (nowdoc_body)
+] @string
 (boolean) @constant.builtin
 (null) @constant.builtin
 (integer) @number

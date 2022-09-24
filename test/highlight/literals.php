@@ -3,7 +3,7 @@
 
 echo <<<OMG
   something
-OMG
+OMG;
 // <- string
 
 echo true, TRUE, false, FALSE
