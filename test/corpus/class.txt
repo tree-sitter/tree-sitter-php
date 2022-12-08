@@ -768,3 +768,23 @@ class Point {
             type: (union_type (primitive_type))
             name: (variable_name (name))))
         body: (compound_statement)))))
+
+=========================================
+Readonly class
+=========================================
+
+<?php
+
+readonly class Test {
+}
+
+---
+
+(program
+  (php_tag)
+  (class_declaration
+    (readonly_modifier)
+    (name)
+    (declaration_list)
+  )
+)
