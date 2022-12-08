@@ -1190,6 +1190,10 @@
                     {
                       "type": "SYMBOL",
                       "name": "abstract_modifier"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "readonly_modifier"
                     }
                   ]
                 }

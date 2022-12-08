@@ -290,7 +290,7 @@ module.exports = grammar({
 
     class_declaration: $ => prec.right(seq(
       optional(field('attributes', $.attribute_list)),
-      optional(field('modifier', choice($.final_modifier, $.abstract_modifier))),
+      optional(field('modifier', choice($.final_modifier, $.abstract_modifier, $.readonly_modifier))),
       keyword('class'),
       field('name', $.name),
       optional($.base_clause),
