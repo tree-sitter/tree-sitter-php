@@ -3959,45 +3959,53 @@
             "value": "{"
           },
           {
-            "type": "SEQ",
+            "type": "CHOICE",
             "members": [
               {
-                "type": "CHOICE",
+                "type": "SEQ",
                 "members": [
                   {
-                    "type": "SYMBOL",
-                    "name": "match_conditional_expression"
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "match_conditional_expression"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "match_default_expression"
+                      }
+                    ]
                   },
                   {
-                    "type": "SYMBOL",
-                    "name": "match_default_expression"
+                    "type": "REPEAT",
+                    "content": {
+                      "type": "SEQ",
+                      "members": [
+                        {
+                          "type": "STRING",
+                          "value": ","
+                        },
+                        {
+                          "type": "CHOICE",
+                          "members": [
+                            {
+                              "type": "SYMBOL",
+                              "name": "match_conditional_expression"
+                            },
+                            {
+                              "type": "SYMBOL",
+                              "name": "match_default_expression"
+                            }
+                          ]
+                        }
+                      ]
+                    }
                   }
                 ]
               },
               {
-                "type": "REPEAT",
-                "content": {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "STRING",
-                      "value": ","
-                    },
-                    {
-                      "type": "CHOICE",
-                      "members": [
-                        {
-                          "type": "SYMBOL",
-                          "name": "match_conditional_expression"
-                        },
-                        {
-                          "type": "SYMBOL",
-                          "name": "match_default_expression"
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "type": "BLANK"
               }
             ]
           },

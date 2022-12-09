@@ -763,7 +763,7 @@ module.exports = grammar({
     match_block: $ => prec.left(
       seq(
         '{',
-        commaSep1(
+        commaSep(
           choice(
             $.match_conditional_expression,
             $.match_default_expression
