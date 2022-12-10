@@ -249,3 +249,127 @@ function a(string $var) : static {
     (compound_statement)
   )
 )
+
+===============================================
+Null type
+===============================================
+
+<?php
+
+class Nil {
+    public null $nil = null;
+ 
+    public function foo(null $v): null { }
+}
+
+---
+
+ (program
+  (php_tag)
+  (class_declaration
+    (name)
+    (declaration_list
+      (property_declaration
+        (visibility_modifier)
+        (union_type
+          (primitive_type))
+        (property_element
+          (variable_name
+            (name))
+          (property_initializer
+            (null))))
+      (method_declaration
+        (visibility_modifier)
+        (name)
+        (formal_parameters
+          (simple_parameter
+            (union_type
+              (primitive_type))
+            (variable_name
+              (name))))
+        (union_type
+          (primitive_type))
+        (compound_statement)))))
+
+===============================================
+False type
+===============================================
+
+<?php
+
+class Falsy {
+    public false $nil = false;
+ 
+    public function foo(false $v): false { }
+}
+
+---
+
+ (program
+  (php_tag)
+  (class_declaration
+    (name)
+    (declaration_list
+      (property_declaration
+        (visibility_modifier)
+        (union_type
+          (primitive_type))
+        (property_element
+          (variable_name
+            (name))
+          (property_initializer
+            (boolean))))
+      (method_declaration
+        (visibility_modifier)
+        (name)
+        (formal_parameters
+          (simple_parameter
+            (union_type
+              (primitive_type))
+            (variable_name
+              (name))))
+        (union_type
+          (primitive_type))
+        (compound_statement)))))
+
+===============================================
+True type
+===============================================
+
+<?php
+
+class Truthy {
+    public true $truthy = true;
+ 
+    public function foo(true $v): true {}
+}
+
+---
+
+ (program
+  (php_tag)
+  (class_declaration
+    (name)
+    (declaration_list
+      (property_declaration
+        (visibility_modifier)
+        (union_type
+          (primitive_type))
+        (property_element
+          (variable_name
+            (name))
+          (property_initializer
+            (boolean))))
+      (method_declaration
+        (visibility_modifier)
+        (name)
+        (formal_parameters
+          (simple_parameter
+            (union_type
+              (primitive_type))
+            (variable_name
+              (name))))
+        (union_type
+          (primitive_type))
+        (compound_statement)))))
+

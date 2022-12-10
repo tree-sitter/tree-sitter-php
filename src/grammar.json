@@ -2682,6 +2682,10 @@
         {
           "type": "STRING",
           "value": "null"
+        },
+        {
+          "type": "STRING",
+          "value": "true"
         }
       ]
     },

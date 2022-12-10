@@ -5373,11 +5373,11 @@
   },
   {
     "type": "float",
-    "named": false
+    "named": true
   },
   {
     "type": "float",
-    "named": true
+    "named": false
   },
   {
     "type": "fn",
@@ -5565,6 +5565,10 @@
   },
   {
     "type": "trait",
+    "named": false
+  },
+  {
+    "type": "true",
     "named": false
   },
   {

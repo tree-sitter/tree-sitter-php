@@ -520,8 +520,9 @@ module.exports = grammar({
       'void',
       'mixed',
       'static', // only legal as a return type
-      'false', // only legal in unions
-      'null', // only legal in unions
+      'false',
+      'null',
+      'true',
     ),
 
     cast_type: $ => choice(
