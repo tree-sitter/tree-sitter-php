@@ -655,13 +655,13 @@ enum Suit: string
   )
   (enum_declaration
     (name)
-    (union_type (primitive_type))
+    (primitive_type)
     (class_interface_clause (name))
     (enum_declaration_list)
   )
   (enum_declaration
     (name)
-    (union_type (primitive_type))
+    (primitive_type)
     (enum_declaration_list 
       (enum_case (name) (string (string_value)))
       (enum_case (name))

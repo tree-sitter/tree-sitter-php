@@ -1885,11 +1885,11 @@
       "required": false,
       "types": [
         {
-          "type": "_type",
+          "type": "class_interface_clause",
           "named": true
         },
         {
-          "type": "class_interface_clause",
+          "type": "primitive_type",
           "named": true
         }
       ]

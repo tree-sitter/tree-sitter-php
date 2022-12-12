@@ -1006,8 +1006,22 @@
                     "value": ":"
                   },
                   {
-                    "type": "SYMBOL",
-                    "name": "_type"
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "STRING",
+                          "value": "string"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "int"
+                        }
+                      ]
+                    },
+                    "named": true,
+                    "value": "primitive_type"
                   }
                 ]
               },
