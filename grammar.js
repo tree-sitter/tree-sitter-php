@@ -263,7 +263,7 @@ module.exports = grammar({
       optional(field('attributes', $.attribute_list)),
       keyword('enum'),
       field('name', $.name),
-      optional(seq(':', $._type)),
+      optional(seq(':', alias(choice('string', 'int'), $.primitive_type))),
       optional($.class_interface_clause),
       field('body', $.enum_declaration_list)
     )),
