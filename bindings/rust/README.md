@@ -22,6 +22,8 @@ use tree_sitter::Parser;
 
 fn main() {
     let code = r#"
+    <?php
+    
     function double(int $x) {
         return $x * 2;
     }
