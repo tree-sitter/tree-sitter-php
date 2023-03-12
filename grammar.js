@@ -87,7 +87,6 @@ module.exports = grammar({
     $._callable_expression,
     $._foreach_value,
     $._literal,
-    $._intrinsic,
     $._class_type_designator,
     $._variable_name,
   ],

@@ -8927,7 +8927,6 @@
     "_callable_expression",
     "_foreach_value",
     "_literal",
-    "ReferenceError",
     "_class_type_designator",
     "_variable_name"
   ],
