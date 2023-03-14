@@ -788,3 +788,31 @@ readonly class Test {
     (declaration_list)
   )
 )
+
+=========================================
+Constants in trait
+=========================================
+
+<?php
+
+trait Test {
+    public const FLAG_1 = 1;
+}
+
+---
+
+(program
+  (php_tag)
+  (trait_declaration
+    (name)
+    (declaration_list
+      (const_declaration
+        (visibility_modifier)
+        (const_element
+          (name)
+          (integer)
+        )
+      )
+    )
+  )
+)
