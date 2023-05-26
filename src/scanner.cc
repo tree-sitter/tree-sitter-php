@@ -313,7 +313,6 @@ struct Scanner {
             }
             break;
           }
-	  break;
         case '[':
           if (is_after_variable) {
             return has_content;
