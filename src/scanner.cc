@@ -170,7 +170,7 @@ struct Scanner {
 
     bool end_tag_matched = false;
 
-    for (int i = 0; i < heredoc_tag.length(); i++) {
+    for (size_t i = 0; i < heredoc_tag.length(); i++) {
       if (lexer->lookahead != heredoc_tag[i]) break;
       advance(lexer);
       has_consumed_content = true;
@@ -224,7 +224,7 @@ struct Scanner {
 
       bool end_tag_matched = false;
 
-      for (int i = 0; i < heredoc_tag.length(); i++) {
+      for (size_t i = 0; i < heredoc_tag.length(); i++) {
         if (lexer->lookahead != heredoc_tag[i]) break;
         has_consumed_content = true;
         advance(lexer);
@@ -313,6 +313,7 @@ struct Scanner {
             }
             break;
           }
+	  break;
         case '[':
           if (is_after_variable) {
             return has_content;
