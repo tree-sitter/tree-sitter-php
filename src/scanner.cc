@@ -158,7 +158,7 @@ struct Scanner {
     if (open_heredocs.empty()) {
       return false;
     }
-      
+
     // While PHP requires the nowdoc end tag to be the very first on a new line, there may be an
     // arbitrary amount of whitespace before the closing token
     while (iswspace(lexer->lookahead)) {
@@ -343,7 +343,7 @@ struct Scanner {
       result += lexer->lookahead;
       advance(lexer);
     }
-  
+
     return result;
   }
 
@@ -402,7 +402,7 @@ struct Scanner {
       Heredoc heredoc = open_heredocs.back();
 
       while (iswspace(lexer->lookahead)) {
-        advance(lexer);
+        skip(lexer);
       }
 
       if (heredoc.word != scan_heredoc_word(lexer)) {
