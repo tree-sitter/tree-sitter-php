@@ -467,3 +467,41 @@ echo ANIMALS[1];
     )
   )
 )
+
+=========================================
+#168 Top level statements
+=========================================
+
+echo ANOTHER_CONST;
+echo ANIMALS[1];
+
+if ($a > 0) {
+  echo "Yes";
+}
+
+while ($a < 10) {
+  echo $a;
+  $a++;
+}
+
+---
+
+(program
+  (echo_statement
+    (name))
+  (echo_statement
+    (subscript_expression
+      (name)
+      (integer)))
+  (if_statement
+    condition: (parenthesized_expression (binary_expression
+      left: (variable_name (name))
+      right: (integer)))
+    body: (compound_statement (echo_statement (encapsed_string (string_value)))))
+  (while_statement
+    condition: (parenthesized_expression (binary_expression
+      left: (variable_name (name))
+      right: (integer)))
+    body: (compound_statement
+      (echo_statement (variable_name (name)))
+      (expression_statement (update_expression (variable_name (name)))))))

@@ -1,0 +1,53 @@
+=========================
+PHP mixed with HTML
+=========================
+
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+  </head>
+  <body class="antialiased">
+    <?php
+      while ($a < 10) {
+        echo $a;
+        $a++;
+      }
+    ?>
+    <?= "Yes" ?>
+  </body>
+</html>
+
+---
+
+(program
+  (text)
+  (php_tag)
+  (while_statement
+    (parenthesized_expression
+      (binary_expression
+        (variable_name
+          (name))
+        (integer)))
+    (compound_statement
+      (echo_statement
+        (variable_name
+          (name)))
+      (expression_statement
+        (update_expression
+        (variable_name
+          (name))))))
+  (text_interpolation
+    (php_tag))
+  (expression_statement
+    (encapsed_string
+      (string_value)))
+  (text_interpolation
+    (text)))
+
