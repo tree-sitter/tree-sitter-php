@@ -103,7 +103,10 @@ module.exports = grammar({
       optional(seq(
         $.php_tag,
         repeat($._statement)
-      ))
+      )),
+      // accept statements at top-level to enable
+      // parsing of partial code snippets (e.g, in markdown; see #168).
+      optional(repeat($._statement)),
     ),
 
     php_tag: $ => /<\?([pP][hH][pP]|=)?/,
