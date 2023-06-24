@@ -558,32 +558,32 @@ bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
     return false;
 }
 
-void *tree_sitter_php_external_scanner_create() {
+void *tree_sitter_php_only_external_scanner_create() {
     Scanner *scanner = calloc(1, sizeof(Scanner));
     scanner->open_heredocs = vec_new();
     return scanner;
 }
 
-unsigned tree_sitter_php_external_scanner_serialize(void *payload,
+unsigned tree_sitter_php_only_external_scanner_serialize(void *payload,
                                                     char *buffer) {
     Scanner *scanner = (Scanner *)payload;
     return serialize(scanner, buffer);
 }
 
-void tree_sitter_php_external_scanner_deserialize(void *payload,
+void tree_sitter_php_only_external_scanner_deserialize(void *payload,
                                                   const char *buffer,
                                                   unsigned length) {
     Scanner *scanner = (Scanner *)payload;
     deserialize(scanner, buffer, length);
 }
 
-bool tree_sitter_php_external_scanner_scan(void *payload, TSLexer *lexer,
+bool tree_sitter_php_only_external_scanner_scan(void *payload, TSLexer *lexer,
                                            const bool *valid_symbols) {
     Scanner *scanner = (Scanner *)payload;
     return scan(scanner, lexer, valid_symbols);
 }
 
-void tree_sitter_php_external_scanner_destroy(void *payload) {
+void tree_sitter_php_only_external_scanner_destroy(void *payload) {
     Scanner *scanner = (Scanner *)payload;
     for (size_t i = 0; i < scanner->open_heredocs.len; i++) {
         STRING_FREE(scanner->open_heredocs.data[i].word);

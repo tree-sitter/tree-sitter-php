@@ -99,6 +99,7 @@ module.exports = grammar({
     program: $ => seq(
       optional($.php_tag),
       optional(repeat($._statement)),
+      optional('?>'),
     ),
 
     php_tag: $ => /<\?([pP][hH][pP]|=)?/,

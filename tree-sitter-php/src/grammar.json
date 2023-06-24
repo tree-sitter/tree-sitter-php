@@ -129,6 +129,10 @@
   },
   "extras": [
     {
+      "type": "PATTERN",
+      "value": "\\s,"
+    },
+    {
       "type": "SYMBOL",
       "name": "text_interpolation"
     }

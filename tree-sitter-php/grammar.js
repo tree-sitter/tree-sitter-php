@@ -7,6 +7,7 @@ module.exports = grammar({
   ],
 
   extras: $ => [
+    /\s,/,
     $.text_interpolation
   ],
 

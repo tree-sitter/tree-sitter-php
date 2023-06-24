@@ -20,8 +20,7 @@ FALSE;
   (expression_statement (boolean))
   (expression_statement (boolean))
   (expression_statement (boolean))
-  (expression_statement (boolean))
-  (text_interpolation))
+  (expression_statement (boolean)))
 
 ==========================
 Floats
@@ -91,8 +90,7 @@ Testing string scanner confirmance
 
 (program
   (php_tag)
-  (echo_statement (binary_expression (encapsed_string (escape_sequence) (escape_sequence) (escape_sequence) (string_value)) (string (string_value))))
-  (text_interpolation))
+  (echo_statement (binary_expression (encapsed_string (escape_sequence) (escape_sequence) (escape_sequence) (string_value)) (string (string_value)))))
 
 ==========================
 Shell command

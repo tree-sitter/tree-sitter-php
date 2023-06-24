@@ -415,8 +415,7 @@ true ? false : true ? "a" : "b";
         (boolean)
         (boolean))
       (encapsed_string (string_value))
-      (encapsed_string (string_value))))
-  (text_interpolation))
+      (encapsed_string (string_value)))))
 
 =================================================
 Associativity of null-coalescence
@@ -435,8 +434,7 @@ NULL ?? NULL ?? 1;
       (null)
       (binary_expression
         (null)
-        (integer))))
-  (text_interpolation))
+        (integer)))))
 
 =========================================
 Associativity of negation
@@ -462,8 +460,7 @@ Associativity of negation
       (binary_expression
         (variable_name
           (name))
-          (name))))
-  (text_interpolation))
+          (name)))))
 
 ====================================
 Augmented assignment
@@ -509,8 +506,7 @@ $i .= "a" . "b";
       (augmented_assignment_expression
         (variable_name
           (name))
-        (encapsed_string (string_value)))))
-  (text_interpolation))
+        (encapsed_string (string_value))))))
 
 =======================================
 Nested assignemnts
@@ -683,8 +679,7 @@ $a = [...$values];
         )
       )
     )
-  )
-  (text_interpolation))
+  ))
 
 ===============================================
 Anonymous functions
