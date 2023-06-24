@@ -21,8 +21,8 @@
     "shelljs": "^0.8.4"
   },
   "scripts": {
-    "build": "tree-sitter generate && node-gyp build",
-    "test": "tree-sitter test && node script/parse-examples.js"
+    "build": "(cd tree-sitter-php && tree-sitter generate --no-bindings) && (cd tree-sitter-php-only && tree-sitter generate --no-bindings) && node-gyp build",
+    "test": "(cd tree-sitter-php && tree-sitter test) && (cd tree-sitter-php-only && tree-sitter test) && node script/parse-examples.js"
   },
   "repository": {
     "type": "git",
@@ -33,8 +33,7 @@
       "scope": "source.php",
       "file-types": [
         "php"
-      ],
-      "highlights": "queries/highlights.scm"
+      ]
     }
   ]
 }

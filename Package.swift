@@ -4,25 +4,29 @@ import PackageDescription
 let package = Package(
     name: "TreeSitterPHP",
     products: [
-        .library(name: "TreeSitterPHP", targets: ["TreeSitterPHP"]),
+        .library(name: "TreeSitterPHP", targets: ["TreeSitterPHP", "TreeSitterPHPOnly"]),
     ],
     dependencies: [],
     targets: [
         .target(name: "TreeSitterPHP",
-                path: ".",
+            path: "tree-sitter-php",
                 exclude: [
-                    "binding.gyp",
-                    "bindings",
-                    "Cargo.toml",
                     "corpus",
                     "grammar.js",
-                    "LICENSE",
-                    "Makefile",
-                    "package.json",
-                    "README.md",
-                    "script",
-                    "src/grammar.json",
-                    "src/node-types.json",
+                ],
+                sources: [
+                    "src/parser.c",
+                ],
+                resources: [
+                    .copy("queries")
+                ],
+                publicHeadersPath: "bindings/swift",
+                cSettings: [.headerSearchPath("src")])
+        .target(name: "TreeSitterPHPOnly",
+                path: "tree-sitter-php-only",
+                exclude: [
+                    "corpus",
+                    "grammar.js",
                 ],
                 sources: [
                     "src/parser.c",

@@ -1,5 +1,6 @@
 fn main() {
-    let src_dir = std::path::Path::new("src");
+    let src_dir = std::path::Path::new("tree-sitter-php/src");
+    let src_dir_only = std::path::Path::new("tree-sitter-php-only/src");
 
     let mut c_config = cc::Build::new();
     c_config.include(src_dir);

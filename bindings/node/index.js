@@ -15,5 +15,6 @@ try {
 }
 
 try {
-  module.exports.nodeTypeInfo = require("../../src/node-types.json");
+  module.exports.nodeTypeInfo = require("../../tree-sitter-php/src/node-types.json");
+  module.exports.nodeTypeInfoOnly = require("../../tree-sitter-php-only/src/node-types.json");
 } catch (_) {}
