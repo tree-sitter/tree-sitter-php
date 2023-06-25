@@ -29,7 +29,6 @@ bool tree_sitter_php_external_scanner_scan(void *payload, TSLexer *lexer,
                 lexer->advance(lexer, false);
             } else {
                 lexer->mark_end(lexer);
-
                 lexer->advance(lexer, false);
 
                 if (lexer->lookahead == '>') {

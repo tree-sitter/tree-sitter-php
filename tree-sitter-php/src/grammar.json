@@ -29,8 +29,16 @@
           "name": "_php_tag"
         },
         {
-          "type": "SYMBOL",
-          "name": "_php_content"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_php_content"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "CHOICE",

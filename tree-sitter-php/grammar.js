@@ -19,29 +19,9 @@ module.exports = grammar({
 
     php: $ => seq(
       $._php_tag,
-      $._php_content,
-      // /(.*?)\?>/,
-      // /.*[^?][^?>]/,
-      // /[^?]+|\?,/,
-      // /[^?][^>]*(?:\?>)/,
-      // repeat1(choice(
-      //   token(prec(-1, /\?/)),
-      //   /[^?][^?>]*/
-      // )),
+      optional($._php_content),
       choice('?>', $._eof),
-      // optional('?>'),
     ),
-
-    // php: $ => /[^?>]*(?:[^>?][^?]*)/,
-    // php: $ => repeat1(/[^?]*\?+(?:[^>?][^?]*\?)*/),
-    // php: $ => repeat1(choice(
-    //   token(prec(-1, />/)),
-    //   /[^\s?][^>]*/
-    // )),
-    // php: $ => repeat1(choice(
-    //   token(prec(-1, /</)),
-    //   /[^\s<][^<]*/
-    // )),
 
     text: $ => prec.right(repeat1(/[^<]+|</)),
   },
