@@ -3,36 +3,46 @@ module.exports = grammar({
 
   externals: $ => [
     $._eof,
+    $._php_content,
     $.sentinel_error, // Unused token used to indicate error recovery mode
   ],
 
-  extras: $ => [
-    /\s,/,
-    $.text_interpolation
-  ],
+  // extras: $ => [/\s/],
 
   rules: {
-    program: $ => seq(
-      optional($.text),
-      optional(seq(
-        $.php_tag,
-        optional(alias($.text, 'php')),
-        choice('?>', $._eof)
-        // repeat($._statement)
-      ))
-    ),
-
-    php_tag: $ => /<\?([pP][hH][pP]|=)?/,
-
-    text_interpolation: $ => seq(
-      '?>',
-      optional($.text),
-      choice($.php_tag, $._eof)
-    ),
-
-    text: $ => repeat1(choice(
-      token(prec(-1, /</)),
-      /[^\s<][^<]*/
+    program: $ => repeat(choice(
+      $.text,
+      $.php,
     )),
+
+    _php_tag: $ => /<\?([pP][hH][pP]|=)?/,
+
+    php: $ => seq(
+      $._php_tag,
+      $._php_content,
+      // /(.*?)\?>/,
+      // /.*[^?][^?>]/,
+      // /[^?]+|\?,/,
+      // /[^?][^>]*(?:\?>)/,
+      // repeat1(choice(
+      //   token(prec(-1, /\?/)),
+      //   /[^?][^?>]*/
+      // )),
+      choice('?>', $._eof),
+      // optional('?>'),
+    ),
+
+    // php: $ => /[^?>]*(?:[^>?][^?]*)/,
+    // php: $ => repeat1(/[^?]*\?+(?:[^>?][^?]*\?)*/),
+    // php: $ => repeat1(choice(
+    //   token(prec(-1, />/)),
+    //   /[^\s?][^>]*/
+    // )),
+    // php: $ => repeat1(choice(
+    //   token(prec(-1, /</)),
+    //   /[^\s<][^<]*/
+    // )),
+
+    text: $ => prec.right(repeat1(/[^<]+|</)),
   },
 })

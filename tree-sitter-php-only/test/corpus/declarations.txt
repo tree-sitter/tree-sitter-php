@@ -1,6 +1,6 @@
-=========================================
+================================================================================
 Interface declarations
-=========================================
+================================================================================
 
 <?php
 
@@ -16,10 +16,10 @@ class Exception_foo implements ThrowableInterface {
 	}
 }
 
----
+--------------------------------------------------------------------------------
 
-(program
-	(php_tag)
+(php
+  (php_tag)
   (interface_declaration
     name: (name)
     body: (declaration_list
@@ -29,23 +29,31 @@ class Exception_foo implements ThrowableInterface {
         parameters: (formal_parameters))))
   (class_declaration
     name: (name)
-    (class_interface_clause (name))
+    (class_interface_clause
+      (name))
     body: (declaration_list
       (property_declaration
         (visibility_modifier)
-        (property_element (variable_name (name)) (property_initializer (encapsed_string (string_value)))))
+        (property_element
+          (variable_name
+            (name))
+          (property_initializer
+            (encapsed_string
+              (string_value)))))
       (method_declaration
         (visibility_modifier)
         name: (name)
         parameters: (formal_parameters)
         body: (compound_statement
-          (return_statement (member_access_expression
-            object: (variable_name (name))
-            name: (name))))))))
+          (return_statement
+            (member_access_expression
+              object: (variable_name
+                (name))
+              name: (name))))))))
 
-==========================
+================================================================================
 Use declarations
-==========================
+================================================================================
 
 <?php
 
@@ -65,29 +73,45 @@ class AbstractCache
     }
 }
 
----
+--------------------------------------------------------------------------------
 
-(program
-	(php_tag)
+(php
+  (php_tag)
   (trait_declaration
     (name)
     (declaration_list
-      (use_declaration (name))
-      (use_declaration (name) (name) (use_list))
-      (use_declaration (name) (name))))
+      (use_declaration
+        (name))
+      (use_declaration
+        (name)
+        (name)
+        (use_list))
+      (use_declaration
+        (name)
+        (name))))
   (class_declaration
     (name)
     (declaration_list
       (use_declaration
         (name)
         (use_list
-          (use_as_clause (name) (visibility_modifier))
-          (use_as_clause (class_constant_access_expression (name) (name)) (name))
-          (use_as_clause (class_constant_access_expression (name) (name)) (name)))))))
+          (use_as_clause
+            (name)
+            (visibility_modifier))
+          (use_as_clause
+            (class_constant_access_expression
+              (name)
+              (name))
+            (name))
+          (use_as_clause
+            (class_constant_access_expression
+              (name)
+              (name))
+            (name)))))))
 
-==========================
+================================================================================
 Namespace names in namespaces
-==========================
+================================================================================
 
 <?php
 
@@ -96,12 +120,14 @@ namespace Be \ ta {
     class B {}
 }
 
----
+--------------------------------------------------------------------------------
 
-(program
-	(php_tag)
+(php
+  (php_tag)
   (namespace_definition
-    name: (namespace_name (name) (name))
+    name: (namespace_name
+      (name)
+      (name))
     body: (compound_statement
       (class_declaration
         name: (name)
@@ -110,9 +136,9 @@ namespace Be \ ta {
         name: (name)
         body: (declaration_list)))))
 
-==============================
+================================================================================
 Class declarations
-==============================
+================================================================================
 
 <?php
 class foo {
@@ -127,107 +153,140 @@ class foo {
   }
 }
 
----
+--------------------------------------------------------------------------------
 
-(program
-	(php_tag)
+(php
+  (php_tag)
   (class_declaration
-  name: (name)
-	body: (declaration_list
-	  (method_declaration
-	    name: (name)
-	    parameters: (formal_parameters
-				(simple_parameter
-					name: (variable_name (name))))
-	    body: (compound_statement
-				(expression_statement (reference_assignment_expression
-	        left: (subscript_expression (variable_name (name)) (string (string_value)))
-	        right: (variable_name (name))))
-				(expression_statement (assignment_expression
-	        left: (member_access_expression
-						object: (variable_name (name))
-						name: (name))
-	        right: (variable_name (name))))
-				(expression_statement (member_call_expression
-	        object: (subscript_expression (variable_name (name)) (string (string_value)))
-	        name: (name)
-	        arguments: (arguments)))))
-	  (method_declaration
-	    name: (name)
-	    parameters: (formal_parameters)
-	    body: (compound_statement
-	      (expression_statement (assignment_expression
-	        left: (subscript_expression (subscript_expression (variable_name (name)) (string (string_value))))
-	        right: (member_access_expression
-						object: (variable_name (name))
-						name: (name)))))))))
+    name: (name)
+    body: (declaration_list
+      (method_declaration
+        name: (name)
+        parameters: (formal_parameters
+          (simple_parameter
+            name: (variable_name
+              (name))))
+        body: (compound_statement
+          (expression_statement
+            (reference_assignment_expression
+              left: (subscript_expression
+                (variable_name
+                  (name))
+                (string
+                  (string_value)))
+              right: (variable_name
+                (name))))
+          (expression_statement
+            (assignment_expression
+              left: (member_access_expression
+                object: (variable_name
+                  (name))
+                name: (name))
+              right: (variable_name
+                (name))))
+          (expression_statement
+            (member_call_expression
+              object: (subscript_expression
+                (variable_name
+                  (name))
+                (string
+                  (string_value)))
+              name: (name)
+              arguments: (arguments)))))
+      (method_declaration
+        name: (name)
+        parameters: (formal_parameters)
+        body: (compound_statement
+          (expression_statement
+            (assignment_expression
+              left: (subscript_expression
+                (subscript_expression
+                  (variable_name
+                    (name))
+                  (string
+                    (string_value))))
+              right: (member_access_expression
+                object: (variable_name
+                  (name))
+                name: (name)))))))))
 
-========================================
+================================================================================
 Class declarations with base classes
-========================================
+================================================================================
 
 <?php
 class A extends B {
 
 }
 
----
+--------------------------------------------------------------------------------
 
-(program
-	(php_tag)
-	(class_declaration
-		name: (name)
-		(base_clause (name))
-		body: (declaration_list)))
+(php
+  (php_tag)
+  (class_declaration
+    name: (name)
+    (base_clause
+      (name))
+    body: (declaration_list)))
 
-==========================
+================================================================================
 Function parameters
-==========================
+================================================================================
 
 <?php
 function test(int $a, string ...$b)
 {
 }
 
----
+--------------------------------------------------------------------------------
 
-(program
-	(php_tag)
-	(function_definition
-		name: (name)
-		parameters: (formal_parameters
-			(simple_parameter
-				type: (union_type (primitive_type))
-				name: (variable_name (name)))
-			(variadic_parameter
-				type: (union_type (primitive_type))
-				name: (variable_name (name))))
-		body: (compound_statement)))
+(php
+  (php_tag)
+  (function_definition
+    name: (name)
+    parameters: (formal_parameters
+      (simple_parameter
+        type: (union_type
+          (primitive_type))
+        name: (variable_name
+          (name)))
+      (variadic_parameter
+        type: (union_type
+          (primitive_type))
+        name: (variable_name
+          (name))))
+    body: (compound_statement)))
 
-====================================
+================================================================================
 Functions with default parameters
-====================================
+================================================================================
 
 <?php
 function a($arg = self::bar) {
 	echo $arg;
 }
 
----
+--------------------------------------------------------------------------------
 
-(program
-	(php_tag)
-	(function_definition
-		(name)
-		(formal_parameters
-			(simple_parameter
-				(variable_name (name))
-				(class_constant_access_expression (relative_scope) (name))))
-		(compound_statement (echo_statement (variable_name (name))))))
+(php
+  (php_tag)
+  (function_definition
+    (name)
+    (formal_parameters
+      (simple_parameter
+        (variable_name
+          (name))
+        (class_constant_access_expression
+          (relative_scope)
+          (name))))
+    (compound_statement
+      (echo_statement
+        (variable_name
+          (name))))))
 
-========================================================================
+================================================================================
 Static variables in functions
-========================================================================
+================================================================================
 
 <?php
 function blah()
@@ -235,21 +294,27 @@ function blah()
   static $hey=0, $yo=0;
 }
 
----
+--------------------------------------------------------------------------------
 
-(program
-	(php_tag)
-	(function_definition
-		(name)
-		(formal_parameters)
-		(compound_statement
-			(function_static_declaration
-				(static_variable_declaration (variable_name (name)) (integer))
-				(static_variable_declaration (variable_name (name)) (integer))))))
+(php
+  (php_tag)
+  (function_definition
+    (name)
+    (formal_parameters)
+    (compound_statement
+      (function_static_declaration
+        (static_variable_declaration
+          (variable_name
+            (name))
+          (integer))
+        (static_variable_declaration
+          (variable_name
+            (name))
+          (integer))))))
 
-=========================================
+================================================================================
 Defining Constants
-=========================================
+================================================================================
 
 <?php
 
@@ -263,64 +328,67 @@ define('ANIMALS', array(
     'bird'
 ));
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (expression_statement
     (function_call_expression
       (name)
       (arguments
-        (argument (encapsed_string (string_value)))
-        (argument (encapsed_string (string_value)))
-      )
-    )
-  )
+        (argument
+          (encapsed_string
+            (string_value)))
+        (argument
+          (encapsed_string
+            (string_value))))))
   (const_declaration
     (const_element
       (name)
-      (string (string_value))
-    )
-  )
+      (string
+        (string_value))))
   (const_declaration
     (const_element
       (name)
       (binary_expression
         (name)
-        (string (string_value))
-      )
-    )
-  )
+        (string
+          (string_value)))))
   (const_declaration
     (const_element
       (name)
       (array_creation_expression
-        (array_element_initializer (string (string_value)))
-        (array_element_initializer (string (string_value)))
-        (array_element_initializer (string (string_value)))
-      )
-    )
-  )
+        (array_element_initializer
+          (string
+            (string_value)))
+        (array_element_initializer
+          (string
+            (string_value)))
+        (array_element_initializer
+          (string
+            (string_value))))))
   (expression_statement
     (function_call_expression
       (name)
       (arguments
-        (argument (string (string_value)))
+        (argument
+          (string
+            (string_value)))
         (argument
           (array_creation_expression
-            (array_element_initializer (string (string_value)))
-            (array_element_initializer (string (string_value)))
-            (array_element_initializer (string (string_value)))
-          )
-        )
-      )
-    )
-  )
-)
+            (array_element_initializer
+              (string
+                (string_value)))
+            (array_element_initializer
+              (string
+                (string_value)))
+            (array_element_initializer
+              (string
+                (string_value)))))))))
 
-=======================================
+================================================================================
 Attributes
-=======================================
+================================================================================
 
 <?php
 
@@ -373,90 +441,98 @@ class A {
 function a() {
 }
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
-
   (function_definition
-    attributes: (attribute_list (attribute_group (attribute (name))))
+    attributes: (attribute_list
+      (attribute_group
+        (attribute
+          (name))))
     name: (name)
     parameters: (formal_parameters
       (simple_parameter
-        attributes: (attribute_list 
-          (attribute_group (attribute (name)))
-        )
-        name: (variable_name (name))
-      )
-    )
-    body: (compound_statement (expression_statement (variable_name (name))))
-  )
-
+        attributes: (attribute_list
+          (attribute_group
+            (attribute
+              (name))))
+        name: (variable_name
+          (name))))
+    body: (compound_statement
+      (expression_statement
+        (variable_name
+          (name)))))
   (class_declaration
     name: (name)
     body: (declaration_list
       (const_declaration
-        attributes: (attribute_list (attribute_group (attribute (name))))
-        (const_element (name) (string (string_value)))
-      )
-
+        attributes: (attribute_list
+          (attribute_group
+            (attribute
+              (name))))
+        (const_element
+          (name)
+          (string
+            (string_value))))
       (property_declaration
-        attributes: (attribute_list (attribute_group (attribute (name))))
+        attributes: (attribute_list
+          (attribute_group
+            (attribute
+              (name))))
         (visibility_modifier)
-        type: (union_type (primitive_type))
-        (property_element (variable_name (name))
-          (property_initializer (string (string_value)))
-        )
-      )
+        type: (union_type
+          (primitive_type))
+        (property_element
+          (variable_name
+            (name))
+          (property_initializer
+            (string
+              (string_value)))))
       (method_declaration
         attributes: (attribute_list
           (attribute_group
             (attribute
               (name)
               parameters: (arguments
-                (argument (encapsed_string (string_value)))
+                (argument
+                  (encapsed_string
+                    (string_value)))
                 (argument
                   (array_creation_expression
-                    (array_element_initializer (encapsed_string (string_value)))
-                  )
-                )
-              )
-            )
-          )
-        )
+                    (array_element_initializer
+                      (encapsed_string
+                        (string_value)))))))))
         (visibility_modifier)
         name: (name)
         parameters: (formal_parameters
           (simple_parameter
-            attributes: (attribute_list (attribute_group (attribute (name))))
-            name: (variable_name (name))
-          )
-        )
-        body: (compound_statement (comment))
-      )
-    )
-  )
+            attributes: (attribute_list
+              (attribute_group
+                (attribute
+                  (name))))
+            name: (variable_name
+              (name))))
+        body: (compound_statement
+          (comment)))))
   (class_declaration
     attributes: (attribute_list
       (attribute_group
-        (attribute (name))
-      )
+        (attribute
+          (name)))
       (attribute_group
         (attribute
           (qualified_name
             (namespace_name_as_prefix
-              (namespace_name (name))
-            )
-            (name)
-          )
-        )
-      )
+              (namespace_name
+                (name)))
+            (name))))
       (attribute_group
         (attribute
           (name)
-          parameters: (arguments (argument (integer)))
-        )
-      )
+          parameters: (arguments
+            (argument
+              (integer)))))
       (attribute_group
         (attribute
           (name)
@@ -464,12 +540,7 @@ function a() {
             (argument
               (class_constant_access_expression
                 (name)
-                (name)
-              )
-            )
-          )
-        )
-      )
+                (name))))))
       (attribute_group
         (attribute
           (name)
@@ -477,14 +548,10 @@ function a() {
             (argument
               (array_creation_expression
                 (array_element_initializer
-                  (encapsed_string (string_value))
-                  (encapsed_string (string_value))
-                )
-              )
-            )
-          )
-        )
-      )
+                  (encapsed_string
+                    (string_value))
+                  (encapsed_string
+                    (string_value))))))))
       (attribute_group
         (attribute
           (name)
@@ -492,52 +559,46 @@ function a() {
             (argument
               (binary_expression
                 left: (integer)
-                right: (integer)
-              )
-            )
-          )
-        )
-      )
-    )
+                right: (integer)))))))
     name: (name)
-    body: (declaration_list)
-  )
+    body: (declaration_list))
   (expression_statement
     (object_creation_expression
-      attributes: (attribute_list (attribute_group (attribute (name))))
+      attributes: (attribute_list
+        (attribute_group
+          (attribute
+            (name))))
       (arguments)
-      (declaration_list)
-    )
-  )
+      (declaration_list)))
   (expression_statement
     (arrow_function
-      attributes: (attribute_list (attribute_group (attribute (name))))
+      attributes: (attribute_list
+        (attribute_group
+          (attribute
+            (name))))
       parameters: (formal_parameters
         (simple_parameter
-          name: (variable_name (name))
-        )
-      )
-      body: (variable_name (name))
-    )
-  )
+          name: (variable_name
+            (name))))
+      body: (variable_name
+        (name))))
   (expression_statement
     (assignment_expression
-      left: (variable_name (name))
+      left: (variable_name
+        (name))
       right: (anonymous_function_creation_expression
-        attributes: (attribute_list (attribute_group (attribute (name))))
+        attributes: (attribute_list
+          (attribute_group
+            (attribute
+              (name))))
         parameters: (formal_parameters
           (simple_parameter
-            name: (variable_name (name))
-          )
-        )
+            name: (variable_name
+              (name))))
         body: (compound_statement
           (return_statement
-            (variable_name (name))
-          )
-        )
-      )
-    )
-  )
+            (variable_name
+              (name)))))))
   (class_declaration
     name: (name)
     body: (declaration_list
@@ -546,73 +607,64 @@ function a() {
           (attribute_group
             (attribute
               (qualified_name
-                (namespace_name_as_prefix (namespace_name (name)))
-                (name)
-              )
+                (namespace_name_as_prefix
+                  (namespace_name
+                    (name)))
+                (name))
               parameters: (arguments
                 (argument
                   (object_creation_expression
                     (qualified_name
-                      (namespace_name_as_prefix (namespace_name (name)))
-                      (name)
-                    )
-                  )
-                )
+                      (namespace_name_as_prefix
+                        (namespace_name
+                          (name)))
+                      (name))))
                 (argument
                   (object_creation_expression
                     (qualified_name
-                      (namespace_name_as_prefix (namespace_name (name)))
-                      (name)
-                    )
+                      (namespace_name_as_prefix
+                        (namespace_name
+                          (name)))
+                      (name))
                     (arguments
                       (argument
                         name: (name)
-                        (integer)
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
+                        (integer)))))))))
         (visibility_modifier)
-        type: (union_type (primitive_type))
+        type: (union_type
+          (primitive_type))
         (property_element
-          (variable_name (name))
-          (property_initializer (string (string_value)))
-        )
-      )
-    )
-  )
+          (variable_name
+            (name))
+          (property_initializer
+            (string
+              (string_value)))))))
   (function_definition
     attributes: (attribute_list
       (attribute_group
-        (attribute (name))
+        (attribute
+          (name))
         (attribute
           (name)
-          parameters: (arguments)
-        )
+          parameters: (arguments))
         (attribute
           (name)
-          parameters: (arguments (argument (integer)))
-        )
+          parameters: (arguments
+            (argument
+              (integer))))
         (attribute
           (name)
-          parameters: (arguments (argument name: (name) (integer)))
-        )
-      )
-    )
+          parameters: (arguments
+            (argument
+              name: (name)
+              (integer))))))
     name: (name)
     parameters: (formal_parameters)
-    body: (compound_statement)
-  )
-)
+    body: (compound_statement)))
 
-
-=======================================
+================================================================================
 Enums
-=======================================
+================================================================================
 
 <?php
 
@@ -637,70 +689,74 @@ enum Suit: string
   }
 }
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (enum_declaration
     (name)
-    (enum_declaration_list)
-  )
+    (enum_declaration_list))
   (enum_declaration
     (name)
     (class_interface_clause
       (name)
-      (name)
-    )
-    (enum_declaration_list)
-  )
+      (name))
+    (enum_declaration_list))
   (enum_declaration
     (name)
     (primitive_type)
-    (class_interface_clause (name))
-    (enum_declaration_list)
-  )
+    (class_interface_clause
+      (name))
+    (enum_declaration_list))
   (enum_declaration
     (name)
     (primitive_type)
-    (enum_declaration_list 
-      (enum_case (name) (string (string_value)))
-      (enum_case (name))
-      (enum_case (name) (string (string_value)))
-      (enum_case (name) (string (string_value)))
-      
+    (enum_declaration_list
+      (enum_case
+        (name)
+        (string
+          (string_value)))
+      (enum_case
+        (name))
+      (enum_case
+        (name)
+        (string
+          (string_value)))
+      (enum_case
+        (name)
+        (string
+          (string_value)))
       (comment)
-      
       (method_declaration
         (visibility_modifier)
         (name)
         (formal_parameters)
-        (union_type (primitive_type))
+        (union_type
+          (primitive_type))
         (compound_statement
           (return_statement
             (match_expression
               (parenthesized_expression
-                (variable_name (name))
-              )
+                (variable_name
+                  (name)))
               (match_block
                 (match_conditional_expression
                   (match_condition_list
-                    (class_constant_access_expression (name) (name))
-                    (class_constant_access_expression (name) (name))
-                  )
-                  (string (string_value))
-                )
+                    (class_constant_access_expression
+                      (name)
+                      (name))
+                    (class_constant_access_expression
+                      (name)
+                      (name)))
+                  (string
+                    (string_value)))
                 (match_conditional_expression
                   (match_condition_list
-                    (class_constant_access_expression (name) (name))
-                    (class_constant_access_expression (name) (name))
-                  )
-                  (string (string_value))
-                )
-              )
-            )
-          )
-        )
-      )
-    )
-  )
-)
+                    (class_constant_access_expression
+                      (name)
+                      (name))
+                    (class_constant_access_expression
+                      (name)
+                      (name)))
+                  (string
+                    (string_value)))))))))))

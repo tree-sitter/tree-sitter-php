@@ -1,42 +1,42 @@
-=========================================
+================================================================================
 #131: Parse error when using self as constant
-=========================================
+================================================================================
 
 <?php
 define('self', 'value');
 var_dump(self);
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (expression_statement
     (function_call_expression
       function: (name)
       arguments: (arguments
-        (argument (string (string_value)))
-        (argument (string (string_value)))
-      )
-    )
-  )
+        (argument
+          (string
+            (string_value)))
+        (argument
+          (string
+            (string_value))))))
   (expression_statement
     (function_call_expression
       function: (name)
-      arguments: (arguments (argument (name)))
-    )
-  )
-)
+      arguments: (arguments
+        (argument
+          (name))))))
 
-=========================================
+================================================================================
 #133: Incorrect precedence for error supression operator
-=========================================
+================================================================================
 
 <?php
 @trigger_error("a") && trigger_error("b");
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (expression_statement
     (binary_expression
@@ -46,22 +46,10 @@ var_dump(self);
           arguments: (arguments
             (argument
               (encapsed_string
-                (string_value)
-              )
-            )
-          )
-        )
-      )
+                (string_value))))))
       right: (function_call_expression
         function: (name)
         arguments: (arguments
           (argument
             (encapsed_string
-              (string_value)
-            )
-          )
-        )
-      )
-    )
-  )
-)
+              (string_value))))))))

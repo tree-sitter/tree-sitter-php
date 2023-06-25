@@ -96,7 +96,7 @@ module.exports = grammar({
   ],
 
   rules: {
-    program: $ => seq(
+    php: $ => seq(
       optional($.php_tag),
       optional(repeat($._statement)),
       optional('?>'),

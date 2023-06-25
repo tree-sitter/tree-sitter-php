@@ -1,6 +1,6 @@
-=========================================
+================================================================================
 Abstract class
-=========================================
+================================================================================
 
 <?php
 
@@ -10,9 +10,9 @@ abstract class A {
 }
 
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (class_declaration
     (abstract_modifier)
@@ -22,21 +22,16 @@ abstract class A {
         (visibility_modifier)
         (name)
         (formal_parameters)
-        (compound_statement)
-      )
+        (compound_statement))
       (method_declaration
         (abstract_modifier)
         (visibility_modifier)
         (name)
-        (formal_parameters)
-      )
-    )
-  )
-)
+        (formal_parameters)))))
 
-=========================================
+================================================================================
 Anonymous classes
-=========================================
+================================================================================
 
 <?php
 
@@ -59,9 +54,9 @@ class A {
     }
 }
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (expression_statement
     (object_creation_expression
@@ -70,23 +65,15 @@ class A {
           (visibility_modifier)
           (name)
           (formal_parameters)
-          (compound_statement)
-        )
-      )
-    )
-  )
+          (compound_statement)))))
   (expression_statement
     (object_creation_expression
       (base_clause
-        (name)
-      )
+        (name))
       (class_interface_clause
         (name)
-        (name)
-      )
-      (declaration_list)
-    )
-  )
+        (name))
+      (declaration_list)))
   (expression_statement
     (object_creation_expression
       (arguments)
@@ -94,32 +81,22 @@ class A {
         (property_declaration
           (visibility_modifier)
           (property_element
-            (variable_name (name))
-          )
-        )
-      )
-    )
-  )
+            (variable_name
+              (name)))))))
   (expression_statement
     (object_creation_expression
       (arguments
         (argument
-          (variable_name (name))
-        )
+          (variable_name
+            (name)))
         (argument
-          (variable_name (name))
-        )
-      )
+          (variable_name
+            (name))))
       (base_clause
-        (name)
-      )
+        (name))
       (declaration_list
         (use_declaration
-          (name)
-        )
-      )
-    )
-  )
+          (name)))))
   (class_declaration
     (name)
     (declaration_list
@@ -130,24 +107,22 @@ class A {
         (compound_statement
           (return_statement
             (object_creation_expression
-              (arguments (argument (variable_name (name))))
-              (base_clause (name))
+              (arguments
+                (argument
+                  (variable_name
+                    (name))))
+              (base_clause
+                (name))
               (declaration_list
                 (const_declaration
-                  (const_element (name) (string (string_value)))
-                )
-              )
-            )
-          )
-        )
-      )
-    )
-  )
-)
+                  (const_element
+                    (name)
+                    (string
+                      (string_value))))))))))))
 
-=========================================
+================================================================================
 Conditional class definition
-=========================================
+================================================================================
 
 <?php
 
@@ -155,24 +130,21 @@ if (true) {
     class A {}
 }
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (if_statement
-    (parenthesized_expression (boolean))
+    (parenthesized_expression
+      (boolean))
     (compound_statement
       (class_declaration
         (name)
-        (declaration_list)
-      )
-    )
-  )
-)
+        (declaration_list)))))
 
-=========================================
+================================================================================
 Class constant modifiers
-=========================================
+================================================================================
 
 <?php
 
@@ -184,59 +156,58 @@ class Foo {
     final const E = 5;
 }
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (class_declaration
     (name)
     (declaration_list
       (const_declaration
-        (const_element (name) (integer))
-      )
+        (const_element
+          (name)
+          (integer)))
       (const_declaration
         (visibility_modifier)
-        (const_element (name) (integer))
-      )
+        (const_element
+          (name)
+          (integer)))
       (const_declaration
         (visibility_modifier)
-        (const_element (name) (integer))
-      )
+        (const_element
+          (name)
+          (integer)))
       (const_declaration
         (visibility_modifier)
-        (const_element (name) (integer))
-      )
+        (const_element
+          (name)
+          (integer)))
       (const_declaration
         (final_modifier)
-        (const_element (name) (integer))
-      )
-    )
-  )
-)
+        (const_element
+          (name)
+          (integer))))))
 
-
-=========================================
+================================================================================
 Final class
-=========================================
+================================================================================
 
 <?php
 
 final class A {}
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (class_declaration
     (final_modifier)
     (name)
-    (declaration_list)
-  )
-)
+    (declaration_list)))
 
-=========================================
+================================================================================
 Implicitly public properties and methods
-=========================================
+================================================================================
 
 <?php
 
@@ -250,9 +221,9 @@ abstract class A {
     function g() {}
 }
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (class_declaration
     (abstract_modifier)
@@ -260,48 +231,42 @@ abstract class A {
     (declaration_list
       (property_declaration
         (var_modifier)
-        (property_element (variable_name (name)))
-      )
+        (property_element
+          (variable_name
+            (name))))
       (property_declaration
         (static_modifier)
-        (property_element (variable_name (name)))
-      )
+        (property_element
+          (variable_name
+            (name))))
       (method_declaration
         (abstract_modifier)
         (name)
-        (formal_parameters)
-      )
+        (formal_parameters))
       (method_declaration
         (final_modifier)
         (name)
         (formal_parameters)
-        (compound_statement)
-      )
+        (compound_statement))
       (method_declaration
         (static_modifier)
         (name)
         (formal_parameters)
-        (compound_statement)
-      )
+        (compound_statement))
       (method_declaration
         (final_modifier)
         (static_modifier)
         (name)
         (formal_parameters)
-        (compound_statement)
-      )
+        (compound_statement))
       (method_declaration
         (name)
         (formal_parameters)
-        (compound_statement)
-      )
-    )
-  )
-)
+        (compound_statement)))))
 
-=========================================
+================================================================================
 Property Types
-=========================================
+================================================================================
 
 <?php
 
@@ -312,41 +277,46 @@ class A {
     private $d;
 }
 
----
+--------------------------------------------------------------------------------
 
-(program
-	(php_tag)
+(php
+  (php_tag)
   (class_declaration
     name: (name)
     body: (declaration_list
       (property_declaration
         (visibility_modifier)
-        type: (union_type (primitive_type))
-        (property_element (variable_name (name)))
-      )
+        type: (union_type
+          (primitive_type))
+        (property_element
+          (variable_name
+            (name))))
       (property_declaration
         (visibility_modifier)
         (static_modifier)
-        type: (union_type (named_type (name)))
-        (property_element (variable_name (name)))
-      )
+        type: (union_type
+          (named_type
+            (name)))
+        (property_element
+          (variable_name
+            (name))))
       (property_declaration
         (visibility_modifier)
-        type: (union_type (optional_type (primitive_type)))
-        (property_element (variable_name (name)))
-      )
+        type: (union_type
+          (optional_type
+            (primitive_type)))
+        (property_element
+          (variable_name
+            (name))))
       (property_declaration
         (visibility_modifier)
-        (property_element (variable_name (name)))
-      )
-    )
-  )
-)
+        (property_element
+          (variable_name
+            (name)))))))
 
-
-=========================================
+================================================================================
 Constructor Property Promotion
-=========================================
+================================================================================
 
 <?php
 
@@ -358,9 +328,9 @@ class Point {
     ) {}
 }
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (class_declaration
     name: (name)
@@ -372,28 +342,24 @@ class Point {
           (property_promotion_parameter
             visibility: (visibility_modifier)
             type: (union_type
-              (primitive_type)
-            )
-            name: (variable_name (name))
-            default_value: (float)
-          )
+              (primitive_type))
+            name: (variable_name
+              (name))
+            default_value: (float))
           (simple_parameter
-            type: (union_type (primitive_type))
-            name: (variable_name (name))
-            default_value: (float)
-          )
+            type: (union_type
+              (primitive_type))
+            name: (variable_name
+              (name))
+            default_value: (float))
           (property_promotion_parameter
             visibility: (visibility_modifier)
-            type: (union_type (primitive_type))
-            name: (variable_name (name))
-            default_value: (float)
-          )
-        )
-        body: (compound_statement)
-      )
-    )
-  )
-)
+            type: (union_type
+              (primitive_type))
+            name: (variable_name
+              (name))
+            default_value: (float)))
+        body: (compound_statement)))))
 
 ================================================================================
 Readonly properties
@@ -443,7 +409,7 @@ class A {
 
 --------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (class_declaration
     (name)
@@ -746,7 +712,7 @@ class Point {
 
 --------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (class_declaration
     name: (name)
@@ -757,41 +723,43 @@ class Point {
         parameters: (formal_parameters
           (property_promotion_parameter
             visibility: (visibility_modifier)
-            name: (variable_name (name)))
+            name: (variable_name
+              (name)))
           (property_promotion_parameter
             visibility: (visibility_modifier)
             readonly: (readonly_modifier)
-            name: (variable_name (name)))
+            name: (variable_name
+              (name)))
           (property_promotion_parameter
             visibility: (visibility_modifier)
             readonly: (readonly_modifier)
-            type: (union_type (primitive_type))
-            name: (variable_name (name))))
+            type: (union_type
+              (primitive_type))
+            name: (variable_name
+              (name))))
         body: (compound_statement)))))
 
-=========================================
+================================================================================
 Readonly class
-=========================================
+================================================================================
 
 <?php
 
 readonly class Test {
 }
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (class_declaration
     (readonly_modifier)
     (name)
-    (declaration_list)
-  )
-)
+    (declaration_list)))
 
-=========================================
+================================================================================
 Constants in trait
-=========================================
+================================================================================
 
 <?php
 
@@ -799,9 +767,9 @@ trait Test {
     public const FLAG_1 = 1;
 }
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (trait_declaration
     (name)
@@ -810,9 +778,4 @@ trait Test {
         (visibility_modifier)
         (const_element
           (name)
-          (integer)
-        )
-      )
-    )
-  )
-)
+          (integer))))))

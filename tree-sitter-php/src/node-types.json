@@ -1,7 +1,7 @@
 [
   {
     "type": "php",
-    "named": false,
+    "named": true,
     "fields": {}
   },
   {
@@ -13,7 +13,7 @@
       "required": false,
       "types": [
         {
-          "type": "php_tag",
+          "type": "php",
           "named": true
         },
         {
@@ -29,30 +29,7 @@
     "fields": {}
   },
   {
-    "type": "text_interpolation",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "php_tag",
-          "named": true
-        },
-        {
-          "type": "text",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "?>",
     "named": false
-  },
-  {
-    "type": "php_tag",
-    "named": true
   }
 ]

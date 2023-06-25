@@ -1,6 +1,6 @@
-========================
+================================================================================
 Booleans
-========================
+================================================================================
 
 <?php
 True;
@@ -11,20 +11,26 @@ False;
 FALSE;
 ?>
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
-  (expression_statement (boolean))
-  (expression_statement (boolean))
-  (expression_statement (boolean))
-  (expression_statement (boolean))
-  (expression_statement (boolean))
-  (expression_statement (boolean)))
+  (expression_statement
+    (boolean))
+  (expression_statement
+    (boolean))
+  (expression_statement
+    (boolean))
+  (expression_statement
+    (boolean))
+  (expression_statement
+    (boolean))
+  (expression_statement
+    (boolean)))
 
-==========================
+================================================================================
 Floats
-==========================
+================================================================================
 
 <?php
 
@@ -36,22 +42,28 @@ Floats
 6.674_083e11;
 107_925_284.88;
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
-  (expression_statement (float))
-  (expression_statement (float))
-  (expression_statement (float))
-  (expression_statement (float))
-  (expression_statement (float))
-  (expression_statement (float))
-  (expression_statement (float))
-)
+  (expression_statement
+    (float))
+  (expression_statement
+    (float))
+  (expression_statement
+    (float))
+  (expression_statement
+    (float))
+  (expression_statement
+    (float))
+  (expression_statement
+    (float))
+  (expression_statement
+    (float)))
 
-==========================
+================================================================================
 Integers
-==========================
+================================================================================
 
 <?php
 
@@ -65,43 +77,63 @@ Integers
 0b1111_1111_1111;
 0o123;
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
-  (expression_statement (integer))
-  (expression_statement (integer))
-  (expression_statement (integer))
-  (expression_statement (integer))
-  (expression_statement (integer))
-  (expression_statement (integer))
-  (expression_statement (integer))
-  (expression_statement (integer))
-  (expression_statement (integer))
-)
+  (expression_statement
+    (integer))
+  (expression_statement
+    (integer))
+  (expression_statement
+    (integer))
+  (expression_statement
+    (integer))
+  (expression_statement
+    (integer))
+  (expression_statement
+    (integer))
+  (expression_statement
+    (integer))
+  (expression_statement
+    (integer))
+  (expression_statement
+    (integer)))
 
-============================
+================================================================================
 Testing string scanner confirmance
-==============================
+================================================================================
 
 <?php echo "\"\t\\'" . '\n\\\'a\\\b\\' ?>
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
-  (echo_statement (binary_expression (encapsed_string (escape_sequence) (escape_sequence) (escape_sequence) (string_value)) (string (string_value)))))
+  (echo_statement
+    (binary_expression
+      (encapsed_string
+        (escape_sequence)
+        (escape_sequence)
+        (escape_sequence)
+        (string_value))
+      (string
+        (string_value)))))
 
-==========================
+================================================================================
 Shell command
-==========================
+================================================================================
 <?php
 `ls -la`;
 `ls`;
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
-  (expression_statement (shell_command_expression (string_value)))
-  (expression_statement (shell_command_expression (string_value))))
+  (expression_statement
+    (shell_command_expression
+      (string_value)))
+  (expression_statement
+    (shell_command_expression
+      (string_value))))

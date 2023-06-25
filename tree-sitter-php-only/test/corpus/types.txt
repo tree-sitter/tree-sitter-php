@@ -1,29 +1,37 @@
-=========================
+================================================================================
 Type names
-=========================
+================================================================================
 
 <?php
 function a(): A {}
 function b(): A\B {}
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (function_definition
-    (name) (formal_parameters)
-    (union_type (named_type (name)))
+    (name)
+    (formal_parameters)
+    (union_type
+      (named_type
+        (name)))
     (compound_statement))
   (function_definition
-    (name) (formal_parameters)
+    (name)
+    (formal_parameters)
     (union_type
-      (named_type (qualified_name (namespace_name_as_prefix (namespace_name (name))) (name)))
-    )
+      (named_type
+        (qualified_name
+          (namespace_name_as_prefix
+            (namespace_name
+              (name)))
+          (name))))
     (compound_statement)))
 
-=========================
+================================================================================
 Primitive types
-=========================
+================================================================================
 
 <?php
 function a(): int {}
@@ -31,31 +39,37 @@ function b(): callable {}
 function c(): iterable {}
 function d(): never {}
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (function_definition
-    (name) (formal_parameters)
-    (union_type (primitive_type))
+    (name)
+    (formal_parameters)
+    (union_type
+      (primitive_type))
     (compound_statement))
   (function_definition
-    (name) (formal_parameters)
-    (union_type (primitive_type))
+    (name)
+    (formal_parameters)
+    (union_type
+      (primitive_type))
     (compound_statement))
   (function_definition
-    (name) (formal_parameters)
-    (union_type (primitive_type))
+    (name)
+    (formal_parameters)
+    (union_type
+      (primitive_type))
     (compound_statement))
   (function_definition
-    (name) (formal_parameters)
+    (name)
+    (formal_parameters)
     (bottom_type)
     (compound_statement)))
 
-
-=======================
+================================================================================
 Intersection type
-=======================
+================================================================================
 <?php
 
 class Test {
@@ -67,8 +81,9 @@ function test(A&B $a): A&B {}
 function test(Type&MoreTypes &... $b) {}
 
 function test(Type&MoreTypes &$b) {}
----
-(program
+--------------------------------------------------------------------------------
+
+(php
   (php_tag)
   (class_declaration
     (name)
@@ -76,100 +91,97 @@ function test(Type&MoreTypes &$b) {}
       (property_declaration
         (visibility_modifier)
         (intersection_type
-          (named_type (name))
-          (named_type (name))
-        )
+          (named_type
+            (name))
+          (named_type
+            (name)))
         (property_element
-          (variable_name (name))
-        )
-      )
-    )
-  )
+          (variable_name
+            (name))))))
   (function_definition
     (name)
     (formal_parameters
       (simple_parameter
         (intersection_type
-          (named_type (name))
-          (named_type (name))
-        )
-        (variable_name (name))
-      )
-    )
+          (named_type
+            (name))
+          (named_type
+            (name)))
+        (variable_name
+          (name))))
     (intersection_type
-      (named_type (name))
-      (named_type (name))
-    )
-    (compound_statement)
-  )
+      (named_type
+        (name))
+      (named_type
+        (name)))
+    (compound_statement))
   (function_definition
     (name)
     (formal_parameters
       (variadic_parameter
         (intersection_type
-          (named_type (name))
-          (named_type (name))
-        )
+          (named_type
+            (name))
+          (named_type
+            (name)))
         (reference_modifier)
-        (variable_name (name))
-      )
-    )
-    (compound_statement)
-  )
+        (variable_name
+          (name))))
+    (compound_statement))
   (function_definition
     (name)
     (formal_parameters
       (simple_parameter
         (intersection_type
-          (named_type (name))
-          (named_type (name))
-        )
+          (named_type
+            (name))
+          (named_type
+            (name)))
         (reference_modifier)
-        (variable_name (name))
-      )
-    )
-    (compound_statement)
-  )
-)
+        (variable_name
+          (name))))
+    (compound_statement)))
 
-=======================
+================================================================================
 Optional types
-=======================
+================================================================================
 
 <?php
 
 function a(): ?array {}
 function b(): ?Something {}
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (function_definition
-    (name) (formal_parameters)
+    (name)
+    (formal_parameters)
     (union_type
-      (optional_type (primitive_type))
-    )
+      (optional_type
+        (primitive_type)))
     (compound_statement))
   (function_definition
-    (name) (formal_parameters)
+    (name)
+    (formal_parameters)
     (union_type
-      (optional_type (named_type (name)))
-    )
+      (optional_type
+        (named_type
+          (name))))
     (compound_statement)))
 
-
-==========================
+================================================================================
 Union types
-==========================
+================================================================================
 
 <?php
 
 function a(int|string|null $var) : ?int|MyClass {}
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (function_definition
     name: (name)
@@ -178,33 +190,28 @@ function a(int|string|null $var) : ?int|MyClass {}
         type: (union_type
           (primitive_type)
           (primitive_type)
-          (primitive_type)
-        )
-        name: (variable_name (name))
-      )
-    )
+          (primitive_type))
+        name: (variable_name
+          (name))))
     return_type: (union_type
       (optional_type
-        (primitive_type)
-      )
-      (named_type (name))
-    )
-    body: (compound_statement)
-  )
-)
+        (primitive_type))
+      (named_type
+        (name)))
+    body: (compound_statement)))
 
-==========================
+================================================================================
 Mixed type
-==========================
+================================================================================
 
 <?php
 
 function a(mixed|string $var) : mixed {
 
 }
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (function_definition
     (name)
@@ -212,47 +219,41 @@ function a(mixed|string $var) : mixed {
       (simple_parameter
         (union_type
           (primitive_type)
-          (primitive_type)
-        )
-        (variable_name (name))
-      )
-    )
-    (union_type (primitive_type))
-    (compound_statement)
-  )
-)
+          (primitive_type))
+        (variable_name
+          (name))))
+    (union_type
+      (primitive_type))
+    (compound_statement)))
 
-==========================
+================================================================================
 Static type
-==========================
+================================================================================
 
 <?php
 
 function a(string $var) : static {
 
 }
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (function_definition
     (name)
     (formal_parameters
       (simple_parameter
         (union_type
-          (primitive_type)
-        )
-        (variable_name (name))
-      )
-    )
-    (union_type (primitive_type))
-    (compound_statement)
-  )
-)
+          (primitive_type))
+        (variable_name
+          (name))))
+    (union_type
+      (primitive_type))
+    (compound_statement)))
 
-===============================================
+================================================================================
 Null type
-===============================================
+================================================================================
 
 <?php
 
@@ -262,9 +263,9 @@ class Nil {
     public function foo(null $v): null { }
 }
 
----
+--------------------------------------------------------------------------------
 
- (program
+(php
   (php_tag)
   (class_declaration
     (name)
@@ -291,9 +292,9 @@ class Nil {
           (primitive_type))
         (compound_statement)))))
 
-===============================================
+================================================================================
 False type
-===============================================
+================================================================================
 
 <?php
 
@@ -303,9 +304,9 @@ class Falsy {
     public function foo(false $v): false { }
 }
 
----
+--------------------------------------------------------------------------------
 
- (program
+(php
   (php_tag)
   (class_declaration
     (name)
@@ -332,9 +333,9 @@ class Falsy {
           (primitive_type))
         (compound_statement)))))
 
-===============================================
+================================================================================
 True type
-===============================================
+================================================================================
 
 <?php
 
@@ -344,9 +345,9 @@ class Truthy {
     public function foo(true $v): true {}
 }
 
----
+--------------------------------------------------------------------------------
 
- (program
+(php
   (php_tag)
   (class_declaration
     (name)
@@ -372,4 +373,3 @@ class Truthy {
         (union_type
           (primitive_type))
         (compound_statement)))))
-

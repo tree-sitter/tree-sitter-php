@@ -1,0 +1,29 @@
+=========================
+Text mixed with PHP
+=========================
+
+<html>
+  <body>
+    <?php $a = 35; ?>
+    <div>
+      What is your favorite number?
+      Mine is: <?php echo $a; ?>
+      Mine is: <?= $a ?>
+    </div>
+  </body>
+</html>
+<?php
+sdfasdf
+asdfasdf
+
+---
+
+(program
+  (text)
+  (php)
+  (text)
+  (php)
+  (text)
+  (php)
+  (text)
+  (php))

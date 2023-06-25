@@ -2,7 +2,7 @@
   "name": "php_only",
   "word": "name",
   "rules": {
-    "program": {
+    "php": {
       "type": "SEQ",
       "members": [
         {

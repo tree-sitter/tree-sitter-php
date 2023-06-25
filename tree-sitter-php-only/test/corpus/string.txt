@@ -1,46 +1,42 @@
-=======================================
+================================================================================
 Complex: Variable access
-=======================================
+================================================================================
 
 <?php
 
 "{$test}";
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (expression_statement
     (encapsed_string
-      (variable_name (name))
-    )
-  )
-)
+      (variable_name
+        (name)))))
 
-=======================================
+================================================================================
 Complex: Disallow space between { and $
-=======================================
+================================================================================
 
 <?php
 
 "{ $test}";
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (expression_statement
     (encapsed_string
       (string_value)
-      (variable_name (name))
-      (string_value)
-    )
-  )
-)
+      (variable_name
+        (name))
+      (string_value))))
 
-=========================================
+================================================================================
 Complex: PHP documentation tests
-=========================================
+================================================================================
 <?php
 
 "This is {$great}";
@@ -75,48 +71,41 @@ Complex: PHP documentation tests
 
 "I'd like an {${beers::$ale}}\n";
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (expression_statement
     (encapsed_string
       (string_value)
-      (variable_name (name))
-    )
-  )
+      (variable_name
+        (name))))
   (expression_statement
     (encapsed_string
       (string_value)
       (member_access_expression
-        (variable_name (name))
-        (name)
-      )
-      (string_value)
-    )
-  )
+        (variable_name
+          (name))
+        (name))
+      (string_value)))
   (comment)
   (expression_statement
     (encapsed_string
       (string_value)
       (subscript_expression
-        (variable_name (name))
-        (string (string_value))
-      )
-    )
-  )
+        (variable_name
+          (name))
+        (string
+          (string_value)))))
   (expression_statement
     (encapsed_string
       (string_value)
       (subscript_expression
         (subscript_expression
-          (variable_name (name))
-          (integer)
-        )
-        (integer)
-      )
-    )
-  )
+          (variable_name
+            (name))
+          (integer))
+        (integer))))
   (comment)
   (comment)
   (expression_statement
@@ -124,63 +113,49 @@ Complex: PHP documentation tests
       (string_value)
       (subscript_expression
         (subscript_expression
-          (variable_name (name))
-          (string (string_value))
-        )
-        (integer)
-      )
-    )
-  )
+          (variable_name
+            (name))
+          (string
+            (string_value)))
+        (integer))))
   (expression_statement
     (binary_expression
       (encapsed_string
-        (string_value)
-      )
+        (string_value))
       (subscript_expression
         (subscript_expression
-          (variable_name (name))
-          (string (string_value))
-        )
-        (integer)
-      )
-    )
-  )
+          (variable_name
+            (name))
+          (string
+            (string_value)))
+        (integer))))
   (expression_statement
     (encapsed_string
       (string_value)
       (member_access_expression
         (subscript_expression
           (member_access_expression
-            (variable_name (name))
-            (name)
-          )
-          (integer)
-        )
-        (name)
-      )
-    )
-  )
+            (variable_name
+              (name))
+            (name))
+          (integer))
+        (name))))
   (expression_statement
     (encapsed_string
       (string_value)
-      (variable_name (name))
+      (variable_name
+        (name))
       (string_value)
       (dynamic_variable_name
-        (variable_name (name))
-      )
-    )
-  )
+        (variable_name
+          (name)))))
   (expression_statement
     (encapsed_string
       (string_value)
       (dynamic_variable_name
         (function_call_expression
           (name)
-          (arguments)
-        )
-      )
-    )
-  )
+          (arguments)))))
   (expression_statement
     (encapsed_string
       (string_value)
@@ -188,96 +163,79 @@ Complex: PHP documentation tests
       (string_value)
       (dynamic_variable_name
         (member_call_expression
-          (variable_name (name))
+          (variable_name
+            (name))
           (name)
-          (arguments)
-        )
-      )
-    )
-  )
+          (arguments)))))
   (comment)
   (expression_statement
-    (encapsed_string (string_value))
-  )
+    (encapsed_string
+      (string_value)))
   (expression_statement
     (encapsed_string
       (member_access_expression
-        (variable_name (name))
-        (variable_name (name))
-      )
-      (escape_sequence)
-    )
-  )
+        (variable_name
+          (name))
+        (variable_name
+          (name)))
+      (escape_sequence)))
   (expression_statement
     (encapsed_string
       (member_access_expression
-        (variable_name (name))
+        (variable_name
+          (name))
         (subscript_expression
-          (variable_name (name))
-          (integer)
-        )
-      )
-      (escape_sequence)
-    )
-  )
+          (variable_name
+            (name))
+          (integer)))
+      (escape_sequence)))
   (expression_statement
     (encapsed_string
       (string_value)
       (dynamic_variable_name
         (class_constant_access_expression
           (name)
-          (name)
-        )
-      )
-      (escape_sequence)
-    )
-  )
+          (name)))
+      (escape_sequence)))
   (expression_statement
     (encapsed_string
       (string_value)
       (dynamic_variable_name
         (scoped_property_access_expression
           (name)
-          (variable_name (name))
-        )
-      )
-      (escape_sequence)
-    )
-  )
-)
+          (variable_name
+            (name))))
+      (escape_sequence))))
 
-=======================================
+================================================================================
 Simple: Variable access
-=======================================
+================================================================================
 
 <?php
 
 "Hello $people, you're awesome!";
 "hello ${a} world";
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (expression_statement
     (encapsed_string
       (string_value)
-      (variable_name (name))
-      (string_value)
-    )
-  )
+      (variable_name
+        (name))
+      (string_value)))
   (expression_statement
     (encapsed_string
       (string_value)
-      (dynamic_variable_name (name))
-      (string_value)
-    )
-  )
-)
+      (dynamic_variable_name
+        (name))
+      (string_value))))
 
-=========================================
+================================================================================
 Simple: Member and array access
-=========================================
+================================================================================
 <?php
 
 "$people->john drank some $juices[0] juice.".PHP_EOL;
@@ -285,74 +243,63 @@ Simple: Member and array access
 "$people->john's wife greeted $people->robert.";
 "The character at index -2 is $string[-2].";
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (expression_statement
     (binary_expression
       (encapsed_string
         (member_access_expression
-          (variable_name (name))
-          (name)
-        )
+          (variable_name
+            (name))
+          (name))
         (string_value)
         (subscript_expression
-          (variable_name (name))
-          (integer)
-        )
-        (string_value)
-      )
-      (name)
-    )
-  )
+          (variable_name
+            (name))
+          (integer))
+        (string_value))
+      (name)))
   (expression_statement
     (binary_expression
       (encapsed_string
         (member_access_expression
-          (variable_name (name))
-          (name)
-        )
+          (variable_name
+            (name))
+          (name))
         (string_value)
         (member_access_expression
-          (variable_name (name))
-          (name)
-        )
-        (string_value)
-      )
-      (name)
-    )
-  )
+          (variable_name
+            (name))
+          (name))
+        (string_value))
+      (name)))
   (expression_statement
     (encapsed_string
       (member_access_expression
-        (variable_name (name))
-        (name)
-      )
+        (variable_name
+          (name))
+        (name))
       (string_value)
       (member_access_expression
-        (variable_name (name))
-        (name)
-      )
-      (string_value)
-    )
-  )
+        (variable_name
+          (name))
+        (name))
+      (string_value)))
   (expression_statement
     (encapsed_string
       (string_value)
       (subscript_expression
-        (variable_name (name))
-        (unary_op_expression (integer))
-      )
-      (string_value)
-    )
-  )
-)
+        (variable_name
+          (name))
+        (unary_op_expression
+          (integer)))
+      (string_value))))
 
-
-=========================================
+================================================================================
 Corner cases
-=========================================
+================================================================================
 
 <?php
 
@@ -386,168 +333,139 @@ Corner cases
 "${a}[";
 "\u{$a}";
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (expression_statement
     (encapsed_string
-      (string_value)
-    )
-  )
+      (string_value)))
   (expression_statement
     (encapsed_string
       (string_value)
-      (escape_sequence)
-    )
-  )
+      (escape_sequence)))
   (expression_statement
     (encapsed_string
-      (string_value)
-    )
-  )
+      (string_value)))
   (expression_statement
-    (encapsed_string (string_value))
-  )
+    (encapsed_string
+      (string_value)))
   (expression_statement
-    (encapsed_string (string_value))
-  )
+    (encapsed_string
+      (string_value)))
   (expression_statement
-    (encapsed_string (string_value))
-  )
+    (encapsed_string
+      (string_value)))
   (expression_statement
-    (encapsed_string (string_value))
-  )
+    (encapsed_string
+      (string_value)))
   (expression_statement
-    (encapsed_string (string_value))
-  )
+    (encapsed_string
+      (string_value)))
   (expression_statement
-    (encapsed_string (string_value))
-  )
+    (encapsed_string
+      (string_value)))
   (expression_statement
-    (encapsed_string (string_value))
-  )
+    (encapsed_string
+      (string_value)))
   (expression_statement
-    (encapsed_string (escape_sequence))
-  )
+    (encapsed_string
+      (escape_sequence)))
   (expression_statement
-    (encapsed_string (string_value))
-  )
+    (encapsed_string
+      (string_value)))
   (expression_statement
-    (encapsed_string)
-  )
+    (encapsed_string))
   (expression_statement
     (encapsed_string
       (escape_sequence)
-      (string_value)
-    )
-  )
+      (string_value)))
   (expression_statement
     (encapsed_string
       (escape_sequence)
       (escape_sequence)
       (escape_sequence)
-      (string_value)
-    )
-  )
+      (string_value)))
   (expression_statement
     (encapsed_string
       (escape_sequence)
       (string_value)
-      (variable_name (name))
-      (string_value)
-    )
-  )
+      (variable_name
+        (name))
+      (string_value)))
   (expression_statement
     (encapsed_string
       (string_value)
-      (variable_name (name))
-    )
-  )
+      (variable_name
+        (name))))
   (expression_statement
     (encapsed_string
       (string_value)
-      (variable_name (name))
-      (string_value)
-    )
-  )
+      (variable_name
+        (name))
+      (string_value)))
   (expression_statement
     (encapsed_string
       (string_value)
-      (variable_name (name))
-    )
-  )
+      (variable_name
+        (name))))
   (expression_statement
     (encapsed_string
       (scoped_call_expression
-        (variable_name (name))
+        (variable_name
+          (name))
         (name)
-        (arguments)
-      )
-    )
-  )
+        (arguments))))
   (expression_statement
     (encapsed_string
       (string_value)
       (member_access_expression
-        (variable_name (name))
-        (name)
-      )
-      (string_value)
-    )
-  )
+        (variable_name
+          (name))
+        (name))
+      (string_value)))
   (expression_statement
     (encapsed_string
       (string_value)
       (subscript_expression
         (member_access_expression
-          (variable_name (name))
-          (name)
-        )
+          (variable_name
+            (name))
+          (name))
         (binary_expression
-          (encapsed_string (string_value))
+          (encapsed_string
+            (string_value))
           (encapsed_string
             (string_value)
             (member_call_expression
-              (variable_name (name))
+              (variable_name
+                (name))
               (name)
               (arguments
                 (argument
-                  (encapsed_string (string_value))
-                )
-              )
-            )
-          )
-        )
-      )
-      (string_value)
-    )
-  )
+                  (encapsed_string
+                    (string_value))))))))
+      (string_value)))
   (expression_statement
     (encapsed_string
       (string_value)
       (escape_sequence)
-      (string_value)
-    )
-  )
+      (string_value)))
   (expression_statement
     (encapsed_string
       (string_value)
       (dynamic_variable_name
         (binary_expression
-          (encapsed_string (string_value))
-          (encapsed_string (string_value))
-        )
-      )
-      (string_value)
-    )
-  )
+          (encapsed_string
+            (string_value))
+          (encapsed_string
+            (string_value))))
+      (string_value)))
   (expression_statement
     (encapsed_string
       (string_value)
-      (variable_name (name))
-    )
-  )
+      (variable_name
+        (name))))
   (expression_statement
     (encapsed_string
       (dynamic_variable_name
@@ -557,38 +475,25 @@ Corner cases
               (dynamic_variable_name
                 (dynamic_variable_name
                   (dynamic_variable_name
-                    (variable_name (name))
-                  )
-                )
-              )
-            )
-          )
-        )
-      )
-    )
-  )
+                    (variable_name
+                      (name)))))))))))
+  (expression_statement
+    (encapsed_string
+      (string_value)))
+  (expression_statement
+    (encapsed_string
+      (dynamic_variable_name
+        (name))
+      (string_value)))
   (expression_statement
     (encapsed_string
       (string_value)
-    )
-  )
-  (expression_statement
-    (encapsed_string
-      (dynamic_variable_name (name))
-      (string_value)
-    )
-  )
-  (expression_statement
-    (encapsed_string
-      (string_value)
-      (variable_name (name))
-    )
-  )
-)
+      (variable_name
+        (name)))))
 
-=========================================
+================================================================================
 Single quoted
-=========================================
+================================================================================
 
 <?php
 
@@ -608,54 +513,74 @@ okay to do';
 '/*valid regexp*/';
 '/*valid regexp';
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
-  (expression_statement (string (string_value)))
-  (expression_statement (string (string_value)))
-  (expression_statement (string (string_value)))
-  (expression_statement (string (string_value)))
-  (expression_statement (string (string_value)))
-  (expression_statement (string (string_value)))
-  (expression_statement (string (string_value)))
-  (expression_statement (string (string_value)))
-  (expression_statement (string (string_value)))
-  (expression_statement (string (string_value)))
-  (expression_statement (string (string_value)))
-  (expression_statement (string (string_value)))
-  (expression_statement (string (string_value)))
-)
+  (expression_statement
+    (string
+      (string_value)))
+  (expression_statement
+    (string
+      (string_value)))
+  (expression_statement
+    (string
+      (string_value)))
+  (expression_statement
+    (string
+      (string_value)))
+  (expression_statement
+    (string
+      (string_value)))
+  (expression_statement
+    (string
+      (string_value)))
+  (expression_statement
+    (string
+      (string_value)))
+  (expression_statement
+    (string
+      (string_value)))
+  (expression_statement
+    (string
+      (string_value)))
+  (expression_statement
+    (string
+      (string_value)))
+  (expression_statement
+    (string
+      (string_value)))
+  (expression_statement
+    (string
+      (string_value)))
+  (expression_statement
+    (string
+      (string_value))))
 
-=========================================
-Bug: #113 
-=========================================
+================================================================================
+Bug: #113
+================================================================================
 
 <?php
 "$b'";
 "'";
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (expression_statement
     (encapsed_string
-      (variable_name (name))
-      (string_value)
-    )
-  )
+      (variable_name
+        (name))
+      (string_value)))
   (expression_statement
     (encapsed_string
-      (string_value)
-    )
-  )
-)
+      (string_value))))
 
-
-==========================
+================================================================================
 Heredocs
-==========================
+================================================================================
 
 <?php
 
@@ -746,26 +671,22 @@ EOF;
 String with null byte   with lagging letters
 EOF;
 
----
-(program
+--------------------------------------------------------------------------------
+
+(php
   (php_tag)
   (expression_statement
     (heredoc
       identifier: (heredoc_start)
       value: (heredoc_body
-        (string_value)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (string_value))
+      end_tag: (heredoc_end)))
   (expression_statement
     (heredoc
       identifier: (heredoc_start)
       value: (heredoc_body
         (string_value))
-      end_tag: (heredoc_end)
-    )
-  )
+      end_tag: (heredoc_end)))
   (comment)
   (expression_statement
     (function_call_expression
@@ -776,12 +697,7 @@ EOF;
             identifier: (heredoc_start)
             value: (heredoc_body
               (string_value))
-            end_tag: (heredoc_end)
-          )
-        )
-      )
-    )
-  )
+            end_tag: (heredoc_end))))))
   (expression_statement
     (function_call_expression
       function: (name)
@@ -791,182 +707,128 @@ EOF;
             identifier: (heredoc_start)
             value: (heredoc_body
               (string_value))
-            end_tag: (heredoc_end)
-          )
-        )
+            end_tag: (heredoc_end)))
         (argument
-          (boolean)
-        )
-      )
-    )
-  )
+          (boolean)))))
   (expression_statement
     (heredoc
       identifier: (heredoc_start)
       value: (heredoc_body
-        (variable_name (name)))
-      end_tag: (heredoc_end)
-    )
-  )
+        (variable_name
+          (name)))
+      end_tag: (heredoc_end)))
   (expression_statement
     (heredoc
       identifier: (heredoc_start)
       value: (heredoc_body
         (string_value)
         (string_value)
-        (variable_name (name))
+        (variable_name
+          (name))
         (member_access_expression
-          object: (variable_name (name))
-          name: (name)
-        )
+          object: (variable_name
+            (name))
+          name: (name))
         (subscript_expression
           (member_call_expression
-            object: (variable_name (name))
+            object: (variable_name
+              (name))
             name: (name)
-            arguments: (arguments)
-          )
-          (integer)
-        )
-        (string_value)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+            arguments: (arguments))
+          (integer))
+        (string_value))
+      end_tag: (heredoc_end)))
   (expression_statement
     (heredoc
       identifier: (heredoc_start)
       value: (heredoc_body
-        (string_value)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (string_value))
+      end_tag: (heredoc_end)))
   (expression_statement
     (heredoc
       identifier: (heredoc_start)
       value: (heredoc_body
         (string_value)
         (escape_sequence)
-        (string_value)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (string_value))
+      end_tag: (heredoc_end)))
   (expression_statement
     (heredoc
       identifier: (heredoc_start)
       value: (heredoc_body
-        (string_value)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (string_value))
+      end_tag: (heredoc_end)))
   (expression_statement
     (heredoc
       identifier: (heredoc_start)
       value: (heredoc_body
-        (string_value)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
-  
-  (expression_statement 
-    (heredoc 
-      identifier: (heredoc_start) 
-      value: (heredoc_body 
-        (string_value)
-      ) 
-      end_tag: (heredoc_end)
-    )
-  ) 
-  (expression_statement 
-    (heredoc 
-      identifier: (heredoc_start) 
-      value: (heredoc_body 
-        (string_value)
-      ) 
-      end_tag: (heredoc_end)
-    )
-  ) 
-  (expression_statement 
-    (heredoc 
-      identifier: (heredoc_start) 
-      value: (heredoc_body 
-        (string_value)
-      ) 
-      end_tag: (heredoc_end)
-    )
-  ) 
-  (expression_statement 
-    (heredoc 
-      identifier: (heredoc_start) 
-      value: (heredoc_body 
-        (string_value)
-      ) 
-      end_tag: (heredoc_end)
-    )
-  )
-  (expression_statement 
-    (heredoc 
-      identifier: (heredoc_start) 
-      value: (heredoc_body 
-        (string_value)
-      ) 
-      end_tag: (heredoc_end)
-    )
-  )
+        (string_value))
+      end_tag: (heredoc_end)))
+  (expression_statement
+    (heredoc
+      identifier: (heredoc_start)
+      value: (heredoc_body
+        (string_value))
+      end_tag: (heredoc_end)))
+  (expression_statement
+    (heredoc
+      identifier: (heredoc_start)
+      value: (heredoc_body
+        (string_value))
+      end_tag: (heredoc_end)))
+  (expression_statement
+    (heredoc
+      identifier: (heredoc_start)
+      value: (heredoc_body
+        (string_value))
+      end_tag: (heredoc_end)))
+  (expression_statement
+    (heredoc
+      identifier: (heredoc_start)
+      value: (heredoc_body
+        (string_value))
+      end_tag: (heredoc_end)))
+  (expression_statement
+    (heredoc
+      identifier: (heredoc_start)
+      value: (heredoc_body
+        (string_value))
+      end_tag: (heredoc_end)))
   (expression_statement
     (heredoc
       identifier: (heredoc_start)
       value: (heredoc_body
         (string_value)
         (string_value)
-        (string_value)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (string_value))
+      end_tag: (heredoc_end)))
   (expression_statement
     (heredoc
       identifier: (heredoc_start)
-      end_tag: (heredoc_end)
-    )
-  )
+      end_tag: (heredoc_end)))
   (expression_statement
     (heredoc
       identifier: (heredoc_start)
       value: (heredoc_body
         (string_value)
-        (escape_sequence)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (escape_sequence))
+      end_tag: (heredoc_end)))
   (expression_statement
     (heredoc
       identifier: (heredoc_start)
       value: (heredoc_body
-        (string_value)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (string_value))
+      end_tag: (heredoc_end)))
   (expression_statement
     (heredoc
       identifier: (heredoc_start)
       value: (heredoc_body
-        (string_value)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
-)
+        (string_value))
+      end_tag: (heredoc_end))))
 
-
-==========================
+================================================================================
 Nowdocs
-==========================
+================================================================================
 
 <?php
 
@@ -1017,108 +879,76 @@ EOF;
 $this->atlas?->go();
 EOF;
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (expression_statement
     (nowdoc
       identifier: (heredoc_start)
       value: (nowdoc_body
-        (nowdoc_string)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (nowdoc_string))
+      end_tag: (heredoc_end)))
   (expression_statement
     (nowdoc
       identifier: (heredoc_start)
-      end_tag: (heredoc_end)
-    )
-  )
+      end_tag: (heredoc_end)))
   (expression_statement
     (nowdoc
       identifier: (heredoc_start)
-      end_tag: (heredoc_end)
-    )
-  )
+      end_tag: (heredoc_end)))
   (expression_statement
     (nowdoc
       identifier: (heredoc_start)
-      end_tag: (heredoc_end)
-    )
-  )
+      end_tag: (heredoc_end)))
   (expression_statement
     (nowdoc
       identifier: (heredoc_start)
       value: (nowdoc_body
-        (nowdoc_string)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (nowdoc_string))
+      end_tag: (heredoc_end)))
   (expression_statement
     (nowdoc
       identifier: (heredoc_start)
       value: (nowdoc_body
-        (nowdoc_string)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (nowdoc_string))
+      end_tag: (heredoc_end)))
   (expression_statement
     (nowdoc
       identifier: (heredoc_start)
       value: (nowdoc_body
-        (nowdoc_string)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (nowdoc_string))
+      end_tag: (heredoc_end)))
   (expression_statement
     (nowdoc
       identifier: (heredoc_start)
       value: (nowdoc_body
-        (nowdoc_string)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (nowdoc_string))
+      end_tag: (heredoc_end)))
   (expression_statement
     (nowdoc
       identifier: (heredoc_start)
       value: (nowdoc_body
         (nowdoc_string)
         (nowdoc_string)
-        (nowdoc_string)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (nowdoc_string))
+      end_tag: (heredoc_end)))
   (expression_statement
     (nowdoc
       identifier: (heredoc_start)
       value: (nowdoc_body
-        (nowdoc_string)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (nowdoc_string))
+      end_tag: (heredoc_end)))
   (expression_statement
     (nowdoc
       identifier: (heredoc_start)
       value: (nowdoc_body
-        (nowdoc_string)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
-)
+        (nowdoc_string))
+      end_tag: (heredoc_end))))
 
-
-==============================
+================================================================================
 Unicode escape sequences
-==============================
+================================================================================
 
 <?php
 
@@ -1129,15 +959,31 @@ Unicode escape sequences
 "\u{1F602}"; // FACE WITH TEARS OF JOY emoji
 "\u{0000001F602}"; // Leading zeroes permitted
 
----
+--------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
-  (expression_statement (encapsed_string (escape_sequence))) (comment)
-  (expression_statement (encapsed_string (escape_sequence))) (comment)
-  (expression_statement (encapsed_string (escape_sequence))) (comment)
-  (expression_statement (encapsed_string (escape_sequence))) (comment)
-  (expression_statement (encapsed_string (escape_sequence))) (comment)
-  (expression_statement (encapsed_string (escape_sequence))) (comment)
-)
-
+  (expression_statement
+    (encapsed_string
+      (escape_sequence)))
+  (comment)
+  (expression_statement
+    (encapsed_string
+      (escape_sequence)))
+  (comment)
+  (expression_statement
+    (encapsed_string
+      (escape_sequence)))
+  (comment)
+  (expression_statement
+    (encapsed_string
+      (escape_sequence)))
+  (comment)
+  (expression_statement
+    (encapsed_string
+      (escape_sequence)))
+  (comment)
+  (expression_statement
+    (encapsed_string
+      (escape_sequence)))
+  (comment))

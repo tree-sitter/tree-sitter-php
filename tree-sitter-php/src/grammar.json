@@ -2,98 +2,42 @@
   "name": "php",
   "rules": {
     "program": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "text"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "php_tag"
-                },
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "ALIAS",
-                      "content": {
-                        "type": "SYMBOL",
-                        "name": "text"
-                      },
-                      "named": false,
-                      "value": "php"
-                    },
-                    {
-                      "type": "BLANK"
-                    }
-                  ]
-                },
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "STRING",
-                      "value": "?>"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "_eof"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        }
-      ]
+      "type": "REPEAT",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "text"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "php"
+          }
+        ]
+      }
     },
-    "php_tag": {
+    "_php_tag": {
       "type": "PATTERN",
       "value": "<\\?([pP][hH][pP]|=)?"
     },
-    "text_interpolation": {
+    "php": {
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "?>"
+          "type": "SYMBOL",
+          "name": "_php_tag"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_php_content"
         },
         {
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "text"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "php_tag"
+              "type": "STRING",
+              "value": "?>"
             },
             {
               "type": "SYMBOL",
@@ -104,37 +48,21 @@
       ]
     },
     "text": {
-      "type": "REPEAT1",
+      "type": "PREC_RIGHT",
+      "value": 0,
       "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "TOKEN",
-            "content": {
-              "type": "PREC",
-              "value": -1,
-              "content": {
-                "type": "PATTERN",
-                "value": "<"
-              }
-            }
-          },
-          {
-            "type": "PATTERN",
-            "value": "[^\\s<][^<]*"
-          }
-        ]
+        "type": "REPEAT1",
+        "content": {
+          "type": "PATTERN",
+          "value": "[^<]+|<"
+        }
       }
     }
   },
   "extras": [
     {
       "type": "PATTERN",
-      "value": "\\s,"
-    },
-    {
-      "type": "SYMBOL",
-      "name": "text_interpolation"
+      "value": "\\s"
     }
   ],
   "conflicts": [],
@@ -143,6 +71,10 @@
     {
       "type": "SYMBOL",
       "name": "_eof"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_php_content"
     },
     {
       "type": "SYMBOL",

@@ -7,7 +7,7 @@ Quotes in backticks
 
 --------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (expression_statement
     (shell_command_expression
@@ -23,7 +23,7 @@ Escape sequences in backticks
 
 --------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (expression_statement
     (shell_command_expression
@@ -45,13 +45,14 @@ $cmd = 'ls';
 
 --------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (expression_statement
     (assignment_expression
       (variable_name
         (name))
-      (string (string_value))))
+      (string
+        (string_value))))
   (expression_statement
     (shell_command_expression
       (variable_name
@@ -68,7 +69,7 @@ $obj->cmd = 'ls';
 
 --------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (expression_statement
     (assignment_expression
@@ -83,7 +84,8 @@ $obj->cmd = 'ls';
         (variable_name
           (name))
         (name))
-      (string (string_value))))
+      (string
+        (string_value))))
   (expression_statement
     (shell_command_expression
       (member_access_expression
@@ -101,7 +103,7 @@ $cmd = array('ls');
 
 --------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (expression_statement
     (assignment_expression
@@ -109,7 +111,8 @@ $cmd = array('ls');
         (name))
       (array_creation_expression
         (array_element_initializer
-          (string (string_value))))))
+          (string
+            (string_value))))))
   (expression_statement
     (shell_command_expression
       (subscript_expression
@@ -127,13 +130,14 @@ $cmd = 'ls';
 
 --------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (expression_statement
     (assignment_expression
       (variable_name
         (name))
-      (string (string_value))))
+      (string
+        (string_value))))
   (expression_statement
     (shell_command_expression
       (variable_name
@@ -148,7 +152,7 @@ Nesting of expression in backticks
 
 --------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (expression_statement
     (binary_expression
@@ -166,7 +170,7 @@ Nested escaped backticks
 
 --------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (expression_statement
     (shell_command_expression
@@ -183,7 +187,7 @@ Comment in backticks
 
 --------------------------------------------------------------------------------
 
-(program
+(php
   (php_tag)
   (expression_statement
     (shell_command_expression
