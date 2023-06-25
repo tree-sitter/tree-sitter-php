@@ -12,7 +12,7 @@
           },
           {
             "type": "SYMBOL",
-            "name": "php"
+            "name": "php_only"
           }
         ]
       }
@@ -21,7 +21,7 @@
       "type": "PATTERN",
       "value": "<\\?([pP][hH][pP]|=)?"
     },
-    "php": {
+    "php_only": {
       "type": "SEQ",
       "members": [
         {

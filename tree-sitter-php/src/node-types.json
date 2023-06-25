@@ -1,6 +1,6 @@
 [
   {
-    "type": "php",
+    "type": "php_only",
     "named": true,
     "fields": {}
   },
@@ -13,7 +13,7 @@
       "required": false,
       "types": [
         {
-          "type": "php",
+          "type": "php_only",
           "named": true
         },
         {

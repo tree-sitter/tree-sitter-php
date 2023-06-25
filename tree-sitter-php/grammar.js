@@ -12,12 +12,12 @@ module.exports = grammar({
   rules: {
     program: $ => repeat(choice(
       $.text,
-      $.php,
+      $.php_only,
     )),
 
     _php_tag: $ => /<\?([pP][hH][pP]|=)?/,
 
-    php: $ => seq(
+    php_only: $ => seq(
       $._php_tag,
       optional($._php_content),
       choice('?>', $._eof),
