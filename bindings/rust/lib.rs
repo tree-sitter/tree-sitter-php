@@ -19,6 +19,7 @@ use tree_sitter::Language;
 
 extern "C" {
     fn tree_sitter_php() -> Language;
+    fn tree_sitter_php_only() -> Language;
 }
 
 /// Get the tree-sitter [Language][] for this grammar.
@@ -28,17 +29,36 @@ pub fn language() -> Language {
     unsafe { tree_sitter_php() }
 }
 
+/// Get the tree-sitter [Language][] for the php_only grammar.
+///
+/// [Language]: https://docs.rs/tree-sitter/*/tree_sitter/struct.Language.html
+pub fn only_language() -> Language {
+    unsafe { tree_sitter_php_only() }
+}
+
 /// The content of the [`node-types.json`][] file for this grammar.
 ///
 /// [`node-types.json`]: https://tree-sitter.github.io/tree-sitter/using-parsers#static-node-types
-pub const NODE_TYPES: &'static str = include_str!("../../src/node-types.json");
+pub const NODE_TYPES: &'static str = include_str!("../../tree-sitter-php/src/node-types.json");
+
+pub const NODE_TYPES_ONLY: &'static str = include_str!("../../tree-sitter-php-only/src/node-types.json");
 
 // Uncomment these to include any queries that this grammar contains
 
-pub const HIGHLIGHT_QUERY: &'static str = include_str!("../../queries/highlights.scm");
-pub const INJECTIONS_QUERY: &'static str = include_str!("../../queries/injections.scm");
+pub const HIGHLIGHT_QUERY_ONLY: &'static str = include_str!("../../tree-sitter-php-only/queries/highlights.scm");
+pub const INJECTIONS_QUERY: &'static str = include_str!("../../tree-sitter-php/queries/injections.scm");
+pub const INJECTIONS_QUERY_ONLY: &'static str = include_str!("../../tree-sitter-php-only/queries/injections.scm");
 // pub const LOCALS_QUERY: &'static str = include_str!("../../queries/locals.scm");
-pub const TAGS_QUERY: &'static str = include_str!("../../queries/tags.scm");
+pub const TAGS_QUERY_ONLY: &'static str = include_str!("../../tree-sitter-php-only/queries/tags.scm");
+
+/// A parser that produces [`PHPTree`]s.
+///
+/// This is a convenience wrapper around [`language`] and [`only_language`].
+pub struct PHPParser {
+    parser: Parser,
+    language: Language,
+    only_language: Language,
+}
 
 #[cfg(test)]
 mod tests {
