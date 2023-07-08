@@ -89,7 +89,7 @@ typedef struct {
     char *data;
 } String;
 
-String string_new() {
+static String string_new() {
     return (String){.cap = 16, .len = 0, .data = calloc(1, sizeof(char) * 17)};
 }
 
@@ -104,7 +104,7 @@ typedef struct {
     Heredoc *data;
 } HeredocVec;
 
-HeredocVec vec_new() {
+static HeredocVec vec_new() {
     HeredocVec vec = {0, 0, NULL};
     vec.data = calloc(1, sizeof(Heredoc));
     vec.cap = 1;
@@ -122,18 +122,18 @@ static inline void advance(TSLexer *lexer) { lexer->advance(lexer, false); }
 
 static inline void skip(TSLexer *lexer) { lexer->advance(lexer, true); }
 
-unsigned serialize(Scanner *scanner, char *buffer) {
+static unsigned serialize(Scanner *scanner, char *buffer) {
     unsigned size = 0;
 
-    buffer[size++] = scanner->open_heredocs.len;
+    buffer[size++] = (char)scanner->open_heredocs.len;
     for (unsigned j = 0; j < scanner->open_heredocs.len; j++) {
         Heredoc *heredoc = &scanner->open_heredocs.data[j];
         if (size + 2 + heredoc->word.len >=
             TREE_SITTER_SERIALIZATION_BUFFER_SIZE) {
             return 0;
         }
-        buffer[size++] = heredoc->end_word_indentation_allowed;
-        buffer[size++] = heredoc->word.len;
+        buffer[size++] = (char)heredoc->end_word_indentation_allowed;
+        buffer[size++] = (char)heredoc->word.len;
         memcpy(&buffer[size], heredoc->word.data, heredoc->word.len);
         size += heredoc->word.len;
     }
@@ -141,13 +141,14 @@ unsigned serialize(Scanner *scanner, char *buffer) {
     return size;
 }
 
-void deserialize(Scanner *scanner, const char *buffer, unsigned length) {
+static void deserialize(Scanner *scanner, const char *buffer, unsigned length) {
     unsigned size = 0;
     scanner->has_leading_whitespace = false;
     VEC_CLEAR(scanner->open_heredocs);
 
-    if (length == 0)
+    if (length == 0) {
         return;
+    }
 
     uint8_t open_heredoc_count = buffer[size++];
     for (unsigned j = 0; j < open_heredoc_count; j++) {
@@ -238,8 +239,9 @@ static inline bool scan_nowdoc_string(Scanner *scanner, TSLexer *lexer) {
     bool end_tag_matched = false;
 
     for (int i = 0; i < heredoc_tag.len; i++) {
-        if (lexer->lookahead != heredoc_tag.data[i])
+        if (lexer->lookahead != heredoc_tag.data[i]) {
             break;
+        }
         advance(lexer);
         has_consumed_content = true;
 
@@ -275,8 +277,9 @@ static inline bool scan_nowdoc_string(Scanner *scanner, TSLexer *lexer) {
             case '\r':
                 return has_content;
             default:
-                if (lexer->eof(lexer))
+                if (lexer->eof(lexer)) {
                     return false;
+                }
                 advance(lexer);
         }
     }
@@ -284,9 +287,9 @@ static inline bool scan_nowdoc_string(Scanner *scanner, TSLexer *lexer) {
     return false;
 }
 
-bool scan_encapsed_part_string(Scanner *scanner, TSLexer *lexer,
-                               bool is_after_variable, bool is_heredoc,
-                               bool is_execution_string) {
+static bool scan_encapsed_part_string(Scanner *scanner, TSLexer *lexer,
+                                      bool is_after_variable, bool is_heredoc,
+                                      bool is_execution_string) {
     bool has_consumed_content = false;
 
     if (is_heredoc && scanner->open_heredocs.len > 0) {
@@ -304,8 +307,9 @@ bool scan_encapsed_part_string(Scanner *scanner, TSLexer *lexer,
         bool end_tag_matched = false;
 
         for (int i = 0; i < heredoc_tag.len; i++) {
-            if (lexer->lookahead != heredoc_tag.data[i])
+            if (lexer->lookahead != heredoc_tag.data[i]) {
                 break;
+            }
             has_consumed_content = true;
             advance(lexer);
 
@@ -413,8 +417,9 @@ bool scan_encapsed_part_string(Scanner *scanner, TSLexer *lexer,
                 }
                 break;
             default:
-                if (lexer->eof(lexer))
+                if (lexer->eof(lexer)) {
                     return false;
+                }
                 advance(lexer);
         }
 
@@ -424,7 +429,7 @@ bool scan_encapsed_part_string(Scanner *scanner, TSLexer *lexer,
     return false;
 }
 
-String scan_heredoc_word(TSLexer *lexer) {
+static String scan_heredoc_word(TSLexer *lexer) {
     String result = string_new();
 
     while (is_valid_name_char(lexer)) {
@@ -435,7 +440,7 @@ String scan_heredoc_word(TSLexer *lexer) {
     return result;
 }
 
-bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
+static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
     const bool is_error_recovery = valid_symbols[SENTINEL_ERROR];
 
     if (is_error_recovery) {
@@ -502,8 +507,9 @@ bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
 
     if (valid_symbols[HEREDOC_END]) {
         lexer->result_symbol = HEREDOC_END;
-        if (scanner->open_heredocs.len == 0)
+        if (scanner->open_heredocs.len == 0) {
             return false;
+        }
 
         Heredoc heredoc = VEC_BACK(scanner->open_heredocs);
 
@@ -523,8 +529,9 @@ bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
         return true;
     }
 
-    if (!scan_whitespace(lexer))
+    if (!scan_whitespace(lexer)) {
         return false;
+    }
 
     if (valid_symbols[EOF_TOKEN] && lexer->eof(lexer)) {
         lexer->result_symbol = EOF_TOKEN;
@@ -553,8 +560,9 @@ bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
     if (valid_symbols[AUTOMATIC_SEMICOLON]) {
         lexer->result_symbol = AUTOMATIC_SEMICOLON;
 
-        if (lexer->lookahead != '?')
+        if (lexer->lookahead != '?') {
             return false;
+        }
 
         advance(lexer);
 
