@@ -58,15 +58,10 @@ module.exports = grammar({
   word: $ => $.name,
 
   conflicts: $ => [
-    [$.simple_parameter, $.name],
-    [$.variadic_parameter, $.name],
-    [$.static_modifier, $._reserved_identifier],
-
     [$._array_destructing, $.array_creation_expression],
     [$._array_destructing_element, $.array_element_initializer],
     [$._primary_expression, $._array_destructing_element],
 
-    [$.union_type, $._return_type],
     [$.union_type, $.intersection_type],
     [$.intersection_type],
     [$.if_statement],

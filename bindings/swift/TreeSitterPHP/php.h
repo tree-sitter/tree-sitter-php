@@ -13,4 +13,4 @@ extern TSLanguage *tree_sitter_php();
 }
 #endif
 
-#endif // TREE_SITTER_PHP_H_ 
+#endif // TREE_SITTER_PHP_H_
