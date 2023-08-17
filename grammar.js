@@ -70,7 +70,7 @@ module.exports = grammar({
     [$.heredoc_body],
 
     [$.namespace_name_as_prefix],
-    [$.namespace_use_declaration, $.namespace_name_as_prefix]
+    [$.namespace_use_declaration, $.namespace_name_as_prefix],
   ],
 
   inline: $ => [
@@ -1492,11 +1492,7 @@ module.exports = grammar({
 })
 
 function keyword(word, aliasAsWord = true) {
-  let pattern = ''
-  for (const letter of word) {
-    pattern += `[${letter}${letter.toLocaleUpperCase()}]`
-  }
-  let result = new RegExp(pattern)
+  let result = new RegExp(word, 'i')
   if (aliasAsWord) result = alias(result, word)
   return result
 }
