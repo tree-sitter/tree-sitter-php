@@ -37,7 +37,7 @@
 
 #define VEC_CLEAR(vec)                                                         \
     {                                                                          \
-        for (int i = 0; i < (vec).len; i++) {                                  \
+        for (uint32_t i = 0; i < (vec).len; i++) {                             \
             STRING_FREE((vec).data[i].word);                                   \
         }                                                                      \
         (vec).len = 0;                                                         \
@@ -238,7 +238,7 @@ static inline bool scan_nowdoc_string(Scanner *scanner, TSLexer *lexer) {
 
     bool end_tag_matched = false;
 
-    for (int i = 0; i < heredoc_tag.len; i++) {
+    for (uint32_t i = 0; i < heredoc_tag.len; i++) {
         if (lexer->lookahead != heredoc_tag.data[i]) {
             break;
         }
@@ -306,7 +306,7 @@ static bool scan_encapsed_part_string(Scanner *scanner, TSLexer *lexer,
 
         bool end_tag_matched = false;
 
-        for (int i = 0; i < heredoc_tag.len; i++) {
+        for (uint32_t i = 0; i < heredoc_tag.len; i++) {
             if (lexer->lookahead != heredoc_tag.data[i]) {
                 break;
             }
