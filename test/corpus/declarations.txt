@@ -405,7 +405,7 @@ function a() {
         (visibility_modifier)
         type: (union_type (primitive_type))
         (property_element (variable_name (name))
-          (property_initializer (string (string_value)))
+          (property_initializer (string))
         )
       )
       (method_declaration
@@ -580,7 +580,7 @@ function a() {
         type: (union_type (primitive_type))
         (property_element
           (variable_name (name))
-          (property_initializer (string (string_value)))
+          (property_initializer (string))
         )
       )
     )

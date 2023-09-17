@@ -1284,11 +1284,11 @@ module.exports = grammar({
         /[bB]'/,
         "'"
       ),
-      $.string_value,
+      optional($.string_value),
       "'",
     ),
 
-    string_value: $ => token(prec(1, repeat(/\\'|\\\\|\\?[^'\\]/))), // prec(1, ...) is needed to avoid conflict with $.comment
+    string_value: _ => token(prec(1, repeat1(/\\'|\\\\|\\?[^'\\]/))), // prec(1, ...) is needed to avoid conflict with $.comment
 
     heredoc_body: $ => seq($._new_line,
       repeat1(prec.right(

@@ -7139,8 +7139,16 @@
           ]
         },
         {
-          "type": "SYMBOL",
-          "name": "string_value"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "string_value"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "STRING",
@@ -7154,7 +7162,7 @@
         "type": "PREC",
         "value": 1,
         "content": {
-          "type": "REPEAT",
+          "type": "REPEAT1",
           "content": {
             "type": "PATTERN",
             "value": "\\\\'|\\\\\\\\|\\\\?[^'\\\\]"
