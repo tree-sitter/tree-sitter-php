@@ -1220,12 +1220,24 @@
                     {
                       "type": "SYMBOL",
                       "name": "abstract_modifier"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "readonly_modifier"
                     }
                   ]
+                }
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "modifier",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "readonly_modifier"
                 }
               },
               {

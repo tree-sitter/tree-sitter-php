@@ -778,6 +778,9 @@ Readonly class
 readonly class Test {
 }
 
+final readonly class Test2 {
+}
+
 ---
 
 (program
@@ -785,9 +788,12 @@ readonly class Test {
   (class_declaration
     (readonly_modifier)
     (name)
-    (declaration_list)
-  )
-)
+    (declaration_list))
+  (class_declaration
+    (final_modifier)
+    (readonly_modifier)
+    (name)
+    (declaration_list)))
 
 =========================================
 Constants in trait
