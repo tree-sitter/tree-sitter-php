@@ -373,6 +373,14 @@ class A {
 function a() {
 }
 
+class B {
+  public function __construct(
+    #[A]
+    public string $a,
+  ) {
+  }
+}
+
 ---
 
 (program
@@ -605,7 +613,25 @@ function a() {
     )
     name: (name)
     parameters: (formal_parameters)
-    body: (compound_statement)
+    body: (compound_statement))
+    (class_declaration
+      name: (name)
+      body: (declaration_list
+        (method_declaration
+          (visibility_modifier)
+          name: (name)
+          parameters: (formal_parameters
+            (property_promotion_parameter
+              attributes: (attribute_list
+                (attribute_group
+                  (attribute
+                    (name))))
+              visibility: (visibility_modifier)
+              type: (union_type
+                (primitive_type))
+              name: (variable_name
+                (name))))
+          body: (compound_statement)))
   )
 )
 
