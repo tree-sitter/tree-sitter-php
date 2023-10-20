@@ -15,5 +15,6 @@ try {
 }
 
 try {
-  module.exports.nodeTypeInfo = require("../../src/node-types.json");
+  module.exports.php.nodeTypeInfo = require("../../php/src/node-types.json");
+  module.exports.php_only.nodeTypeInfo = require("../../php_only/src/node-types.json");
 } catch (_) {}

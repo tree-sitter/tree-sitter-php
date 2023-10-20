@@ -11,27 +11,17 @@ let package = Package(
         .target(name: "TreeSitterPHP",
                 path: ".",
                 exclude: [
-                    "binding.gyp",
-                    "bindings",
-                    "Cargo.toml",
-                    "corpus",
-                    "grammar.js",
-                    "LICENSE",
-                    "Makefile",
-                    "package.json",
-                    "README.md",
-                    "script",
-                    "src/grammar.json",
-                    "src/node-types.json",
                 ],
                 sources: [
-                    "src/parser.c",
-                    "src/scanner.c",
+                    "php/src/parser.c",
+                    "php/src/scanner.c",
+                    "php_only/src/parser.c",
+                    "php_only/src/scanner.c",
                 ],
                 resources: [
                     .copy("queries")
                 ],
                 publicHeadersPath: "bindings/swift",
-                cSettings: [.headerSearchPath("src")])
+                cSettings: [.headerSearchPath("php/src")])
     ]
 )

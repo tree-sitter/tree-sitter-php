@@ -1,15 +1,14 @@
 VERSION := 0.19.0
 
-# Repository
-SRC_DIR := src
-
-PARSER_REPO_URL := $(shell git -C $(SRC_DIR) remote get-url origin )
+PARSER_REPO_URL := $(shell git -C $(PWD) remote get-url origin )
 
 ifeq (, $(PARSER_NAME))
 	PARSER_NAME := $(shell basename $(PARSER_REPO_URL))
 	PARSER_NAME := $(subst tree-sitter-,,$(PARSER_NAME))
 	PARSER_NAME := $(subst .git,,$(PARSER_NAME))
 endif
+
+SRC_DIR := $(PARSER_NAME)/src
 
 ifeq (, $(PARSER_URL))
 	PARSER_URL := $(subst :,/,$(PARSER_REPO_URL))
@@ -29,7 +28,7 @@ PCLIBDIR ?= $(LIBDIR)/pkgconfig
 CPPSRC := $(wildcard $(SRC_DIR)/*.cc)
 
 ifeq (, $(CPPSRC))
-	ADDITIONALLIBS := 
+	ADDITIONALLIBS :=
 else
 	ADDITIONALLIBS := -lc++
 endif
@@ -71,7 +70,7 @@ endif
 ifneq (,$(filter $(shell uname),FreeBSD NetBSD DragonFly))
 	PCLIBDIR := $(PREFIX)/libdata/pkgconfig
 endif
-				
+
 all: libtree-sitter-$(PARSER_NAME).a libtree-sitter-$(PARSER_NAME).$(SOEXTVER) bindings/c/$(PARSER_NAME).h bindings/c/tree-sitter-$(PARSER_NAME).pc
 
 libtree-sitter-$(PARSER_NAME).a: $(OBJ)

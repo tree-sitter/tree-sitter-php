@@ -19,19 +19,28 @@ use tree_sitter::Language;
 
 extern "C" {
     fn tree_sitter_php() -> Language;
+    fn tree_sitter_php_only() -> Language;
 }
 
 /// Get the tree-sitter [Language][] for this grammar.
 ///
 /// [Language]: https://docs.rs/tree-sitter/*/tree_sitter/struct.Language.html
-pub fn language() -> Language {
+pub fn language_php() -> Language {
     unsafe { tree_sitter_php() }
+}
+
+/// Get the tree-sitter [Language][] for this grammar.
+///
+/// [Language]: https://docs.rs/tree-sitter/*/tree_sitter/struct.Language.html
+pub fn language_php_only() -> Language {
+    unsafe { tree_sitter_php_only() }
 }
 
 /// The content of the [`node-types.json`][] file for this grammar.
 ///
 /// [`node-types.json`]: https://tree-sitter.github.io/tree-sitter/using-parsers#static-node-types
-pub const NODE_TYPES: &'static str = include_str!("../../src/node-types.json");
+pub const PHP_NODE_TYPES: &'static str = include_str!("../../php/src/node-types.json");
+pub const PHP_ONLY_NODE_TYPES: &'static str = include_str!("../../php_only/src/node-types.json");
 
 // Uncomment these to include any queries that this grammar contains
 

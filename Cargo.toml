@@ -9,7 +9,15 @@ edition = "2021"
 license = "MIT"
 
 build = "bindings/rust/build.rs"
-include = ["bindings/rust/*", "grammar.js", "queries/*", "src/*"]
+include = [
+    "common",
+    "bindings/rust",
+    "php/grammar.js",
+    "php/src",
+    "php_only/grammar.js",
+    "php_only/src",
+    "queries",
+]
 
 [lib]
 path = "bindings/rust/lib.rs"

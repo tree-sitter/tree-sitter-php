@@ -4,11 +4,13 @@
       "target_name": "tree_sitter_php_binding",
       "include_dirs": [
         "<!(node -e \"require('nan')\")",
-        "src"
+        "php/src"
       ],
       "sources": [
-        "src/parser.c",
-        "src/scanner.c",
+        "php/src/parser.c",
+        "php/src/scanner.c",
+        "php_only/src/parser.c",
+        "php_only/src/scanner.c",
         "bindings/node/binding.cc"
       ],
       "cflags_c": [

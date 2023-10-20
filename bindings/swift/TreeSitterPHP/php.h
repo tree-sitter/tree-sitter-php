@@ -8,6 +8,7 @@ extern "C" {
 #endif
 
 extern TSLanguage *tree_sitter_php();
+extern TSLanguage *tree_sitter_php_only();
 
 #ifdef __cplusplus
 }
