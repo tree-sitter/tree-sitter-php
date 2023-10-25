@@ -771,7 +771,7 @@ module.exports = grammar({
       )
     ),
 
-    match_condition_list: $ => commaSep1($._expression),
+    match_condition_list: $ => seq(commaSep1($._expression), optional(',')),
 
     match_conditional_expression: $ => seq(
       field('conditional_expressions', $.match_condition_list),

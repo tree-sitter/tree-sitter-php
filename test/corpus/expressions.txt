@@ -1053,6 +1053,7 @@ Match expressions
 
 $statement = match ($a) {
     Lexer::T_SELECT, $c => $b,
+    Lexer::FOO, $c, => $b,
     Lexer::T_UPDATE => updateStatement(),
     Lexer::T_DELETE => $this->DeleteStatement(),
     default => $this->syntaxError('SELECT, UPDATE or DELETE'),
@@ -1068,6 +1069,16 @@ $statement = match ($a) {
       (match_expression
         (parenthesized_expression (variable_name (name)))
         (match_block
+          (match_conditional_expression
+            (match_condition_list
+              (class_constant_access_expression
+                (name)
+                (name)
+              )
+              (variable_name (name))
+            )
+            (variable_name (name))
+          )
           (match_conditional_expression
             (match_condition_list
               (class_constant_access_expression
