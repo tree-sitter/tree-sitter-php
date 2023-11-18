@@ -1,14 +1,6 @@
-package-lock.json
+Cargo.lock
 node_modules
 build
-*.log
-.DS_Store
-examples
-
-*.a
-*.dylib
-*.so
-*.o
-bindings/c/*.h
-bindings/c/tree-sitter-*.pc
+package-lock.json
+/target/
 .build/
