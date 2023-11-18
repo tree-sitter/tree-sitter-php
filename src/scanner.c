@@ -1,9 +1,8 @@
+#include "tree_sitter/parser.h"
+
 #include <assert.h>
 #include <ctype.h>
-#include <stdint.h>
-#include <stdio.h>
 #include <string.h>
-#include <tree_sitter/parser.h>
 #include <wctype.h>
 
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
