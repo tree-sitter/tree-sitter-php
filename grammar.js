@@ -116,7 +116,7 @@ module.exports = grammar({
       )),
     ),
 
-    php_tag: $ => /<\?([pP][hH][pP]|=)?/,
+    php_tag: _ => /<\?([pP][hH][pP]|=)?/,
 
     text_interpolation: $ => seq(
       '?>',
@@ -124,7 +124,7 @@ module.exports = grammar({
       choice($.php_tag, $._eof),
     ),
 
-    text: $ => repeat1(choice(
+    text: _ => repeat1(choice(
       token(prec(-1, /</)),
       /[^\s<][^<]*/,
     )),
@@ -160,9 +160,9 @@ module.exports = grammar({
       $.function_static_declaration,
     ),
 
-    empty_statement: $ => prec(-1, ';'),
+    empty_statement: _ => prec(-1, ';'),
 
-    reference_modifier: $ => token('&'),
+    reference_modifier: _ => '&',
 
     function_static_declaration: $ => seq(
       keyword('static'),
@@ -315,9 +315,9 @@ module.exports = grammar({
       '}',
     ),
 
-    final_modifier: $ => keyword('final'),
-    abstract_modifier: $ => keyword('abstract'),
-    readonly_modifier: $ => keyword('readonly'),
+    final_modifier: _ => keyword('final'),
+    abstract_modifier: _ => keyword('abstract'),
+    readonly_modifier: _ => keyword('readonly'),
 
     class_interface_clause: $ => seq(
       keyword('implements'),
@@ -381,8 +381,8 @@ module.exports = grammar({
       ),
     ),
 
-    var_modifier: $ => keyword('var', false),
-    static_modifier: $ => keyword('static'),
+    var_modifier: _ => keyword('var', false),
+    static_modifier: _ => keyword('static'),
 
     use_declaration: $ => seq(
       keyword('use'),
@@ -423,7 +423,7 @@ module.exports = grammar({
       ),
     ),
 
-    visibility_modifier: $ => choice(
+    visibility_modifier: _ => choice(
       keyword('public'),
       keyword('protected'),
       keyword('private'),
@@ -514,13 +514,13 @@ module.exports = grammar({
       ),
     ),
 
-    bottom_type: $ => 'never',
+    bottom_type: _ => 'never',
 
     union_type: $ => prec.right(pipeSep1($._types)),
 
     intersection_type: $ => ampSep1($._types),
 
-    primitive_type: $ => choice(
+    primitive_type: _ => choice(
       'array',
       keyword('callable'), // not legal in property types
       'iterable',
@@ -536,7 +536,7 @@ module.exports = grammar({
       'true',
     ),
 
-    cast_type: $ => choice(
+    cast_type: _ => choice(
       keyword('array', false),
       keyword('binary', false),
       keyword('bool', false),
@@ -587,7 +587,7 @@ module.exports = grammar({
       $.null,
     ),
 
-    float: $ => /\d*(_\d+)*((\.\d*(_\d+)*)?([eE][\+-]?\d+(_\d+)*)|(\.\d*(_\d+)*)([eE][\+-]?\d+(_\d+)*)?)/,
+    float: _ => /\d*(_\d+)*((\.\d*(_\d+)*)?([eE][\+-]?\d+(_\d+)*)|(\.\d*(_\d+)*)([eE][\+-]?\d+(_\d+)*)?)/,
 
     try_statement: $ => seq(
       keyword('try'),
@@ -623,7 +623,7 @@ module.exports = grammar({
       keyword('break'), optional($._expression), $._semicolon,
     ),
 
-    integer: $ => {
+    integer: _ => {
       const decimal = /[1-9]\d*(_\d+)*/;
       const octal = /0[oO]?[0-7]*(_[0-7]+)*/;
       const hex = /0[xX][0-9a-fA-F]+(_[0-9a-fA-F]+)*/;
@@ -1098,8 +1098,6 @@ module.exports = grammar({
       $._string,
     ),
 
-    parenthesized_expression: $ => seq('(', $._expression, ')'),
-
     scoped_call_expression: $ => prec(PREC.CALL, seq(
       field('scope', $._scope_resolution_qualifier),
       '::',
@@ -1115,13 +1113,13 @@ module.exports = grammar({
       $._dereferencable_expression,
     ),
 
-    relative_scope: $ => prec(PREC.SCOPE, choice(
+    relative_scope: _ => prec(PREC.SCOPE, choice(
       'self',
       'parent',
       keyword('static'),
     )),
 
-    variadic_placeholder: $ => token('...'),
+    variadic_placeholder: _ => '...',
 
     arguments: $ => seq(
       '(',
@@ -1242,7 +1240,7 @@ module.exports = grammar({
 
     // Note: remember to also update the is_escapable_sequence method in the
     // external scanner whenever changing these rules
-    escape_sequence: $ => token.immediate(seq(
+    escape_sequence: _ => token.immediate(seq(
       '\\',
       choice(
         'n',
@@ -1332,7 +1330,8 @@ module.exports = grammar({
       ),
     ),
 
-    _new_line: $ => choice(token(/\r?\n/), token(/\r/)),
+    // _new_line: _ => choice(token(/\r?\n/), token(/\r/)),
+    _new_line: _ => /\r?\n|\r/,
 
     nowdoc_body: $ => seq($._new_line,
       choice(
@@ -1378,9 +1377,9 @@ module.exports = grammar({
       '`',
     ),
 
-    boolean: $ => /[Tt][Rr][Uu][Ee]|[Ff][Aa][Ll][Ss][Ee]/,
+    boolean: _ => /true|false/i,
 
-    null: $ => keyword('null', false),
+    null: _ => keyword('null', false),
 
     _string: $ => choice($.encapsed_string, $.string, $.heredoc, $.nowdoc),
 
@@ -1455,8 +1454,10 @@ module.exports = grammar({
         ['*', PREC.TIMES],
         ['/', PREC.TIMES],
         ['%', PREC.TIMES],
+      // @ts-ignore
       ].map(([op, p]) => prec.left(p, seq(
         field('left', $._expression),
+        // @ts-ignore
         field('operator', op),
         field('right', $._expression),
       ))),
@@ -1482,15 +1483,15 @@ module.exports = grammar({
       $._expression,
     ),
 
-    name: $ => /[_a-zA-Z\u00A1-\u00ff][_a-zA-Z\u00A1-\u00ff\d]*/,
+    name: _ => /[_a-zA-Z\u00A1-\u00ff][_a-zA-Z\u00A1-\u00ff\d]*/,
 
-    _reserved_identifier: $ => choice(
+    _reserved_identifier: _ => choice(
       'self',
       'parent',
       keyword('static'),
     ),
 
-    comment: $ => token(choice(
+    comment: _ => token(choice(
       seq(
         choice('//', /#[^?\[?\r?\n]/),
         repeat(/[^?\r?\n]|\?[^>\r\n]/),
@@ -1508,24 +1509,64 @@ module.exports = grammar({
   },
 });
 
+/**
+ * Creates a regex that matches the given word case-insensitively,
+ * and will alias the regex to the word if aliasAsWord is true
+ *
+ * @param {string} word
+ * @param {boolean} aliasAsWord?
+ *
+ * @return {RegExp|AliasRule}
+ */
 function keyword(word, aliasAsWord = true) {
+  /** @type {RegExp|AliasRule} */
   let result = new RegExp(word, 'i');
   if (aliasAsWord) result = alias(result, word);
   return result;
 }
 
+/**
+ * Creates a rule to match one or more of the rules separated by a comma
+ *
+ * @param {Rule} rule
+ *
+ * @return {SeqRule}
+ *
+ */
 function commaSep1(rule) {
   return seq(rule, repeat(seq(',', rule)));
 }
 
+/**
+ * Creates a rule to optionally match one or more of the rules separated by a comma
+ *
+ * @param {Rule} rule
+ *
+ * @return {ChoiceRule}
+ *
+ */
 function commaSep(rule) {
   return optional(commaSep1(rule));
 }
 
+/**
+ * Creates a rule to match one or more of the rules separated by a pipe
+ *
+ * @param {Rule} rule
+ *
+ * @return {SeqRule}
+ */
 function pipeSep1(rule) {
   return seq(rule, repeat(seq('|', rule)));
 }
 
+/**
+ * Creates a rule to  match one or more of the rules separated by an ampersand
+ *
+ * @param {Rule} rule
+ *
+ * @return {SeqRule}
+ */
 function ampSep1(rule) {
   return seq(rule, repeat(seq(token('&'), rule)));
 }
