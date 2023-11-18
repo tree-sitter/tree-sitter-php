@@ -8,64 +8,63 @@
 
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 
-#define VEC_RESIZE(vec, _cap)                                                  \
-    void *tmp = realloc((vec).data, (_cap) * sizeof((vec).data[0]));           \
-    assert(tmp != NULL);                                                       \
-    (vec).data = tmp;                                                          \
-    assert((vec).data != NULL);                                                \
+#define VEC_RESIZE(vec, _cap)                                                                                          \
+    void *tmp = realloc((vec).data, (_cap) * sizeof((vec).data[0]));                                                   \
+    assert(tmp != NULL);                                                                                               \
+    (vec).data = tmp;                                                                                                  \
+    assert((vec).data != NULL);                                                                                        \
     (vec).cap = (_cap);
 
-#define VEC_PUSH(vec, el)                                                      \
-    if ((vec).cap == (vec).len) {                                              \
-        VEC_RESIZE((vec), MAX(16, (vec).len * 2));                             \
-    }                                                                          \
+#define VEC_PUSH(vec, el)                                                                                              \
+    if ((vec).cap == (vec).len) {                                                                                      \
+        VEC_RESIZE((vec), MAX(16, (vec).len * 2));                                                                     \
+    }                                                                                                                  \
     (vec).data[(vec).len++] = (el);
 
-#define VEC_POP(vec)                                                           \
-    {                                                                          \
-        STRING_FREE(VEC_BACK((vec)).word);                                     \
-        (vec).len--;                                                           \
+#define VEC_POP(vec)                                                                                                   \
+    {                                                                                                                  \
+        STRING_FREE(VEC_BACK((vec)).word);                                                                             \
+        (vec).len--;                                                                                                   \
     }
 
 #define VEC_BACK(vec) ((vec).data[(vec).len - 1])
 
-#define VEC_FREE(vec)                                                          \
-    {                                                                          \
-        if ((vec).data != NULL)                                                \
-            free((vec).data);                                                  \
+#define VEC_FREE(vec)                                                                                                  \
+    {                                                                                                                  \
+        if ((vec).data != NULL)                                                                                        \
+            free((vec).data);                                                                                          \
     }
 
-#define VEC_CLEAR(vec)                                                         \
-    {                                                                          \
-        for (uint32_t i = 0; i < (vec).len; i++) {                             \
-            STRING_FREE((vec).data[i].word);                                   \
-        }                                                                      \
-        (vec).len = 0;                                                         \
+#define VEC_CLEAR(vec)                                                                                                 \
+    {                                                                                                                  \
+        for (uint32_t i = 0; i < (vec).len; i++) {                                                                     \
+            STRING_FREE((vec).data[i].word);                                                                           \
+        }                                                                                                              \
+        (vec).len = 0;                                                                                                 \
     }
 
-#define STRING_RESIZE(vec, _cap)                                               \
-    void *tmp = realloc((vec).data, (_cap + 1) * sizeof((vec).data[0]));       \
-    assert(tmp != NULL);                                                       \
-    (vec).data = tmp;                                                          \
-    memset((vec).data + (vec).len, 0,                                          \
-           ((_cap + 1) - (vec).len) * sizeof((vec).data[0]));                  \
+#define STRING_RESIZE(vec, _cap)                                                                                       \
+    void *tmp = realloc((vec).data, (_cap + 1) * sizeof((vec).data[0]));                                               \
+    assert(tmp != NULL);                                                                                               \
+    (vec).data = tmp;                                                                                                  \
+    memset((vec).data + (vec).len, 0, ((_cap + 1) - (vec).len) * sizeof((vec).data[0]));                               \
     (vec).cap = (_cap);
 
-#define STRING_GROW(vec, _cap)                                                 \
-    if ((vec).cap < (_cap)) {                                                  \
-        STRING_RESIZE((vec), (_cap));                                          \
+#define STRING_GROW(vec, _cap)                                                                                         \
+    if ((vec).cap < (_cap)) {                                                                                          \
+        STRING_RESIZE((vec), (_cap));                                                                                  \
     }
 
-#define STRING_PUSH(vec, el)                                                   \
-    if ((vec).cap == (vec).len) {                                              \
-        STRING_RESIZE((vec), MAX(16, (vec).len * 2));                          \
-    }                                                                          \
+#define STRING_PUSH(vec, el)                                                                                           \
+    if ((vec).cap == (vec).len) {                                                                                      \
+        STRING_RESIZE((vec), MAX(16, (vec).len * 2));                                                                  \
+    }                                                                                                                  \
     (vec).data[(vec).len++] = (el);
 
-#define STRING_FREE(vec)                                                       \
-    {                                                                          \
-        if ((vec).data != NULL)                                                \
-            free((vec).data);                                                  \
+#define STRING_FREE(vec)                                                                                               \
+    {                                                                                                                  \
+        if ((vec).data != NULL)                                                                                        \
+            free((vec).data);                                                                                          \
     }
 
 enum TokenType {
@@ -89,9 +88,7 @@ typedef struct {
     char *data;
 } String;
 
-static String string_new() {
-    return (String){.cap = 16, .len = 0, .data = calloc(1, sizeof(char) * 17)};
-}
+static String string_new() { return (String){.cap = 16, .len = 0, .data = calloc(1, sizeof(char) * 17)}; }
 
 typedef struct {
     String word;
@@ -128,8 +125,7 @@ static unsigned serialize(Scanner *scanner, char *buffer) {
     buffer[size++] = (char)scanner->open_heredocs.len;
     for (unsigned j = 0; j < scanner->open_heredocs.len; j++) {
         Heredoc *heredoc = &scanner->open_heredocs.data[j];
-        if (size + 2 + heredoc->word.len >=
-            TREE_SITTER_SERIALIZATION_BUFFER_SIZE) {
+        if (size + 2 + heredoc->word.len >= TREE_SITTER_SERIALIZATION_BUFFER_SIZE) {
             return 0;
         }
         buffer[size++] = (char)heredoc->end_word_indentation_allowed;
@@ -187,18 +183,15 @@ static inline bool scan_whitespace(TSLexer *lexer) {
     }
 }
 
-static inline bool is_valid_name_char(TSLexer *lexer) {
-    return iswalpha(lexer->lookahead) || lexer->lookahead == '_';
-}
+static inline bool is_valid_name_char(TSLexer *lexer) { return iswalpha(lexer->lookahead) || lexer->lookahead == '_'; }
 
 static inline bool is_escapable_sequence(TSLexer *lexer) {
     // Note: remember to also update the escape_sequence rule in the
     // main grammar whenever changing this method
     int32_t letter = lexer->lookahead;
 
-    if (letter == 'n' || letter == 'r' || letter == 't' || letter == 'v' ||
-        letter == 'e' || letter == 'f' || letter == '\\' || letter == '$' ||
-        letter == '"') {
+    if (letter == 'n' || letter == 'r' || letter == 't' || letter == 'v' || letter == 'e' || letter == 'f' ||
+        letter == '\\' || letter == '$' || letter == '"') {
         return true;
     }
 
@@ -217,8 +210,7 @@ static inline bool is_escapable_sequence(TSLexer *lexer) {
     }
 
     // Octal
-    return iswdigit(lexer->lookahead) && lexer->lookahead >= '0' &&
-           lexer->lookahead <= '7';
+    return iswdigit(lexer->lookahead) && lexer->lookahead >= '0' && lexer->lookahead <= '7';
 }
 
 static inline bool scan_nowdoc_string(Scanner *scanner, TSLexer *lexer) {
@@ -245,24 +237,20 @@ static inline bool scan_nowdoc_string(Scanner *scanner, TSLexer *lexer) {
         advance(lexer);
         has_consumed_content = true;
 
-        end_tag_matched =
-            (i == heredoc_tag.len - 1 &&
-             (iswspace(lexer->lookahead) || lexer->lookahead == ';' ||
-              lexer->lookahead == ',' || lexer->lookahead == ')'));
+        end_tag_matched = (i == heredoc_tag.len - 1 && (iswspace(lexer->lookahead) || lexer->lookahead == ';' ||
+                                                        lexer->lookahead == ',' || lexer->lookahead == ')'));
     }
 
     if (end_tag_matched) {
         // There may be an arbitrary amount of white space after the end tag
-        while (iswspace(lexer->lookahead) && lexer->lookahead != '\r' &&
-               lexer->lookahead != '\n') {
+        while (iswspace(lexer->lookahead) && lexer->lookahead != '\r' && lexer->lookahead != '\n') {
             advance(lexer);
             has_consumed_content = true;
         }
 
         // Return to allow the end tag parsing if we've encountered an end tag
         // at a valid position
-        if (lexer->lookahead == ';' || lexer->lookahead == ',' ||
-            lexer->lookahead == ')' || lexer->lookahead == '\n' ||
+        if (lexer->lookahead == ';' || lexer->lookahead == ',' || lexer->lookahead == ')' || lexer->lookahead == '\n' ||
             lexer->lookahead == '\r') {
             // , and ) is needed to support heredoc in function arguments
             return false;
@@ -287,8 +275,7 @@ static inline bool scan_nowdoc_string(Scanner *scanner, TSLexer *lexer) {
     return false;
 }
 
-static bool scan_encapsed_part_string(Scanner *scanner, TSLexer *lexer,
-                                      bool is_after_variable, bool is_heredoc,
+static bool scan_encapsed_part_string(Scanner *scanner, TSLexer *lexer, bool is_after_variable, bool is_heredoc,
                                       bool is_execution_string) {
     bool has_consumed_content = false;
 
@@ -296,8 +283,7 @@ static bool scan_encapsed_part_string(Scanner *scanner, TSLexer *lexer,
         // While PHP requires the heredoc end tag to be the very first on a new
         // line, there may be an arbitrary amount of whitespace before the
         // closing token However, we should not consume \r or \n
-        while (iswspace(lexer->lookahead) && lexer->lookahead != '\r' &&
-               lexer->lookahead != '\n') {
+        while (iswspace(lexer->lookahead) && lexer->lookahead != '\r' && lexer->lookahead != '\n') {
             advance(lexer);
             has_consumed_content = true;
         }
@@ -313,26 +299,22 @@ static bool scan_encapsed_part_string(Scanner *scanner, TSLexer *lexer,
             has_consumed_content = true;
             advance(lexer);
 
-            end_tag_matched =
-                (i == heredoc_tag.len - 1 &&
-                 (iswspace(lexer->lookahead) || lexer->lookahead == ';' ||
-                  lexer->lookahead == ',' || lexer->lookahead == ')'));
+            end_tag_matched = (i == heredoc_tag.len - 1 && (iswspace(lexer->lookahead) || lexer->lookahead == ';' ||
+                                                            lexer->lookahead == ',' || lexer->lookahead == ')'));
         }
 
         if (end_tag_matched) {
             // There may be an arbitrary amount of white space after the end tag
             // However, we should not consume \r or \n
-            while (iswspace(lexer->lookahead) && lexer->lookahead != '\r' &&
-                   lexer->lookahead != '\n') {
+            while (iswspace(lexer->lookahead) && lexer->lookahead != '\r' && lexer->lookahead != '\n') {
                 advance(lexer);
                 has_consumed_content = true;
             }
 
             // Return to allow the end tag parsing if we've encountered an end
             // tag at a valid position
-            if (lexer->lookahead == ';' || lexer->lookahead == ',' ||
-                lexer->lookahead == ')' || lexer->lookahead == '\n' ||
-                lexer->lookahead == '\r') {
+            if (lexer->lookahead == ';' || lexer->lookahead == ',' || lexer->lookahead == ')' ||
+                lexer->lookahead == '\n' || lexer->lookahead == '\r') {
                 // , and ) is needed to support heredoc in function arguments
                 return false;
             }
@@ -578,21 +560,17 @@ void *tree_sitter_php_external_scanner_create() {
     return scanner;
 }
 
-unsigned tree_sitter_php_external_scanner_serialize(void *payload,
-                                                    char *buffer) {
+unsigned tree_sitter_php_external_scanner_serialize(void *payload, char *buffer) {
     Scanner *scanner = (Scanner *)payload;
     return serialize(scanner, buffer);
 }
 
-void tree_sitter_php_external_scanner_deserialize(void *payload,
-                                                  const char *buffer,
-                                                  unsigned length) {
+void tree_sitter_php_external_scanner_deserialize(void *payload, const char *buffer, unsigned length) {
     Scanner *scanner = (Scanner *)payload;
     deserialize(scanner, buffer, length);
 }
 
-bool tree_sitter_php_external_scanner_scan(void *payload, TSLexer *lexer,
-                                           const bool *valid_symbols) {
+bool tree_sitter_php_external_scanner_scan(void *payload, TSLexer *lexer, const bool *valid_symbols) {
     Scanner *scanner = (Scanner *)payload;
     return scan(scanner, lexer, valid_symbols);
 }
