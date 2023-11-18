@@ -230,11 +230,8 @@
       }
     },
     "reference_modifier": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": "&"
-      }
+      "type": "STRING",
+      "value": "&"
     },
     "function_static_declaration": {
       "type": "SEQ",
@@ -6132,11 +6129,8 @@
       }
     },
     "variadic_placeholder": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": "..."
-      }
+      "type": "STRING",
+      "value": "..."
     },
     "arguments": {
       "type": "SEQ",
@@ -7340,23 +7334,8 @@
       ]
     },
     "_new_line": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "TOKEN",
-          "content": {
-            "type": "PATTERN",
-            "value": "\\r?\\n"
-          }
-        },
-        {
-          "type": "TOKEN",
-          "content": {
-            "type": "PATTERN",
-            "value": "\\r"
-          }
-        }
-      ]
+      "type": "PATTERN",
+      "value": "\\r?\\n|\\r"
     },
     "nowdoc_body": {
       "type": "SEQ",
@@ -7561,7 +7540,8 @@
     },
     "boolean": {
       "type": "PATTERN",
-      "value": "[Tt][Rr][Uu][Ee]|[Ff][Aa][Ll][Ss][Ee]"
+      "value": "true|false",
+      "flags": "i"
     },
     "null": {
       "type": "PATTERN",
