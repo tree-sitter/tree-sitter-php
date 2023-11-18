@@ -5,6 +5,7 @@
   "main": "bindings/node",
   "keywords": [
     "parser",
+    "lexer",
     "php"
   ],
   "author": "Josh Vera",
@@ -17,8 +18,10 @@
     "nan": "^2.14.0"
   },
   "devDependencies": {
-    "tree-sitter-cli": "^0.20.0",
-    "shelljs": "^0.8.4"
+    "eslint": ">=5.16.0",
+    "eslint-config-google": "^0.14.0",
+    "shelljs": "^0.8.4",
+    "tree-sitter-cli": "^0.20.0"
   },
   "scripts": {
     "build": "tree-sitter generate && node-gyp build",
