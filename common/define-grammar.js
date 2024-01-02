@@ -314,7 +314,7 @@ module.exports = function defineGrammar(dialect) {
         optional(field('attributes', $.attribute_list)),
         keyword('case'),
         field('name', $.name),
-        optional(seq('=', field('value', choice($.string, $.integer)))),
+        optional(seq('=', field('value', choice($._string, $.integer)))),
         $._semicolon,
       ),
 
