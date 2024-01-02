@@ -391,7 +391,7 @@ class B {
     name: (name)
     parameters: (formal_parameters
       (simple_parameter
-        attributes: (attribute_list 
+        attributes: (attribute_list
           (attribute_group (attribute (name)))
         )
         name: (variable_name (name))
@@ -651,8 +651,10 @@ enum Suit: string
 {
   case Hearts = 'H';
   case Diamonds;
-  case Clubs = 'C';
-  case Spades = 'S';
+  case Clubs = "C";
+  case Spades = <<<TXT
+      S
+      TXT;
 
   // Fulfills the interface contract.
   public function color(): string {
@@ -688,14 +690,12 @@ enum Suit: string
   (enum_declaration
     (name)
     (primitive_type)
-    (enum_declaration_list 
+    (enum_declaration_list
       (enum_case (name) (string (string_value)))
       (enum_case (name))
-      (enum_case (name) (string (string_value)))
-      (enum_case (name) (string (string_value)))
-      
+      (enum_case (name) (encapsed_string (string_value)))
+      (enum_case (name) (heredoc (heredoc_start) (heredoc_body (string_value)) (heredoc_end)))
       (comment)
-      
       (method_declaration
         (visibility_modifier)
         (name)

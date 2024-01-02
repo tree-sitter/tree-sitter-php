@@ -1157,7 +1157,7 @@
                     "members": [
                       {
                         "type": "SYMBOL",
-                        "name": "string"
+                        "name": "_string"
                       },
                       {
                         "type": "SYMBOL",
