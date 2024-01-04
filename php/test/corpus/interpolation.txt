@@ -233,3 +233,17 @@ if ($post) :
   (text_interpolation)
 )
 
+===============================
+#156 octothorpe immediately after text interpolation
+===============================
+
+<a href="<?=$url?>#intro">Intro</a>
+
+---
+
+(program
+  (text)
+  (php_tag)
+  (expression_statement
+    (variable_name (name)))
+  (text_interpolation (text)))

@@ -1335,7 +1335,7 @@ module.exports = function defineGrammar(dialect) {
         '\'',
       ),
 
-      string_value: _ => token(prec(1, repeat1(/\\'|\\\\|\\?[^'\\]/))), // prec(1, ...) is needed to avoid conflict with $.comment
+      string_value: _ => token(repeat1(/\\'|\\\\|\\?[^'\\]/)),
 
       heredoc_body: $ => seq($._new_line,
         repeat1(prec.right(
@@ -1523,7 +1523,7 @@ module.exports = function defineGrammar(dialect) {
         keyword('static'),
       ),
 
-      comment: _ => token(choice(
+      comment: _ => token(prec(-1, choice(
         seq(
           choice('//', /#[^?\[?\r?\n]/),
           repeat(/[^?\r?\n]|\?[^>\r\n]/),
@@ -1535,7 +1535,7 @@ module.exports = function defineGrammar(dialect) {
           /[^*]*\*+([^/*][^*]*\*+)*/,
           '/',
         ),
-      )),
+      ))),
 
       _semicolon: $ => choice($._automatic_semicolon, ';'),
     },
