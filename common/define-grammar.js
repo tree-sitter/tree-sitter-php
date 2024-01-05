@@ -943,7 +943,11 @@ module.exports = function defineGrammar(dialect) {
       class_constant_access_expression: $ => seq(
         $._scope_resolution_qualifier,
         '::',
-        choice($.name, alias($._reserved_identifier, $.name)),
+        choice(
+          $.name,
+          alias($._reserved_identifier, $.name),
+          seq('{', alias($._expression, $.name), '}'),
+        ),
       ),
 
       print_intrinsic: $ => seq(
