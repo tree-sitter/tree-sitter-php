@@ -364,6 +364,7 @@ module.exports = function defineGrammar(dialect) {
       _const_declaration: $ => seq(
         optional($.visibility_modifier),
         keyword('const'),
+        optional(field('type', $._type)),
         commaSep1($.const_element),
         $._semicolon,
       ),
