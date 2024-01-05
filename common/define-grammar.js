@@ -81,7 +81,8 @@ module.exports = function defineGrammar(dialect) {
       [$._array_destructing_element, $.array_element_initializer],
       [$._primary_expression, $._array_destructing_element],
 
-      [$.union_type, $.intersection_type],
+      [$.union_type, $.intersection_type, $.disjunctive_normal_form_type],
+      [$.union_type, $.disjunctive_normal_form_type],
       [$.intersection_type],
       [$.if_statement],
 
@@ -517,7 +518,11 @@ module.exports = function defineGrammar(dialect) {
         field('name', $.variable_name),
       ),
 
-      _type: $ => choice($.union_type, $.intersection_type),
+      _type: $ => choice(
+        $.union_type,
+        $.intersection_type,
+        $.disjunctive_normal_form_type,
+      ),
 
       _types: $ => choice(
         $.optional_type,
@@ -537,9 +542,14 @@ module.exports = function defineGrammar(dialect) {
 
       bottom_type: _ => 'never',
 
-      union_type: $ => prec.right(pipeSep1($._types)),
+      union_type: $ => prec.dynamic(1, pipeSep1($._types)),
 
       intersection_type: $ => ampSep1($._types),
+
+      disjunctive_normal_form_type: $ => pipeSep1(choice(
+        seq('(', $.intersection_type, ')'),
+        $._types,
+      )),
 
       primitive_type: _ => choice(
         'array',

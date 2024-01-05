@@ -52,7 +52,6 @@ function d(): never {}
     (bottom_type)
     (compound_statement)))
 
-
 =======================
 Intersection type
 =======================
@@ -122,6 +121,112 @@ function test(Type&MoreTypes &$b) {}
       (simple_parameter
         (intersection_type
           (named_type (name))
+          (named_type (name))
+        )
+        (reference_modifier)
+        (variable_name (name))
+      )
+    )
+    (compound_statement)
+  )
+)
+
+=======================
+Disjunctive Normal Form type
+=======================
+<?php
+
+class Test {
+    public (A&B)|C|null $prop;
+}
+
+function test((A&B)|(A&C) $a): A|(A&B)|(A&C)|D {}
+
+function test((Type&MoreTypes)|A|B &... $b) {}
+
+function test(A|B|(Type&MoreTypes)|C &$b) {}
+---
+(program
+  (php_tag)
+  (class_declaration
+    (name)
+    (declaration_list
+      (property_declaration
+        (visibility_modifier)
+        (disjunctive_normal_form_type
+          (intersection_type
+            (named_type (name))
+            (named_type (name))
+          )
+          (named_type (name))
+          (primitive_type)
+        )
+        (property_element
+          (variable_name (name))
+        )
+      )
+    )
+  )
+  (function_definition
+    (name)
+    (formal_parameters
+      (simple_parameter
+        (disjunctive_normal_form_type
+          (intersection_type
+            (named_type (name))
+            (named_type (name))
+          )
+          (intersection_type
+            (named_type (name))
+            (named_type (name))
+          )
+        )
+        (variable_name (name))
+      )
+    )
+    (disjunctive_normal_form_type
+      (named_type (name))
+      (intersection_type
+        (named_type (name))
+        (named_type (name))
+      )
+      (intersection_type
+        (named_type (name))
+        (named_type (name))
+      )
+      (named_type (name))
+    )
+    (compound_statement)
+  )
+  (function_definition
+    (name)
+    (formal_parameters
+      (variadic_parameter
+        (disjunctive_normal_form_type
+          (intersection_type
+            (named_type (name))
+            (named_type (name))
+          )
+          (named_type (name))
+          (named_type (name))
+        )
+        (reference_modifier)
+        (variable_name (name))
+      )
+    )
+    (compound_statement)
+  )
+  (function_definition
+    (name)
+    (formal_parameters
+      (simple_parameter
+        (disjunctive_normal_form_type
+          (named_type (name))
+          (named_type (name))
+          (intersection_type
+            (named_type (name))
+            (named_type (name))
+          )
           (named_type (name))
         )
         (reference_modifier)
