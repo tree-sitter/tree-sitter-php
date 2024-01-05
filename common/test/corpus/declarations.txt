@@ -197,10 +197,10 @@ function test(int $a, string ...$b)
 		name: (name)
 		parameters: (formal_parameters
 			(simple_parameter
-				type: (union_type (primitive_type))
+				type: (primitive_type)
 				name: (variable_name (name)))
 			(variadic_parameter
-				type: (union_type (primitive_type))
+				type: (primitive_type)
 				name: (variable_name (name))))
 		body: (compound_statement)))
 
@@ -411,7 +411,7 @@ class B {
       (property_declaration
         attributes: (attribute_list (attribute_group (attribute (name))))
         (visibility_modifier)
-        type: (union_type (primitive_type))
+        type: (primitive_type)
         (property_element (variable_name (name))
           (property_initializer (string))
         )
@@ -585,7 +585,7 @@ class B {
           )
         )
         (visibility_modifier)
-        type: (union_type (primitive_type))
+        type: (primitive_type)
         (property_element
           (variable_name (name))
           (property_initializer (string))
@@ -627,8 +627,7 @@ class B {
                   (attribute
                     (name))))
               visibility: (visibility_modifier)
-              type: (union_type
-                (primitive_type))
+              type: (primitive_type)
               name: (variable_name
                 (name))))
           body: (compound_statement)))
@@ -700,7 +699,7 @@ enum Suit: string
         (visibility_modifier)
         (name)
         (formal_parameters)
-        (union_type (primitive_type))
+        (primitive_type)
         (compound_statement
           (return_statement
             (match_expression
