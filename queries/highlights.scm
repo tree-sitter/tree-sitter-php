@@ -96,6 +96,7 @@
 "extends" @keyword
 "final" @keyword
 "finally" @keyword
+"for" @keyword
 "foreach" @keyword
 "function" @keyword
 "global" @keyword
