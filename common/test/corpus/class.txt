@@ -214,6 +214,43 @@ class Foo {
   )
 )
 
+=========================================
+Typed class constants
+=========================================
+
+<?php
+
+class Foo {
+    public const int A = 1;
+    public const ?array A = [];
+    public const bool D = false;
+}
+
+---
+
+(program
+  (php_tag)
+  (class_declaration
+    (name)
+    (declaration_list
+      (const_declaration
+        (visibility_modifier)
+        (union_type (primitive_type))
+        (const_element (name) (integer))
+      )
+      (const_declaration
+        (visibility_modifier)
+        (union_type (optional_type (primitive_type)))
+        (const_element (name) (array_creation_expression))
+      )
+      (const_declaration
+        (visibility_modifier)
+        (union_type (primitive_type))
+        (const_element (name) (boolean))
+      )
+    )
+  )
+)
 
 =========================================
 Final class
