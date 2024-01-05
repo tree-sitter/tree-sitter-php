@@ -355,11 +355,11 @@ module.exports = function defineGrammar(dialect) {
 
       const_declaration: $ => $._const_declaration,
 
-      _class_const_declaration: $ => seq(
+      _class_const_declaration: $ => prec(1, seq(
         optional(field('attributes', $.attribute_list)),
         optional(field('modifier', $.final_modifier)),
         $._const_declaration,
-      ),
+      )),
 
       _const_declaration: $ => seq(
         optional($.visibility_modifier),
