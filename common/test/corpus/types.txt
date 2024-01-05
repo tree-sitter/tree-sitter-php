@@ -12,13 +12,11 @@ function b(): A\B {}
   (php_tag)
   (function_definition
     (name) (formal_parameters)
-    (union_type (named_type (name)))
+    (named_type (name))
     (compound_statement))
   (function_definition
     (name) (formal_parameters)
-    (union_type
-      (named_type (qualified_name (namespace_name_as_prefix (namespace_name (name))) (name)))
-    )
+    (named_type (qualified_name (namespace_name_as_prefix (namespace_name (name))) (name)))
     (compound_statement)))
 
 =========================
@@ -37,15 +35,15 @@ function d(): never {}
   (php_tag)
   (function_definition
     (name) (formal_parameters)
-    (union_type (primitive_type))
+    (primitive_type)
     (compound_statement))
   (function_definition
     (name) (formal_parameters)
-    (union_type (primitive_type))
+    (primitive_type)
     (compound_statement))
   (function_definition
     (name) (formal_parameters)
-    (union_type (primitive_type))
+    (primitive_type)
     (compound_statement))
   (function_definition
     (name) (formal_parameters)
@@ -252,15 +250,11 @@ function b(): ?Something {}
   (php_tag)
   (function_definition
     (name) (formal_parameters)
-    (union_type
-      (optional_type (primitive_type))
-    )
+    (optional_type (primitive_type))
     (compound_statement))
   (function_definition
     (name) (formal_parameters)
-    (union_type
-      (optional_type (named_type (name)))
-    )
+    (optional_type (named_type (name)))
     (compound_statement)))
 
 
@@ -289,11 +283,9 @@ function a(int|string|null $var) : ?int|MyClass {}
       )
     )
     return_type: (union_type
-      (optional_type
-        (primitive_type)
-      )
-      (named_type (name))
-    )
+      (optional_type (primitive_type))
+      (named_type (name)
+    ))
     body: (compound_statement)
   )
 )
@@ -322,7 +314,7 @@ function a(mixed|string $var) : mixed {
         (variable_name (name))
       )
     )
-    (union_type (primitive_type))
+    (primitive_type)
     (compound_statement)
   )
 )
@@ -344,13 +336,11 @@ function a(string $var) : static {
     (name)
     (formal_parameters
       (simple_parameter
-        (union_type
-          (primitive_type)
-        )
+       (primitive_type)
         (variable_name (name))
       )
     )
-    (union_type (primitive_type))
+    (primitive_type)
     (compound_statement)
   )
 )
@@ -376,8 +366,7 @@ class Nil {
     (declaration_list
       (property_declaration
         (visibility_modifier)
-        (union_type
-          (primitive_type))
+        (primitive_type)
         (property_element
           (variable_name
             (name))
@@ -388,12 +377,10 @@ class Nil {
         (name)
         (formal_parameters
           (simple_parameter
-            (union_type
-              (primitive_type))
+           (primitive_type)
             (variable_name
               (name))))
-        (union_type
-          (primitive_type))
+        (primitive_type)
         (compound_statement)))))
 
 ===============================================
@@ -417,8 +404,7 @@ class Falsy {
     (declaration_list
       (property_declaration
         (visibility_modifier)
-        (union_type
-          (primitive_type))
+        (primitive_type)
         (property_element
           (variable_name
             (name))
@@ -429,12 +415,10 @@ class Falsy {
         (name)
         (formal_parameters
           (simple_parameter
-            (union_type
-              (primitive_type))
+           (primitive_type)
             (variable_name
               (name))))
-        (union_type
-          (primitive_type))
+        (primitive_type)
         (compound_statement)))))
 
 ===============================================
@@ -458,8 +442,7 @@ class Truthy {
     (declaration_list
       (property_declaration
         (visibility_modifier)
-        (union_type
-          (primitive_type))
+        (primitive_type)
         (property_element
           (variable_name
             (name))
@@ -470,11 +453,9 @@ class Truthy {
         (name)
         (formal_parameters
           (simple_parameter
-            (union_type
-              (primitive_type))
+           (primitive_type)
             (variable_name
               (name))))
-        (union_type
-          (primitive_type))
+        (primitive_type)
         (compound_statement)))))
 

@@ -340,6 +340,18 @@
         "named": true
       },
       {
+        "type": "named_type",
+        "named": true
+      },
+      {
+        "type": "optional_type",
+        "named": true
+      },
+      {
+        "type": "primitive_type",
+        "named": true
+      },
+      {
         "type": "union_type",
         "named": true
       }
