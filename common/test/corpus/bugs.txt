@@ -22,7 +22,7 @@ var_dump(self);
       arguments: (arguments (argument (name))))))
 
 =========================================
-#133: Incorrect precedence for error supression operator
+#133: Incorrect precedence for error suppression operator
 =========================================
 
 <?php
@@ -47,3 +47,119 @@ var_dump(self);
           (argument
             (encapsed_string
               (string_value))))))))
+
+=========================================
+#161: Error when using expressions as named argument
+=========================================
+
+<?php
+foo(array: null);
+foo(bool: null);
+foo(callable: null);
+foo(false: null);
+foo(float: null);
+foo(fn: null);
+foo(function: null);
+foo(int: null);
+foo(iterable: null);
+foo(match: null);
+foo(mixed: null);
+foo(namespace: null);
+foo(null: null);
+foo(numeric: null);
+foo(object: null);
+foo(parent: null);
+foo(self: null);
+foo(static: null);
+foo(string: null);
+foo(true: null);
+foo(void: null);
+
+---
+
+(program
+  (php_tag)
+    (expression_statement
+      (function_call_expression
+        function: (name)
+        arguments: (arguments (argument name: (name) (null)))))
+    (expression_statement
+      (function_call_expression
+        function: (name)
+        arguments: (arguments (argument name: (name) (null)))))
+    (expression_statement
+      (function_call_expression
+        function: (name)
+        arguments: (arguments (argument name: (name) (null)))))
+    (expression_statement
+      (function_call_expression
+        function: (name)
+        arguments: (arguments (argument name: (name) (null)))))
+    (expression_statement
+      (function_call_expression
+        function: (name)
+        arguments: (arguments (argument name: (name) (null)))))
+    (expression_statement
+      (function_call_expression
+        function: (name)
+        arguments: (arguments (argument name: (name) (null)))))
+    (expression_statement
+      (function_call_expression
+        function: (name)
+        arguments: (arguments (argument name: (name) (null)))))
+    (expression_statement
+      (function_call_expression
+        function: (name)
+        arguments: (arguments (argument name: (name) (null)))))
+    (expression_statement
+      (function_call_expression
+        function: (name)
+        arguments: (arguments (argument name: (name) (null)))))
+    (expression_statement
+      (function_call_expression
+        function: (name)
+        arguments: (arguments (argument name: (name) (null)))))
+    (expression_statement
+      (function_call_expression
+        function: (name)
+        arguments: (arguments (argument name: (name) (null)))))
+    (expression_statement
+      (function_call_expression
+        function: (name)
+        arguments: (arguments (argument name: (name) (null)))))
+    (expression_statement
+      (function_call_expression
+        function: (name)
+        arguments: (arguments (argument name: (name) (null)))))
+    (expression_statement
+      (function_call_expression
+        function: (name)
+        arguments: (arguments (argument name: (name) (null)))))
+    (expression_statement
+      (function_call_expression
+        function: (name)
+        arguments: (arguments (argument name: (name) (null)))))
+    (expression_statement
+      (function_call_expression
+        function: (name)
+        arguments: (arguments (argument name: (name) (null)))))
+    (expression_statement
+      (function_call_expression
+        function: (name)
+        arguments: (arguments (argument name: (name) (null)))))
+    (expression_statement
+      (function_call_expression
+        function: (name)
+        arguments: (arguments (argument name: (name) (null)))))
+    (expression_statement
+      (function_call_expression
+        function: (name)
+        arguments: (arguments (argument name: (name) (null)))))
+    (expression_statement
+      (function_call_expression
+        function: (name)
+        arguments: (arguments (argument name: (name) (null)))))
+    (expression_statement
+      (function_call_expression
+        function: (name)
+        arguments: (arguments (argument name: (name) (null))))))
