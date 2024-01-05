@@ -1,7 +1,12 @@
 <?php
 // <- tag
 
-if ($a) {}
+if ($a) {} elseif ($b) {} else {}
+// <- keyword
+//         ^ keyword
+//                        ^ keyword
+
+for ($i = 0; $i < 1; $i++) {}
 // <- keyword
 
 while ($b) {}
@@ -13,6 +18,10 @@ WHILE ($b) {}
 do { } while ($c);
 // <- keyword
 //     ^ keyword
+
+foreach ($foos as $foo) {}
+// <- keyword
+//             ^ keyword
 
 try {} catch (Exception $e) {}
 // <- keyword
