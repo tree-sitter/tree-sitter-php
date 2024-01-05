@@ -2582,6 +2582,10 @@
         {
           "type": "SYMBOL",
           "name": "intersection_type"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "disjunctive_normal_form_type"
         }
       ]
     },
@@ -2642,8 +2646,8 @@
       "value": "never"
     },
     "union_type": {
-      "type": "PREC_RIGHT",
-      "value": 0,
+      "type": "PREC_DYNAMIC",
+      "value": 1,
       "content": {
         "type": "SEQ",
         "members": [
@@ -2692,6 +2696,75 @@
               {
                 "type": "SYMBOL",
                 "name": "_types"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "disjunctive_normal_form_type": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "("
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "intersection_type"
+                },
+                {
+                  "type": "STRING",
+                  "value": ")"
+                }
+              ]
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_types"
+            }
+          ]
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "|"
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": "("
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "intersection_type"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": ")"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_types"
+                  }
+                ]
               }
             ]
           }
@@ -8945,7 +9018,12 @@
     ],
     [
       "union_type",
-      "intersection_type"
+      "intersection_type",
+      "disjunctive_normal_form_type"
+    ],
+    [
+      "union_type",
+      "disjunctive_normal_form_type"
     ],
     [
       "intersection_type"

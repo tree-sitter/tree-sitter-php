@@ -332,6 +332,10 @@
     "named": true,
     "subtypes": [
       {
+        "type": "disjunctive_normal_form_type",
+        "named": true
+      },
+      {
         "type": "intersection_type",
         "named": true
       },
@@ -1638,6 +1642,33 @@
       "types": [
         {
           "type": "_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "disjunctive_normal_form_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "intersection_type",
+          "named": true
+        },
+        {
+          "type": "named_type",
+          "named": true
+        },
+        {
+          "type": "optional_type",
+          "named": true
+        },
+        {
+          "type": "primitive_type",
           "named": true
         }
       ]
@@ -5503,11 +5534,11 @@
   },
   {
     "type": "null",
-    "named": true
+    "named": false
   },
   {
     "type": "null",
-    "named": false
+    "named": true
   },
   {
     "type": "or",
