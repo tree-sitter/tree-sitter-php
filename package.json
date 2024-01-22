@@ -29,8 +29,9 @@
     "build-php": "cd php && tree-sitter generate --no-bindings",
     "build-php_only": "cd php_only && tree-sitter generate --no-bindings",
     "lint": "eslint common/define-grammar.js",
+    "test": "npm run test-php && npm run test-php_only && npm run test-load",
+    "test-examples": "script/parse-examples",
     "test-load": "node -e \"console.log(require('./php').name, require('./php_only').name)\"",
-    "test": "npm run test-php && npm run test-php_only && npm run test-load && node script/parse-examples.js",
     "test-php": "cd php && tree-sitter test",
     "test-php_only": "cd php_only && tree-sitter test"
   },
