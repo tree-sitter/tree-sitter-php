@@ -628,7 +628,7 @@ okay to do';
 )
 
 =========================================
-Bug: #113 
+Bug: #113
 =========================================
 
 <?php
@@ -727,7 +727,7 @@ EOL;
 
 <<<EOT
 hello
- 
+
 world
 EOT;
 
@@ -870,49 +870,12 @@ EOF;
       end_tag: (heredoc_end)
     )
   )
-  
-  (expression_statement 
-    (heredoc 
-      identifier: (heredoc_start) 
-      value: (heredoc_body 
+  (expression_statement
+    (heredoc
+      identifier: (heredoc_start)
+      value: (heredoc_body
         (string_value)
-      ) 
-      end_tag: (heredoc_end)
-    )
-  ) 
-  (expression_statement 
-    (heredoc 
-      identifier: (heredoc_start) 
-      value: (heredoc_body 
-        (string_value)
-      ) 
-      end_tag: (heredoc_end)
-    )
-  ) 
-  (expression_statement 
-    (heredoc 
-      identifier: (heredoc_start) 
-      value: (heredoc_body 
-        (string_value)
-      ) 
-      end_tag: (heredoc_end)
-    )
-  ) 
-  (expression_statement 
-    (heredoc 
-      identifier: (heredoc_start) 
-      value: (heredoc_body 
-        (string_value)
-      ) 
-      end_tag: (heredoc_end)
-    )
-  )
-  (expression_statement 
-    (heredoc 
-      identifier: (heredoc_start) 
-      value: (heredoc_body 
-        (string_value)
-      ) 
+      )
       end_tag: (heredoc_end)
     )
   )
@@ -921,6 +884,41 @@ EOF;
       identifier: (heredoc_start)
       value: (heredoc_body
         (string_value)
+      )
+      end_tag: (heredoc_end)
+    )
+  )
+  (expression_statement
+    (heredoc
+      identifier: (heredoc_start)
+      value: (heredoc_body
+        (string_value)
+      )
+      end_tag: (heredoc_end)
+    )
+  )
+  (expression_statement
+    (heredoc
+      identifier: (heredoc_start)
+      value: (heredoc_body
+        (string_value)
+      )
+      end_tag: (heredoc_end)
+    )
+  )
+  (expression_statement
+    (heredoc
+      identifier: (heredoc_start)
+      value: (heredoc_body
+        (string_value)
+      )
+      end_tag: (heredoc_end)
+    )
+  )
+  (expression_statement
+    (heredoc
+      identifier: (heredoc_start)
+      value: (heredoc_body
         (string_value)
         (string_value)
       )
@@ -979,7 +977,7 @@ PHP;
 EOF;
 
 <<< 'EOF'
- 
+
 EOF;
 
 <<< 'EOF'
@@ -1005,7 +1003,7 @@ EOF;
 This is a test
 
 with multiple
-     
+
      lines
 EOF;
 
@@ -1100,6 +1098,57 @@ EOF;
       identifier: (heredoc_start)
       value: (nowdoc_body
         (nowdoc_string)
+      )
+      end_tag: (heredoc_end)
+    )
+  )
+  (expression_statement
+    (nowdoc
+      identifier: (heredoc_start)
+      value: (nowdoc_body
+        (nowdoc_string)
+      )
+      end_tag: (heredoc_end)
+    )
+  )
+)
+
+==========================
+#209: Here/Nowdoc with numbers in identifier
+==========================
+
+<?php
+
+<<<_F00
+This is a test.
+_F00;
+
+<<<"_F00"
+This is a test.
+_F00;
+
+<<<'_F00'
+This is a test.
+_F00;
+
+---
+
+(program
+  (php_tag)
+  (expression_statement
+    (heredoc
+      identifier: (heredoc_start)
+      value: (heredoc_body
+        (string_value)
+      )
+      end_tag: (heredoc_end)
+    )
+  )
+  (expression_statement
+    (heredoc
+      identifier: (heredoc_start)
+      value: (heredoc_body
+        (string_value)
       )
       end_tag: (heredoc_end)
     )

@@ -182,7 +182,7 @@ static inline bool scan_whitespace(TSLexer *lexer) {
     }
 }
 
-static inline bool is_valid_name_char(TSLexer *lexer) { return iswalpha(lexer->lookahead) || lexer->lookahead == '_'; }
+static inline bool is_valid_name_char(TSLexer *lexer) { return iswalnum(lexer->lookahead) || lexer->lookahead == '_'; }
 
 static inline bool is_escapable_sequence(TSLexer *lexer) {
     // Note: remember to also update the escape_sequence rule in the
