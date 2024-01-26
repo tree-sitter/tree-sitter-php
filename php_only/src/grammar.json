@@ -7275,16 +7275,37 @@
           ]
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "string_value"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
+          "type": "REPEAT",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "TOKEN",
+                  "content": {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": "\\\\"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "\\'"
+                      }
+                    ]
+                  }
+                },
+                "named": true,
+                "value": "escape_sequence"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "string_value"
+              }
+            ]
+          }
         },
         {
           "type": "STRING",
@@ -7298,7 +7319,7 @@
         "type": "REPEAT1",
         "content": {
           "type": "PATTERN",
-          "value": "\\\\'|\\\\\\\\|\\\\?[^'\\\\]"
+          "value": "\\\\?[^'\\\\]"
         }
       }
     },
