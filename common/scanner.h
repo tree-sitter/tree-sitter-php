@@ -205,7 +205,7 @@ static inline bool is_escapable_sequence(TSLexer *lexer) {
         return true; // We handle the case where this is not really an escape
                      // sequence in grammar.js - this is needed to support the
                      // edge case "\u{$a}" in which case "\u" is to be
-                     // interprented as characters and {$a} as a variable
+                     // interpreted as characters and {$a} as a variable
     }
 
     // Octal

@@ -80,7 +80,7 @@ Integers
 )
 
 ============================
-Testing string scanner confirmance
+Testing string scanner conformance
 ==============================
 
 <?php
@@ -92,7 +92,13 @@ echo "\"\t\\'" . '\n\\\'a\\\b\\';
   (php_tag)
   (echo_statement (binary_expression
     (encapsed_string (escape_sequence) (escape_sequence) (escape_sequence) (string_value))
-    (string (string_value)))))
+    (string (string_value)
+      (escape_sequence)
+      (escape_sequence)
+      (string_value)
+      (escape_sequence)
+      (string_value)
+      (escape_sequence)))))
 
 ==========================
 Shell command

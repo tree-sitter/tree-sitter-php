@@ -614,8 +614,8 @@ okay to do';
   (php_tag)
   (expression_statement (string (string_value)))
   (expression_statement (string (string_value)))
-  (expression_statement (string (string_value)))
-  (expression_statement (string (string_value)))
+  (expression_statement (string (string_value) (escape_sequence) (string_value)))
+  (expression_statement (string (string_value) (escape_sequence) (string_value)))
   (expression_statement (string (string_value)))
   (expression_statement (string (string_value)))
   (expression_statement (string (string_value)))
@@ -1164,7 +1164,6 @@ _F00;
   )
 )
 
-
 ==============================
 Unicode escape sequences
 ==============================
@@ -1189,4 +1188,3 @@ Unicode escape sequences
   (expression_statement (encapsed_string (escape_sequence))) (comment)
   (expression_statement (encapsed_string (escape_sequence))) (comment)
 )
-

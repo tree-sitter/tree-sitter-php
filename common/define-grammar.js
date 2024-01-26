@@ -1323,24 +1323,21 @@ module.exports = function defineGrammar(dialect) {
       ),
 
       encapsed_string: $ => prec.right(seq(
-        choice(
-          /[bB]"/,
-          '"',
-        ),
+        choice(/[bB]"/, '"'),
         optional($._interpolated_string_body),
         '"',
       )),
 
       string: $ => seq(
-        choice(
-          /[bB]'/,
-          '\'',
-        ),
-        optional($.string_value),
+        choice(/[bB]'/, '\''),
+        repeat(choice(
+          alias(token(choice('\\\\', '\\\'')), $.escape_sequence),
+          $.string_value,
+        )),
         '\'',
       ),
 
-      string_value: _ => token(repeat1(/\\'|\\\\|\\?[^'\\]/)),
+      string_value: _ => token(repeat1(/\\?[^'\\]/)),
 
       heredoc_body: $ => seq($._new_line,
         repeat1(prec.right(
