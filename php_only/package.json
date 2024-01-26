@@ -5,6 +5,7 @@
       "scope": "source.php",
       "file-types": ["php"],
       "highlights": "../queries/highlights.scm",
+      "injections": "../queries/injections.scm",
       "tags": "../queries/tags.scm"
     }
   ]

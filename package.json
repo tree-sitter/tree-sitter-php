@@ -25,7 +25,7 @@
     "tree-sitter-cli": "^0.20.8"
   },
   "scripts": {
-    "build": "npm run build-php && npm run build-php_only",
+    "build": "npm run build-php && npm run build-php_only && node-gyp rebuild",
     "build-php": "cd php && tree-sitter generate --no-bindings",
     "build-php_only": "cd php_only && tree-sitter generate --no-bindings",
     "lint": "eslint common/define-grammar.js",
@@ -45,8 +45,11 @@
       "file-types": ["php"],
       "path": "php",
       "highlights": "queries/highlights.scm",
-      "tags": "queries/tags.scm",
-      "injections": "queries/injections.scm"
+      "injections": [
+        "queries/injections.scm",
+        "queries/injections-text.scm"
+      ],
+      "tags": "queries/tags.scm"
     }
   ]
 }
