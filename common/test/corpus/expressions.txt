@@ -1558,3 +1558,37 @@ Foo::{$bar};
     (class_constant_access_expression
       (name)
       (name (variable_name (name))))))
+
+===============================================
+UTF-8 identifiers
+===============================================
+
+<?php
+$漢字;
+
+<<<漢漢字
+  This is a heredoc
+漢漢字;
+
+<<<'字漢'
+  This is a nowdoc.
+字漢;
+
+---
+
+(program
+  (php_tag)
+  (expression_statement
+    (variable_name (name)))
+    (expression_statement
+      (heredoc
+        (heredoc_start)
+        (heredoc_body
+          (string_value))
+        (heredoc_end)))
+    (expression_statement
+      (nowdoc
+        (heredoc_start)
+        (nowdoc_body
+          (nowdoc_string))
+        (heredoc_end))))
