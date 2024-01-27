@@ -109,7 +109,7 @@ module.exports = function defineGrammar(dialect) {
     extras: $ => {
       const extras = [
         $.comment,
-        /[\s\uFEFF\u2060\u200B\u00A0]/,
+        /[\s\u00A0\u200B\u2060\uFEFF]/,
       ];
 
       if (dialect === 'php') {
@@ -1517,7 +1517,17 @@ module.exports = function defineGrammar(dialect) {
         $._expression,
       ),
 
-      name: _ => /[_a-zA-Z\u00A1-\u00ff][_a-zA-Z\u00A1-\u00ff\d]*/,
+      // Note that PHP officially only supports the following character regex
+      // for identifiers: ^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$
+      // However, there is a "bug" in how PHP parses multi-byte characters that allows
+      // for a much larger range of characters to be used in identifiers.
+      //
+      // See: https://www.php.net/manual/en/language.variables.basics.php
+      name: _ => {
+        // We need to side step around the whitespace characters in the extras array.
+        const range = String.raw`\u0080-\u009f\u00a1-\u200a\u200c-\u205f\u2061-\ufefe\uff00-\uffff`;
+        return new RegExp(`[_a-zA-Z${range}][_a-zA-Z${range}\\d]*`);
+      },
 
       _reserved_identifier: _ => choice(
         'self',
