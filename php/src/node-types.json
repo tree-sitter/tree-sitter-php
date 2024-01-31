@@ -32,7 +32,7 @@
         "named": true
       },
       {
-        "type": "exponentiation_expression",
+        "type": "error_suppression_expression",
         "named": true
       },
       {
@@ -938,6 +938,10 @@
             "named": false
           },
           {
+            "type": "**",
+            "named": false
+          },
+          {
             "type": "+",
             "named": false
           },
@@ -1183,10 +1187,6 @@
           },
           {
             "type": "clone_expression",
-            "named": true
-          },
-          {
-            "type": "exponentiation_expression",
             "named": true
           },
           {
@@ -1984,65 +1984,18 @@
     }
   },
   {
-    "type": "exponentiation_expression",
+    "type": "error_suppression_expression",
     "named": true,
-    "fields": {
-      "left": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "_primary_expression",
-            "named": true
-          },
-          {
-            "type": "clone_expression",
-            "named": true
-          },
-          {
-            "type": "match_expression",
-            "named": true
-          },
-          {
-            "type": "unary_op_expression",
-            "named": true
-          }
-        ]
-      },
-      "right": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "_primary_expression",
-            "named": true
-          },
-          {
-            "type": "assignment_expression",
-            "named": true
-          },
-          {
-            "type": "augmented_assignment_expression",
-            "named": true
-          },
-          {
-            "type": "clone_expression",
-            "named": true
-          },
-          {
-            "type": "exponentiation_expression",
-            "named": true
-          },
-          {
-            "type": "match_expression",
-            "named": true
-          },
-          {
-            "type": "unary_op_expression",
-            "named": true
-          }
-        ]
-      }
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "_expression",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -4698,15 +4651,44 @@
   {
     "type": "unary_op_expression",
     "named": true,
-    "fields": {},
+    "fields": {
+      "argument": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "_expression",
+            "named": true
+          }
+        ]
+      },
+      "operator": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "!",
+            "named": false
+          },
+          {
+            "type": "+",
+            "named": false
+          },
+          {
+            "type": "-",
+            "named": false
+          },
+          {
+            "type": "~",
+            "named": false
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": false,
-      "required": true,
+      "required": false,
       "types": [
-        {
-          "type": "_expression",
-          "named": true
-        },
         {
           "type": "integer",
           "named": true
@@ -4795,56 +4777,71 @@
   {
     "type": "update_expression",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "cast_expression",
-          "named": true
-        },
-        {
-          "type": "dynamic_variable_name",
-          "named": true
-        },
-        {
-          "type": "function_call_expression",
-          "named": true
-        },
-        {
-          "type": "member_access_expression",
-          "named": true
-        },
-        {
-          "type": "member_call_expression",
-          "named": true
-        },
-        {
-          "type": "nullsafe_member_access_expression",
-          "named": true
-        },
-        {
-          "type": "nullsafe_member_call_expression",
-          "named": true
-        },
-        {
-          "type": "scoped_call_expression",
-          "named": true
-        },
-        {
-          "type": "scoped_property_access_expression",
-          "named": true
-        },
-        {
-          "type": "subscript_expression",
-          "named": true
-        },
-        {
-          "type": "variable_name",
-          "named": true
-        }
-      ]
+    "fields": {
+      "argument": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "cast_expression",
+            "named": true
+          },
+          {
+            "type": "dynamic_variable_name",
+            "named": true
+          },
+          {
+            "type": "function_call_expression",
+            "named": true
+          },
+          {
+            "type": "member_access_expression",
+            "named": true
+          },
+          {
+            "type": "member_call_expression",
+            "named": true
+          },
+          {
+            "type": "nullsafe_member_access_expression",
+            "named": true
+          },
+          {
+            "type": "nullsafe_member_call_expression",
+            "named": true
+          },
+          {
+            "type": "scoped_call_expression",
+            "named": true
+          },
+          {
+            "type": "scoped_property_access_expression",
+            "named": true
+          },
+          {
+            "type": "subscript_expression",
+            "named": true
+          },
+          {
+            "type": "variable_name",
+            "named": true
+          }
+        ]
+      },
+      "operator": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "++",
+            "named": false
+          },
+          {
+            "type": "--",
+            "named": false
+          }
+        ]
+      }
     }
   },
   {
