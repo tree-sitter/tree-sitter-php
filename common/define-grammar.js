@@ -997,12 +997,14 @@ module.exports = function defineGrammar(dialect) {
         $._variable_name,
       ),
 
-      update_expression: $ => prec.left(PREC.INC, choice(
-        seq($._variable, '++'),
-        seq($._variable, '--'),
-        seq('++', $._variable),
-        seq('--', $._variable),
-      )),
+      update_expression: $ => {
+        const argument = field('argument', $._variable);
+        const operator = field('operator', choice('--', '++'));
+        return prec.left(PREC.INC, choice(
+          seq(operator, argument),
+          seq(argument, operator),
+        ));
+      },
 
       cast_expression: $ => prec(PREC.CAST, seq(
         '(', field('type', $.cast_type), ')',

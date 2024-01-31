@@ -103,7 +103,7 @@ while ($a < 10) {
       right: (integer)))
     body: (compound_statement
       (echo_statement (variable_name (name)))
-      (expression_statement (update_expression (variable_name (name)))))))
+      (expression_statement (update_expression argument: (variable_name (name)))))))
 
 ==============================
 Alternative while statements
@@ -125,13 +125,13 @@ endwhile;
     condition: (parenthesized_expression (binary_expression
       left: (variable_name (name))
       right: (integer)))
-    body: (echo_statement (update_expression (variable_name (name)))))
+    body: (echo_statement (update_expression argument: (variable_name (name)))))
   (while_statement
     condition: (parenthesized_expression (binary_expression
       left: (variable_name (name))
       right: (integer)))
     body: (colon_block
-      (echo_statement (update_expression (variable_name (name))))
+      (echo_statement (update_expression argument: (variable_name (name))))
       (echo_statement (variable_name (name))))))
 
 ==============================
@@ -150,14 +150,22 @@ endfor;
 (program
   (php_tag)
   (for_statement
-    (assignment_expression (variable_name (name)) (integer))
-    (binary_expression (variable_name (name)) (integer))
-    (update_expression (variable_name (name)))
+    (assignment_expression
+      left: (variable_name (name))
+      right: (integer))
+    (binary_expression
+      left: (variable_name (name))
+      right: (integer))
+    (update_expression argument: (variable_name (name)))
     (echo_statement (variable_name (name))))
   (for_statement
-    (assignment_expression (variable_name (name)) (integer))
-    (binary_expression (variable_name (name)) (integer))
-    (update_expression (variable_name (name)))
+    (assignment_expression
+      left: (variable_name (name))
+      right: (integer))
+    (binary_expression
+      left: (variable_name (name))
+      right: (integer))
+    (update_expression argument: (variable_name (name)))
     (echo_statement (variable_name (name)))))
 
 ==============================
@@ -260,7 +268,7 @@ do {
   (do_statement
     body: (compound_statement
       (echo_statement (variable_name (name)))
-      (expression_statement (update_expression (variable_name (name)))))
+      (expression_statement (update_expression argument: (variable_name (name)))))
     condition: (parenthesized_expression (binary_expression
       left: (variable_name (name))
       right: (integer)))))
