@@ -15,17 +15,11 @@ var_dump(self);
       function: (name)
       arguments: (arguments
         (argument (string (string_value)))
-        (argument (string (string_value)))
-      )
-    )
-  )
+        (argument (string (string_value))))))
   (expression_statement
     (function_call_expression
       function: (name)
-      arguments: (arguments (argument (name)))
-    )
-  )
-)
+      arguments: (arguments (argument (name))))))
 
 =========================================
 #133: Incorrect precedence for error supression operator
@@ -40,28 +34,16 @@ var_dump(self);
   (php_tag)
   (expression_statement
     (binary_expression
-      left: (unary_op_expression
+      left: (error_suppression_expression
         (function_call_expression
           function: (name)
           arguments: (arguments
             (argument
               (encapsed_string
-                (string_value)
-              )
-            )
-          )
-        )
-      )
+                (string_value))))))
       right: (function_call_expression
         function: (name)
         arguments: (arguments
           (argument
             (encapsed_string
-              (string_value)
-            )
-          )
-        )
-      )
-    )
-  )
-)
+              (string_value))))))))
