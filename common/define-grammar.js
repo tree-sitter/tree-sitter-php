@@ -890,6 +890,7 @@ module.exports = function defineGrammar(dialect) {
         $.reference_assignment_expression,
         $.yield_expression,
         $._unary_expression,
+        $.error_suppression_expression,
         $.binary_expression,
         $.include_expression,
         $.include_once_expression,
@@ -904,10 +905,12 @@ module.exports = function defineGrammar(dialect) {
         $.cast_expression,
       ),
 
-      unary_op_expression: $ => choice(
-        prec(PREC.INC, seq('@', $._expression)),
-        prec.left(PREC.NEG, seq(choice('+', '-', '~', '!'), $._expression)),
+      unary_op_expression: $ => prec.left(
+        PREC.NEG,
+        seq(choice('+', '-', '~', '!'), $._expression),
       ),
+
+      error_suppression_expression: $ => prec(PREC.INC, seq('@', $._expression)),
 
       clone_expression: $ => seq(
         keyword('clone'), $._primary_expression,
