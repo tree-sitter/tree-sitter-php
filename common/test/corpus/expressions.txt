@@ -31,43 +31,29 @@ $a ** $c = $b;
   (expression_statement
     (assignment_expression
       left: (variable_name (name))
-      right: (exponentiation_expression
+      right: (binary_expression
         left: (integer)
-        right: (integer)
-      )
-    )
-  )
+        right: (integer))))
   (expression_statement
     (assignment_expression
       left: (variable_name (name))
       right: (integer)))
   (echo_statement
-    (exponentiation_expression
+    (binary_expression
       left: (variable_name (name))
-      right: (unary_op_expression
-        (variable_name (name))
-      )
-    )
-  )
+      right: (unary_op_expression (variable_name (name)))))
   (expression_statement
-    (exponentiation_expression
+    (binary_expression
       left: (variable_name (name))
       right: (augmented_assignment_expression
         left: (variable_name (name))
-        right: (variable_name (name))
-      )
-    )
-  )
+        right: (variable_name (name)))))
   (expression_statement
-    (exponentiation_expression
+    (binary_expression
       left: (variable_name (name))
       right: (assignment_expression
         left: (variable_name (name))
-        right: (variable_name (name))
-      )
-    )
-  )
-)
+        right: (variable_name (name))))))
 
 ==========================
 Reserved Identifiers as Names
