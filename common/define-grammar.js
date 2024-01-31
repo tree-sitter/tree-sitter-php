@@ -900,7 +900,6 @@ module.exports = function defineGrammar(dialect) {
       _unary_expression: $ => choice(
         $.clone_expression,
         $._primary_expression,
-        $.exponentiation_expression,
         $.unary_op_expression,
         $.cast_expression,
       ),
@@ -909,12 +908,6 @@ module.exports = function defineGrammar(dialect) {
         prec(PREC.INC, seq('@', $._expression)),
         prec.left(PREC.NEG, seq(choice('+', '-', '~', '!'), $._expression)),
       ),
-
-      exponentiation_expression: $ => prec.right(PREC.EXPONENTIAL, seq(
-        field('left', choice($.clone_expression, $._primary_expression, $.unary_op_expression, $.match_expression)),
-        '**',
-        field('right', choice($.exponentiation_expression, $.clone_expression, $.unary_op_expression, $._primary_expression, $.augmented_assignment_expression, $.assignment_expression, $.match_expression, $.cast_expression)),
-      )),
 
       clone_expression: $ => seq(
         keyword('clone'), $._primary_expression,
@@ -1459,6 +1452,11 @@ module.exports = function defineGrammar(dialect) {
         prec.right(PREC.NULL_COALESCE, seq(
           field('left', $._expression),
           field('operator', '??'),
+          field('right', $._expression),
+        )),
+        prec.right(PREC.EXPONENTIAL, seq(
+          field('left', $._expression),
+          field('operator', '**'),
           field('right', $._expression),
         )),
         ...[
