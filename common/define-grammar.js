@@ -905,10 +905,10 @@ module.exports = function defineGrammar(dialect) {
         $.cast_expression,
       ),
 
-      unary_op_expression: $ => prec.left(
-        PREC.NEG,
-        seq(choice('+', '-', '~', '!'), $._expression),
-      ),
+      unary_op_expression: $ => prec.left(PREC.NEG, seq(
+        field('operator', choice('+', '-', '~', '!')),
+        field('argument', $._expression),
+      )),
 
       error_suppression_expression: $ => prec(PREC.INC, seq('@', $._expression)),
 

@@ -41,7 +41,8 @@ $a ** $c = $b;
   (echo_statement
     (binary_expression
       left: (variable_name (name))
-      right: (unary_op_expression (variable_name (name)))))
+      right: (unary_op_expression
+        argument: (variable_name (name)))))
   (expression_statement
     (binary_expression
       left: (variable_name (name))
@@ -85,11 +86,11 @@ if (!$foo = $bar) {
 (program
   (php_tag)
   (if_statement
-    (parenthesized_expression (unary_op_expression
-      (assignment_expression
-        (variable_name (name))
-        (variable_name (name)))))
-    (compound_statement)))
+    condition: (parenthesized_expression (unary_op_expression
+      argument: (assignment_expression
+        left: (variable_name (name))
+        right: (variable_name (name)))))
+    body: (compound_statement)))
 
 ===============================
 Capitalized logical operators
@@ -434,16 +435,15 @@ Associativity of negation
   (php_tag)
   (expression_statement
     (binary_expression
-      (unary_op_expression
-        (integer))
-      (unary_op_expression
-        (integer))))
+      left: (unary_op_expression
+        argument: (integer))
+      right: (unary_op_expression
+        argument: (integer))))
   (expression_statement
     (unary_op_expression
-      (binary_expression
-        (variable_name
-          (name))
-          (name)))))
+      argument: (binary_expression
+        left: (variable_name (name))
+        right: (name)))))
 
 ====================================
 Augmented assignment
@@ -740,162 +740,105 @@ throw $exception ??= new Exception();
     (throw_expression
       (object_creation_expression
         (name)
-        (arguments (argument (name)))
-      )
-    )
-  )
+        (arguments (argument (name))))))
   (expression_statement
     (assignment_expression
       left: (variable_name (name))
       right: (conditional_expression
         condition: (unary_op_expression
-          (function_call_expression
+          argument: (function_call_expression
             function: (name)
-            arguments: (arguments (argument (variable_name (name))))
-          )
-        )
+            arguments: (arguments (argument (variable_name (name))))))
         body: (function_call_expression
           function: (name)
-          arguments: (arguments (argument (variable_name (name))))
-        )
+          arguments: (arguments (argument (variable_name (name)))))
         alternative: (throw_expression
           (object_creation_expression
             (name)
-            (arguments)
-          )
-        )
-      )
-    )
-  )
+            (arguments))))))
   (expression_statement
     (binary_expression
       left: (variable_name (name))
       right: (throw_expression
         (object_creation_expression
           (name)
-          (arguments)
-        )
-      )
-    )
-  )
+          (arguments)))))
   (expression_statement
     (binary_expression
       left: (variable_name (name))
       right: (throw_expression
         (object_creation_expression
           (name)
-          (arguments)
-        )
-      )
-    )
-  )
+          (arguments)))))
   (expression_statement
     (binary_expression
       left: (variable_name (name))
       right: (throw_expression
         (object_creation_expression
           (name)
-          (arguments)
-        )
-      )
-    )
-  )
+          (arguments)))))
   (expression_statement
     (binary_expression
       left: (variable_name (name))
       right: (throw_expression
         (object_creation_expression
           (name)
-          (arguments)
-        )
-      )
-    )
-  )
+          (arguments)))))
   (expression_statement
     (throw_expression
       (member_call_expression
         object: (variable_name (name))
         name: (name)
-        arguments: (arguments)
-      )
-    )
-  )
+        arguments: (arguments))))
   (expression_statement
     (throw_expression
       (scoped_call_expression
         scope: (relative_scope)
         name: (name)
-        arguments: (arguments)
-      )
-    )
-  )
+        arguments: (arguments))))
   (expression_statement
     (throw_expression
       (conditional_expression
         condition: (variable_name (name))
         body: (object_creation_expression
           (name)
-          (arguments)
-        )
+          (arguments))
         alternative: (object_creation_expression
           (name)
-          (arguments)
-        )
-      )
-    )
-  )
+          (arguments)))))
   (expression_statement
     (throw_expression
       (binary_expression
         left: (variable_name (name))
         right: (object_creation_expression
           (name)
-          (arguments)
-        )
-      )
-    )
-  )
+          (arguments)))))
   (expression_statement
     (throw_expression
       (assignment_expression
         left: (variable_name (name))
         right: (object_creation_expression
           (name)
-          (arguments)
-        )
-      )
-    )
-  )
+          (arguments)))))
   (expression_statement
     (throw_expression
       (conditional_expression
         condition: (binary_expression
           left: (variable_name (name))
-          right: (variable_name (name))
-        )
+          right: (variable_name (name)))
         body: (object_creation_expression
           (name)
-          (arguments)
-        )
+          (arguments))
         alternative: (object_creation_expression
           (name)
-          (arguments)
-        )
-      )
-    )
-  )
+          (arguments)))))
   (expression_statement
     (throw_expression
       (augmented_assignment_expression
         left: (variable_name (name))
         right: (object_creation_expression
           (name)
-          (arguments)
-        )
-      )
-    )
-  )
-)
+          (arguments))))))
 
 ===============================================
 Nullsafe operator

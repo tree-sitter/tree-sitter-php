@@ -163,15 +163,10 @@ if ( ! function_exists('xml_parser_create') ) {
   (if_statement
     condition: (parenthesized_expression
       (unary_op_expression
-        (function_call_expression
+        argument: (function_call_expression
           function: (name)
-          arguments: (arguments (argument (string (string_value))))
-        )
-      )
-    )
-    body: (compound_statement (echo_statement (variable_name (name))))
-  )
-)
+          arguments: (arguments (argument (string (string_value)))))))
+    body: (compound_statement (echo_statement (variable_name (name))))))
 
 =====================================
 Closing tags before the first PHP tag
