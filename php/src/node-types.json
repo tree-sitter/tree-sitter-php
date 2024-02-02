@@ -1076,6 +1076,11 @@
     }
   },
   {
+    "type": "boolean",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "break_statement",
     "named": true,
     "fields": {},
@@ -3280,6 +3285,11 @@
     }
   },
   {
+    "type": "null",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "nullsafe_member_access_expression",
     "named": true,
     "fields": {
@@ -5328,10 +5338,6 @@
     "named": false
   },
   {
-    "type": "boolean",
-    "named": true
-  },
-  {
     "type": "bottom_type",
     "named": true
   },
@@ -5449,11 +5455,11 @@
   },
   {
     "type": "float",
-    "named": true
+    "named": false
   },
   {
     "type": "float",
-    "named": false
+    "named": true
   },
   {
     "type": "fn",
@@ -5558,10 +5564,6 @@
   {
     "type": "null",
     "named": false
-  },
-  {
-    "type": "null",
-    "named": true
   },
   {
     "type": "or",

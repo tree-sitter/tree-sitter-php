@@ -1169,9 +1169,29 @@ module.exports = function defineGrammar(dialect) {
       ),
 
       argument: $ => seq(
-        optional(seq(field('name', $.name), ':')),
+        optional($._argument_name),
         optional(field('reference_modifier', $.reference_modifier)),
         choice(alias($._reserved_identifier, $.name), $.variadic_unpacking, $._expression),
+      ),
+
+      _argument_name: $ => seq(
+        field('name', alias(
+          choice(
+            $.name,
+            keyword('array', false),
+            keyword('fn', false),
+            keyword('function', false),
+            keyword('match', false),
+            keyword('namespace', false),
+            keyword('null', false),
+            keyword('static', false),
+            'parent',
+            'self',
+            /true|false/i,
+          ),
+          $.name,
+        )),
+        ':',
       ),
 
       member_call_expression: $ => prec(PREC.CALL, seq(

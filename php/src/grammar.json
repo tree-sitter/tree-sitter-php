@@ -6279,21 +6279,8 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "FIELD",
-                  "name": "name",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "name"
-                  }
-                },
-                {
-                  "type": "STRING",
-                  "value": ":"
-                }
-              ]
+              "type": "SYMBOL",
+              "name": "_argument_name"
             },
             {
               "type": "BLANK"
@@ -6337,6 +6324,81 @@
               "name": "_expression"
             }
           ]
+        }
+      ]
+    },
+    "_argument_name": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "name"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "array",
+                  "flags": "i"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "fn",
+                  "flags": "i"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "function",
+                  "flags": "i"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "match",
+                  "flags": "i"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "namespace",
+                  "flags": "i"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "null",
+                  "flags": "i"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "static",
+                  "flags": "i"
+                },
+                {
+                  "type": "STRING",
+                  "value": "parent"
+                },
+                {
+                  "type": "STRING",
+                  "value": "self"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "true|false",
+                  "flags": "i"
+                }
+              ]
+            },
+            "named": true,
+            "value": "name"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ":"
         }
       ]
     },
