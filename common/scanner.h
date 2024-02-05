@@ -92,6 +92,13 @@ static String string_new() {
     return (String){.cap = 16, .len = 0, .data = calloc(17, sizeof(wchar_t))};
 }
 
+static inline bool string_eq(String *self, String *other)  {
+    if (self->len != other->len) {
+        return false;
+    }
+    return memcmp(self->data, other->data, self->len * sizeof(self->data[0])) == 0;
+}
+
 typedef struct {
     String word;
     bool end_word_indentation_allowed;
@@ -204,7 +211,7 @@ static inline bool is_escapable_sequence(TSLexer *lexer) {
     // Hex
     if (letter == 'x') {
         advance(lexer);
-        return isxdigit(lexer->lookahead);
+        return iswxdigit(lexer->lookahead);
     }
 
     // Unicode
@@ -506,7 +513,7 @@ static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
         }
 
         String word = scan_heredoc_word(lexer);
-        if (wcscmp(word.data, heredoc.word.data) != 0) {
+        if (!string_eq(&word, &heredoc.word)) {
             STRING_FREE(word);
             return false;
         }
