@@ -7128,15 +7128,6 @@
             },
             "named": true,
             "value": "string_value"
-          },
-          {
-            "type": "ALIAS",
-            "content": {
-              "type": "STRING",
-              "value": "'"
-            },
-            "named": true,
-            "value": "string_value"
           }
         ]
       }
@@ -7190,40 +7181,6 @@
             "content": {
               "type": "STRING",
               "value": "\\u"
-            },
-            "named": true,
-            "value": "string_value"
-          },
-          {
-            "type": "ALIAS",
-            "content": {
-              "type": "STRING",
-              "value": "'"
-            },
-            "named": true,
-            "value": "string_value"
-          },
-          {
-            "type": "ALIAS",
-            "content": {
-              "type": "STRING",
-              "value": "<?"
-            },
-            "named": true,
-            "value": "string_value"
-          },
-          {
-            "type": "ALIAS",
-            "content": {
-              "type": "TOKEN",
-              "content": {
-                "type": "PREC",
-                "value": 1,
-                "content": {
-                  "type": "STRING",
-                  "value": "?>"
-                }
-              }
             },
             "named": true,
             "value": "string_value"
@@ -7327,10 +7284,14 @@
     "string_value": {
       "type": "TOKEN",
       "content": {
-        "type": "REPEAT1",
+        "type": "PREC",
+        "value": 1,
         "content": {
-          "type": "PATTERN",
-          "value": "\\\\?[^'\\\\]"
+          "type": "REPEAT1",
+          "content": {
+            "type": "PATTERN",
+            "value": "\\\\?[^'\\\\]"
+          }
         }
       }
     },
