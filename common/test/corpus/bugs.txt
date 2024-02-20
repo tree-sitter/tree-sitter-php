@@ -163,3 +163,49 @@ foo(void: null);
       (function_call_expression
         function: (name)
         arguments: (arguments (argument name: (name) (null))))))
+
+
+=========================================
+#221: Error when closing tag is in a string
+=========================================
+
+<?php
+$foo = "?>";
+$foo = <<<EOF
+  ?>
+  EOF;
+$foo = <<<'EOF'
+  ?>
+  EOF;
+$foo = '?>';
+
+---
+
+(program
+  (php_tag)
+    (expression_statement
+      (assignment_expression
+        left: (variable_name (name))
+        right: (encapsed_string (string_value))))
+    (expression_statement
+      (assignment_expression
+        left: (variable_name
+          (name))
+        right: (heredoc
+          identifier: (heredoc_start)
+          value: (heredoc_body
+            (string_value))
+          end_tag: (heredoc_end))))
+    (expression_statement
+      (assignment_expression
+        left: (variable_name
+          (name))
+        right: (nowdoc
+          identifier: (heredoc_start)
+          value: (nowdoc_body
+            (nowdoc_string))
+          end_tag: (heredoc_end))))
+    (expression_statement
+      (assignment_expression
+        left: (variable_name (name))
+        right: (string (string_value)))))
