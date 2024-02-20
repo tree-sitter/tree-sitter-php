@@ -1355,7 +1355,7 @@ module.exports = function defineGrammar(dialect) {
         '\'',
       ),
 
-      string_value: _ => token(repeat1(/\\?[^'\\]/)),
+      string_value: _ => token(prec(1, repeat1(/\\?[^'\\]/))),
 
       heredoc_body: $ => seq($._new_line,
         repeat1(prec.right(
