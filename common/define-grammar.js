@@ -1322,7 +1322,6 @@ module.exports = function defineGrammar(dialect) {
           $._simple_string_part,
           $._complex_string_part,
           alias('\\u', $.string_value),
-          alias('\'', $.string_value), // Needed to avoid the edge case "$b'" from breaking parsing by trying to apply the $.string rule for some reason
         ),
       ),
 
@@ -1334,9 +1333,6 @@ module.exports = function defineGrammar(dialect) {
           $._simple_string_part,
           $._complex_string_part,
           alias('\\u', $.string_value),
-          alias('\'', $.string_value), // Needed to avoid the edge case "$b'" from breaking parsing by trying to apply the $.string rule for some reason
-          alias('<?', $.string_value),
-          alias(token(prec(1, '?>')), $.string_value),
         ),
       ),
 
@@ -1382,7 +1378,6 @@ module.exports = function defineGrammar(dialect) {
         ),
       ),
 
-      // _new_line: _ => choice(token(/\r?\n/), token(/\r/)),
       _new_line: _ => /\r?\n|\r/,
 
       nowdoc_body: $ => seq($._new_line,

@@ -590,6 +590,21 @@ EOF;
 String with null byte   with lagging letters
 EOF;
 
+<<<EOL
+    <?php echo "Hello World"; ?>
+EOL;
+
+
+<<<EOL
+    \u{$a};
+    "\u{$a}";
+EOL;
+
+<<<EOL
+    $b'
+    "$b'"
+EOL;
+
 ---
 (program
   (php_tag)
@@ -735,6 +750,36 @@ EOF;
     (heredoc
       identifier: (heredoc_start)
       value: (heredoc_body
+        (string_value))
+      end_tag: (heredoc_end)))
+  (expression_statement
+    (heredoc
+      identifier: (heredoc_start)
+      value: (heredoc_body
+        (string_value))
+      end_tag: (heredoc_end)))
+  (expression_statement
+    (heredoc
+      identifier: (heredoc_start)
+      value: (heredoc_body
+        (string_value)
+        (string_value)
+        (variable_name (name))
+        (string_value)
+        (string_value)
+        (string_value)
+        (variable_name (name))
+        (string_value))
+      end_tag: (heredoc_end)))
+  (expression_statement
+    (heredoc
+      identifier: (heredoc_start)
+      value: (heredoc_body
+        (string_value)
+        (variable_name (name))
+        (string_value)
+        (string_value)
+        (variable_name (name))
         (string_value))
       end_tag: (heredoc_end))))
 
