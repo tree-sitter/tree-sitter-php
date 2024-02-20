@@ -12,10 +12,7 @@ Complex: Variable access
   (php_tag)
   (expression_statement
     (encapsed_string
-      (variable_name (name))
-    )
-  )
-)
+      (variable_name (name)))))
 
 =======================================
 Complex: Disallow space between { and $
@@ -33,10 +30,7 @@ Complex: Disallow space between { and $
     (encapsed_string
       (string_value)
       (variable_name (name))
-      (string_value)
-    )
-  )
-)
+      (string_value))))
 
 =========================================
 Complex: PHP documentation tests
@@ -82,41 +76,29 @@ Complex: PHP documentation tests
   (expression_statement
     (encapsed_string
       (string_value)
-      (variable_name (name))
-    )
-  )
+      (variable_name (name))))
   (expression_statement
     (encapsed_string
       (string_value)
       (member_access_expression
         (variable_name (name))
-        (name)
-      )
-      (string_value)
-    )
-  )
+        (name))
+      (string_value)))
   (comment)
   (expression_statement
     (encapsed_string
       (string_value)
       (subscript_expression
         (variable_name (name))
-        (string (string_value))
-      )
-    )
-  )
+        (string (string_value)))))
   (expression_statement
     (encapsed_string
       (string_value)
       (subscript_expression
         (subscript_expression
           (variable_name (name))
-          (integer)
-        )
-        (integer)
-      )
-    )
-  )
+          (integer))
+        (integer))))
   (comment)
   (comment)
   (expression_statement
@@ -125,26 +107,17 @@ Complex: PHP documentation tests
       (subscript_expression
         (subscript_expression
           (variable_name (name))
-          (string (string_value))
-        )
-        (integer)
-      )
-    )
-  )
+          (string (string_value)))
+        (integer))))
   (expression_statement
     (binary_expression
       (encapsed_string
-        (string_value)
-      )
+        (string_value))
       (subscript_expression
         (subscript_expression
           (variable_name (name))
-          (string (string_value))
-        )
-        (integer)
-      )
-    )
-  )
+          (string (string_value)))
+        (integer))))
   (expression_statement
     (encapsed_string
       (string_value)
@@ -152,35 +125,23 @@ Complex: PHP documentation tests
         (subscript_expression
           (member_access_expression
             (variable_name (name))
-            (name)
-          )
-          (integer)
-        )
-        (name)
-      )
-    )
-  )
+            (name))
+          (integer))
+        (name))))
   (expression_statement
     (encapsed_string
       (string_value)
       (variable_name (name))
       (string_value)
       (dynamic_variable_name
-        (variable_name (name))
-      )
-    )
-  )
+        (variable_name (name)))))
   (expression_statement
     (encapsed_string
       (string_value)
       (dynamic_variable_name
         (function_call_expression
           (name)
-          (arguments)
-        )
-      )
-    )
-  )
+          (arguments)))))
   (expression_statement
     (encapsed_string
       (string_value)
@@ -190,61 +151,40 @@ Complex: PHP documentation tests
         (member_call_expression
           (variable_name (name))
           (name)
-          (arguments)
-        )
-      )
-    )
-  )
+          (arguments)))))
   (comment)
   (expression_statement
-    (encapsed_string (string_value))
-  )
+    (encapsed_string (string_value)))
   (expression_statement
     (encapsed_string
       (member_access_expression
         (variable_name (name))
-        (variable_name (name))
-      )
-      (escape_sequence)
-    )
-  )
+        (variable_name (name)))
+      (escape_sequence)))
   (expression_statement
     (encapsed_string
       (member_access_expression
         (variable_name (name))
         (subscript_expression
           (variable_name (name))
-          (integer)
-        )
-      )
-      (escape_sequence)
-    )
-  )
+          (integer)))
+      (escape_sequence)))
   (expression_statement
     (encapsed_string
       (string_value)
       (dynamic_variable_name
         (class_constant_access_expression
           (name)
-          (name)
-        )
-      )
-      (escape_sequence)
-    )
-  )
+          (name)))
+      (escape_sequence)))
   (expression_statement
     (encapsed_string
       (string_value)
       (dynamic_variable_name
         (scoped_property_access_expression
           (name)
-          (variable_name (name))
-        )
-      )
-      (escape_sequence)
-    )
-  )
-)
+          (variable_name (name))))
+      (escape_sequence))))
 
 =======================================
 Simple: Variable access
@@ -263,17 +203,12 @@ Simple: Variable access
     (encapsed_string
       (string_value)
       (variable_name (name))
-      (string_value)
-    )
-  )
+      (string_value)))
   (expression_statement
     (encapsed_string
       (string_value)
       (dynamic_variable_name (name))
-      (string_value)
-    )
-  )
-)
+      (string_value))))
 
 =========================================
 Simple: Member and array access
@@ -294,60 +229,42 @@ Simple: Member and array access
       (encapsed_string
         (member_access_expression
           (variable_name (name))
-          (name)
-        )
+          (name))
         (string_value)
         (subscript_expression
           (variable_name (name))
-          (integer)
-        )
-        (string_value)
-      )
-      (name)
-    )
-  )
+          (integer))
+        (string_value))
+      (name)))
   (expression_statement
     (binary_expression
       (encapsed_string
         (member_access_expression
           (variable_name (name))
-          (name)
-        )
+          (name))
         (string_value)
         (member_access_expression
           (variable_name (name))
-          (name)
-        )
-        (string_value)
-      )
-      (name)
-    )
-  )
+          (name))
+        (string_value))
+      (name)))
   (expression_statement
     (encapsed_string
       (member_access_expression
         (variable_name (name))
-        (name)
-      )
+        (name))
       (string_value)
       (member_access_expression
         (variable_name (name))
-        (name)
-      )
-      (string_value)
-    )
-  )
+        (name))
+      (string_value)))
   (expression_statement
     (encapsed_string
       (string_value)
       (subscript_expression
         (variable_name (name))
-        (unary_op_expression (integer))
-      )
-      (string_value)
-    )
-  )
-)
+        (unary_op_expression (integer)))
+      (string_value))))
 
 
 =========================================
@@ -392,118 +309,83 @@ Corner cases
   (php_tag)
   (expression_statement
     (encapsed_string
-      (string_value)
-    )
-  )
+      (string_value)))
   (expression_statement
     (encapsed_string
       (string_value)
-      (escape_sequence)
-    )
-  )
+      (escape_sequence)))
   (expression_statement
     (encapsed_string
-      (string_value)
-    )
-  )
+      (string_value)))
   (expression_statement
-    (encapsed_string (string_value))
-  )
+    (encapsed_string (string_value)))
   (expression_statement
-    (encapsed_string (string_value))
-  )
+    (encapsed_string (string_value)))
   (expression_statement
-    (encapsed_string (string_value))
-  )
+    (encapsed_string (string_value)))
   (expression_statement
-    (encapsed_string (string_value))
-  )
+    (encapsed_string (string_value)))
   (expression_statement
-    (encapsed_string (string_value))
-  )
+    (encapsed_string (string_value)))
   (expression_statement
-    (encapsed_string (string_value))
-  )
+    (encapsed_string (string_value)))
   (expression_statement
-    (encapsed_string (string_value))
-  )
+    (encapsed_string (string_value)))
   (expression_statement
-    (encapsed_string (escape_sequence))
-  )
+    (encapsed_string (escape_sequence)))
   (expression_statement
-    (encapsed_string (string_value))
-  )
+    (encapsed_string (string_value)))
   (expression_statement
-    (encapsed_string)
-  )
+    (encapsed_string))
   (expression_statement
     (encapsed_string
       (escape_sequence)
-      (string_value)
-    )
-  )
+      (string_value)))
   (expression_statement
     (encapsed_string
       (escape_sequence)
       (escape_sequence)
       (escape_sequence)
-      (string_value)
-    )
-  )
+      (string_value)))
   (expression_statement
     (encapsed_string
       (escape_sequence)
       (string_value)
       (variable_name (name))
+      (string_value)))
+  (expression_statement
+    (encapsed_string
       (string_value)
-    )
-  )
+      (variable_name (name))))
   (expression_statement
     (encapsed_string
       (string_value)
       (variable_name (name))
-    )
-  )
+      (string_value)))
   (expression_statement
     (encapsed_string
       (string_value)
-      (variable_name (name))
-      (string_value)
-    )
-  )
-  (expression_statement
-    (encapsed_string
-      (string_value)
-      (variable_name (name))
-    )
-  )
+      (variable_name (name))))
   (expression_statement
     (encapsed_string
       (scoped_call_expression
         (variable_name (name))
         (name)
-        (arguments)
-      )
-    )
-  )
+        (arguments))))
   (expression_statement
     (encapsed_string
       (string_value)
       (member_access_expression
         (variable_name (name))
-        (name)
-      )
-      (string_value)
-    )
-  )
+        (name))
+      (string_value)))
   (expression_statement
     (encapsed_string
       (string_value)
       (subscript_expression
         (member_access_expression
           (variable_name (name))
-          (name)
-        )
+          (name))
         (binary_expression
           (encapsed_string (string_value))
           (encapsed_string
@@ -513,41 +395,25 @@ Corner cases
               (name)
               (arguments
                 (argument
-                  (encapsed_string (string_value))
-                )
-              )
-            )
-          )
-        )
-      )
-      (string_value)
-    )
-  )
+                  (encapsed_string (string_value))))))))
+      (string_value)))
   (expression_statement
     (encapsed_string
       (string_value)
       (escape_sequence)
-      (string_value)
-    )
-  )
+      (string_value)))
   (expression_statement
     (encapsed_string
       (string_value)
       (dynamic_variable_name
         (binary_expression
           (encapsed_string (string_value))
-          (encapsed_string (string_value))
-        )
-      )
-      (string_value)
-    )
-  )
+          (encapsed_string (string_value))))
+      (string_value)))
   (expression_statement
     (encapsed_string
       (string_value)
-      (variable_name (name))
-    )
-  )
+      (variable_name (name))))
   (expression_statement
     (encapsed_string
       (dynamic_variable_name
@@ -557,34 +423,18 @@ Corner cases
               (dynamic_variable_name
                 (dynamic_variable_name
                   (dynamic_variable_name
-                    (variable_name (name))
-                  )
-                )
-              )
-            )
-          )
-        )
-      )
-    )
-  )
+                    (variable_name (name)))))))))))
   (expression_statement
     (encapsed_string
-      (string_value)
-    )
-  )
+      (string_value)))
   (expression_statement
     (encapsed_string
       (dynamic_variable_name (name))
-      (string_value)
-    )
-  )
+      (string_value)))
   (expression_statement
     (encapsed_string
       (string_value)
-      (variable_name (name))
-    )
-  )
-)
+      (variable_name (name)))))
 
 =========================================
 Single quoted
@@ -624,8 +474,7 @@ okay to do';
   (expression_statement (string (string_value)))
   (expression_statement (string (string_value)))
   (expression_statement (string (string_value)))
-  (expression_statement (string (string_value)))
-)
+  (expression_statement (string (string_value))))
 
 =========================================
 Bug: #113
@@ -642,15 +491,10 @@ Bug: #113
   (expression_statement
     (encapsed_string
       (variable_name (name))
-      (string_value)
-    )
-  )
+      (string_value)))
   (expression_statement
     (encapsed_string
-      (string_value)
-    )
-  )
-)
+      (string_value))))
 
 
 ==========================
@@ -753,19 +597,14 @@ EOF;
     (heredoc
       identifier: (heredoc_start)
       value: (heredoc_body
-        (string_value)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (string_value))
+      end_tag: (heredoc_end)))
   (expression_statement
     (heredoc
       identifier: (heredoc_start)
       value: (heredoc_body
         (string_value))
-      end_tag: (heredoc_end)
-    )
-  )
+      end_tag: (heredoc_end)))
   (comment)
   (expression_statement
     (function_call_expression
@@ -776,12 +615,7 @@ EOF;
             identifier: (heredoc_start)
             value: (heredoc_body
               (string_value))
-            end_tag: (heredoc_end)
-          )
-        )
-      )
-    )
-  )
+            end_tag: (heredoc_end))))))
   (expression_statement
     (function_call_expression
       function: (name)
@@ -791,23 +625,14 @@ EOF;
             identifier: (heredoc_start)
             value: (heredoc_body
               (string_value))
-            end_tag: (heredoc_end)
-          )
-        )
-        (argument
-          (boolean)
-        )
-      )
-    )
-  )
+            end_tag: (heredoc_end)))
+        (argument (boolean)))))
   (expression_statement
     (heredoc
       identifier: (heredoc_start)
       value: (heredoc_body
         (variable_name (name)))
-      end_tag: (heredoc_end)
-    )
-  )
+      end_tag: (heredoc_end)))
   (expression_statement
     (heredoc
       identifier: (heredoc_start)
@@ -817,149 +642,101 @@ EOF;
         (variable_name (name))
         (member_access_expression
           object: (variable_name (name))
-          name: (name)
-        )
+          name: (name))
         (subscript_expression
           (member_call_expression
             object: (variable_name (name))
             name: (name)
-            arguments: (arguments)
-          )
-          (integer)
-        )
-        (string_value)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+            arguments: (arguments))
+          (integer))
+        (string_value))
+      end_tag: (heredoc_end)))
   (expression_statement
     (heredoc
       identifier: (heredoc_start)
       value: (heredoc_body
-        (string_value)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (string_value))
+      end_tag: (heredoc_end)))
   (expression_statement
     (heredoc
       identifier: (heredoc_start)
       value: (heredoc_body
         (string_value)
         (escape_sequence)
-        (string_value)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (string_value))
+      end_tag: (heredoc_end)))
+  (expression_statement
+    (heredoc
+      identifier: (heredoc_start)
+      value: (heredoc_body
+        (string_value))
+      end_tag: (heredoc_end)))
+  (expression_statement
+    (heredoc
+      identifier: (heredoc_start)
+      value: (heredoc_body
+        (string_value))
+      end_tag: (heredoc_end)))
+  (expression_statement
+    (heredoc
+      identifier: (heredoc_start)
+      value: (heredoc_body
+        (string_value))
+      end_tag: (heredoc_end)))
+  (expression_statement
+    (heredoc
+      identifier: (heredoc_start)
+      value: (heredoc_body
+        (string_value))
+      end_tag: (heredoc_end)))
+  (expression_statement
+    (heredoc
+      identifier: (heredoc_start)
+      value: (heredoc_body
+        (string_value))
+      end_tag: (heredoc_end)))
+  (expression_statement
+    (heredoc
+      identifier: (heredoc_start)
+      value: (heredoc_body
+        (string_value))
+      end_tag: (heredoc_end)))
+  (expression_statement
+    (heredoc
+      identifier: (heredoc_start)
+      value: (heredoc_body
+        (string_value))
+      end_tag: (heredoc_end)))
   (expression_statement
     (heredoc
       identifier: (heredoc_start)
       value: (heredoc_body
         (string_value)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (string_value))
+      end_tag: (heredoc_end)))
+  (expression_statement
+    (heredoc
+      identifier: (heredoc_start)
+      end_tag: (heredoc_end)))
   (expression_statement
     (heredoc
       identifier: (heredoc_start)
       value: (heredoc_body
         (string_value)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (escape_sequence))
+      end_tag: (heredoc_end)))
   (expression_statement
     (heredoc
       identifier: (heredoc_start)
       value: (heredoc_body
-        (string_value)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (string_value))
+      end_tag: (heredoc_end)))
   (expression_statement
     (heredoc
       identifier: (heredoc_start)
       value: (heredoc_body
-        (string_value)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
-  (expression_statement
-    (heredoc
-      identifier: (heredoc_start)
-      value: (heredoc_body
-        (string_value)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
-  (expression_statement
-    (heredoc
-      identifier: (heredoc_start)
-      value: (heredoc_body
-        (string_value)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
-  (expression_statement
-    (heredoc
-      identifier: (heredoc_start)
-      value: (heredoc_body
-        (string_value)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
-  (expression_statement
-    (heredoc
-      identifier: (heredoc_start)
-      value: (heredoc_body
-        (string_value)
-        (string_value)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
-  (expression_statement
-    (heredoc
-      identifier: (heredoc_start)
-      end_tag: (heredoc_end)
-    )
-  )
-  (expression_statement
-    (heredoc
-      identifier: (heredoc_start)
-      value: (heredoc_body
-        (string_value)
-        (escape_sequence)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
-  (expression_statement
-    (heredoc
-      identifier: (heredoc_start)
-      value: (heredoc_body
-        (string_value)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
-  (expression_statement
-    (heredoc
-      identifier: (heredoc_start)
-      value: (heredoc_body
-        (string_value)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
-)
+        (string_value))
+      end_tag: (heredoc_end))))
 
 
 ==========================
@@ -1023,95 +800,64 @@ EOF;
     (nowdoc
       identifier: (heredoc_start)
       value: (nowdoc_body
-        (nowdoc_string)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (nowdoc_string))
+      end_tag: (heredoc_end)))
   (expression_statement
     (nowdoc
       identifier: (heredoc_start)
-      end_tag: (heredoc_end)
-    )
-  )
+      end_tag: (heredoc_end)))
   (expression_statement
     (nowdoc
       identifier: (heredoc_start)
-      end_tag: (heredoc_end)
-    )
-  )
+      end_tag: (heredoc_end)))
   (expression_statement
     (nowdoc
       identifier: (heredoc_start)
-      end_tag: (heredoc_end)
-    )
-  )
+      end_tag: (heredoc_end)))
   (expression_statement
     (nowdoc
       identifier: (heredoc_start)
       value: (nowdoc_body
-        (nowdoc_string)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (nowdoc_string))
+      end_tag: (heredoc_end)))
   (expression_statement
     (nowdoc
       identifier: (heredoc_start)
       value: (nowdoc_body
-        (nowdoc_string)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (nowdoc_string))
+      end_tag: (heredoc_end)))
   (expression_statement
     (nowdoc
       identifier: (heredoc_start)
       value: (nowdoc_body
-        (nowdoc_string)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (nowdoc_string))
+      end_tag: (heredoc_end)))
   (expression_statement
     (nowdoc
       identifier: (heredoc_start)
       value: (nowdoc_body
-        (nowdoc_string)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (nowdoc_string))
+      end_tag: (heredoc_end)))
   (expression_statement
     (nowdoc
       identifier: (heredoc_start)
       value: (nowdoc_body
         (nowdoc_string)
         (nowdoc_string)
-        (nowdoc_string)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (nowdoc_string))
+      end_tag: (heredoc_end)))
   (expression_statement
     (nowdoc
       identifier: (heredoc_start)
       value: (nowdoc_body
-        (nowdoc_string)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (nowdoc_string))
+      end_tag: (heredoc_end)))
   (expression_statement
     (nowdoc
       identifier: (heredoc_start)
       value: (nowdoc_body
-        (nowdoc_string)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
-)
+        (nowdoc_string))
+      end_tag: (heredoc_end))))
 
 ==========================
 #209: Here/Nowdoc with numbers in identifier
@@ -1139,30 +885,20 @@ _F00;
     (heredoc
       identifier: (heredoc_start)
       value: (heredoc_body
-        (string_value)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (string_value))
+      end_tag: (heredoc_end)))
   (expression_statement
     (heredoc
       identifier: (heredoc_start)
       value: (heredoc_body
-        (string_value)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
+        (string_value))
+      end_tag: (heredoc_end)))
   (expression_statement
     (nowdoc
       identifier: (heredoc_start)
       value: (nowdoc_body
-        (nowdoc_string)
-      )
-      end_tag: (heredoc_end)
-    )
-  )
-)
+        (nowdoc_string))
+      end_tag: (heredoc_end))))
 
 ==============================
 Unicode escape sequences
@@ -1186,5 +922,5 @@ Unicode escape sequences
   (expression_statement (encapsed_string (escape_sequence))) (comment)
   (expression_statement (encapsed_string (escape_sequence))) (comment)
   (expression_statement (encapsed_string (escape_sequence))) (comment)
-  (expression_statement (encapsed_string (escape_sequence))) (comment)
-)
+  (expression_statement (encapsed_string (escape_sequence))) (comment))
+
