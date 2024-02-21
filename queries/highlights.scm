@@ -16,9 +16,6 @@
 ((name) @constructor
  (#match? @constructor "^[A-Z]"))
 
-((name) @variable.builtin
- (#eq? @variable.builtin "this"))
-
 ; Types
 
 (primitive_type) @type.builtin
@@ -70,6 +67,9 @@
 (integer) @number
 (float) @number
 (comment) @comment
+
+((name) @variable.builtin
+ (#eq? @variable.builtin "this"))
 
 "$" @operator
 
