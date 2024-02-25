@@ -12,14 +12,14 @@ function clone_repo {
 	path=examples/$name
 	if [ ! -d "$path" ]; then
 		echo "Cloning $owner/$name"
-		git clone "https://github.com/$owner/$name" "$path"
+		git clone --depth 1 "https://github.com/$owner/$name" "$path"
 	fi
 
 	pushd "$path" >/dev/null
 	actual_sha=$(git rev-parse HEAD)
 	if [ "$actual_sha" != "$sha" ]; then
 		echo "Updating $owner/$name to $sha"
-		git fetch
+		git fetch --depth 1 origin "$sha"
 		git reset --hard "$sha"
 	fi
 	popd >/dev/null
