@@ -6,14 +6,14 @@ echo <<<OMG
 OMG;
 // <- string
 
-echo true, TRUE, false, FALSE
+echo true, TRUE, false, FALSE;
 //    ^ constant.builtin
 //          ^ constant.builtin
 //               ^ constant.builtin
 //                      ^ constant.builtin
 
-echo PI_314
+echo PI_314;
 //   ^ constant
 
-echo __DIR__
+echo __DIR__;
 //    ^ constant.builtin

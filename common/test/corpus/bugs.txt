@@ -164,7 +164,6 @@ foo(void: null);
         function: (name)
         arguments: (arguments (argument name: (name) (null))))))
 
-
 =========================================
 #221: Error when closing tag is in a string
 =========================================
@@ -209,3 +208,26 @@ $foo = '?>';
       (assignment_expression
         left: (variable_name (name))
         right: (string (string_value)))))
+
+=========================================
+#223: Error with comment inside binary expression
+=========================================
+
+<?php
+if (
+  true
+  // this is a comment
+  || false
+) {}
+
+---
+
+(program
+  (php_tag)
+  (if_statement
+    condition: (parenthesized_expression
+      (binary_expression
+        left: (boolean)
+        (comment)
+        right: (boolean)))
+    body: (compound_statement)))

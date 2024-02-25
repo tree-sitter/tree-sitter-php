@@ -455,6 +455,7 @@ okay to do';
 '#valid regexp#';
 'hello#world';
 'hello//world';
+'//hello world';
 '/*valid regexp*/';
 '/*valid regexp';
 
@@ -466,6 +467,7 @@ okay to do';
   (expression_statement (string (string_value)))
   (expression_statement (string (string_value) (escape_sequence) (string_value)))
   (expression_statement (string (string_value) (escape_sequence) (string_value)))
+  (expression_statement (string (string_value)))
   (expression_statement (string (string_value)))
   (expression_statement (string (string_value)))
   (expression_statement (string (string_value)))

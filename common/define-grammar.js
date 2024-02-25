@@ -148,7 +148,7 @@ module.exports = function defineGrammar(dialect) {
 
       text: _ => repeat1(choice(
         token(prec(-1, /</)),
-        /[^\s<][^<]*/,
+        token(prec(1, /[^\s<][^<]*/)),
       )),
 
       _statement: $ => choice(
@@ -1553,7 +1553,7 @@ module.exports = function defineGrammar(dialect) {
         keyword('static'),
       ),
 
-      comment: _ => token(prec(-1, choice(
+      comment: _ => token(choice(
         seq(
           choice('//', /#[^?\[?\r?\n]/),
           repeat(/[^?\r?\n]|\?[^>\r\n]/),
@@ -1565,7 +1565,7 @@ module.exports = function defineGrammar(dialect) {
           /[^*]*\*+([^/*][^*]*\*+)*/,
           '/',
         ),
-      ))),
+      )),
 
       _semicolon: $ => choice($._automatic_semicolon, ';'),
     },
