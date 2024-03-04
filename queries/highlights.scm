@@ -115,6 +115,7 @@
 "require_once" @keyword
 "require" @keyword
 "return" @keyword
+"self" @keyword
 "static" @keyword
 "switch" @keyword
 "throw" @keyword
