@@ -64,8 +64,8 @@
   "use"
   "while"
   "xor"
-  ; "yield from"
   "yield"
+  (yield_expression "from")
   (static_modifier)
   (function_static_declaration "static")
 ] @keyword
