@@ -4,16 +4,16 @@
 echo <<<OMG
   something
 OMG;
-// <- string
+// <- @string
 
 echo true, TRUE, false, FALSE;
-//    ^ constant.builtin
-//          ^ constant.builtin
-//               ^ constant.builtin
-//                      ^ constant.builtin
+//   ^^^^ @constant.builtin
+//         ^^^^ @constant.builtin
+//               ^^^^^ @constant.builtin
+//                      ^^^^^ @constant.builtin
 
 echo PI_314;
-//   ^ constant
+//   ^^^^^^ @constant
 
 echo __DIR__;
-//    ^ constant.builtin
+//   ^^^^^^^ @constant.builtin

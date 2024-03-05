@@ -1,145 +1,139 @@
 <?php
-// <- tag
+// <- @tag
 
 declare(strict_types=1);
-// <- keyword
+// <- @keyword
 
 include "file.php";
-// <- keyword
+// <- @keyword
 include_once "file.php";
-// <- keyword
-
+// <- @keyword
 require "file.php";
-// <- keyword
+// <- @keyword
 require_once "file.php";
-// <- keyword
+// <- @keyword
 
 namespace A\B;
-// <- keyword
+// <- @keyword
 
-if ($a) {} elseif ($b) {} else {}
-//         ^ keyword
-//                        ^ keyword
-if ($a and $b or $c xor $d) {}
-//     ^ keyword
-//            ^ keyword
-//                  ^ keyword
+if ($a and $b or $c xor $d) {} elseif ($b) {} else {}
+// <- @keyword
+//     ^^^ @keyword
+//            ^^ @keyword
+//                  ^^^ @keyword
+//                             ^^^^^^ @keyword
+//                                            ^^^^ @keyword
 
 for ($i = 0; $i < 1; $i++) { continue; }
-// <- keyword
-//                           ^ keyword
+// <- @keyword
+//                           ^^^^^^^^ @keyword
 
 while ($b) {}
-// <- keyword
+// <- @keyword
 
 WHILE ($b) {}
-// <- keyword
+// <- @keyword
 
 do { } while ($c);
-// <- keyword
-//     ^ keyword
+// <- @keyword
+//     ^^^^^ @keyword
 
 foreach ($foos as $foo) {}
-// <- keyword
-//             ^ keyword
+// <- @keyword
+//             ^^ @keyword
 
 try {} catch (Exception $e) {} finally {}
-// <- keyword
-//     ^ keyword
-//                             ^ keyword
+// <- @keyword
+//     ^^^^^ @keyword
+//                             ^^^^^^^ @keyword
 
 function a() {}
-// <- keyword
+// <- @keyword
 
 abstract class A
-// <- keyword
-//       ^ keyword
+// <- @keyword
+//       ^^^^^ @keyword
 {
   private const BAR = 1;
-  // <- keyword
-  //      ^ keyword
+//^^^^^^^ @keyword
+//        ^^^^^ @keyword
   protected readonly static $a;
-  // <- keyword
-  //        ^ keyword
-  //                 ^ keyword
+//^^^^^^^^^ @keyword
+//          ^^^^^^^^ @keyword
+//                   ^^^^^^ @keyword
   final public $b;
-  // <- keyword
+//^^^^^ @keyword
   public static function foo(): static {}
-  // <- keyword
-  //     ^ keyword
-  //            ^ keyword
-  //                            ^ !keyword
+//^^^^^^ @keyword
+//       ^^^^^^ @keyword
+//              ^^^^^^^^ @keyword
 }
 
 class B extends A implements T
-//      ^ keyword
-//                ^ keyword
+//      ^^^^^^^ @keyword
+//                ^^^^^^^^^^ @keyword
 {
   use T, U {
-  // <- keyword
+//^^^ @keyword
     U::small insteadof T;
-    //       ^ keyword
+//           ^^^^^^^^^ @keyword
   }
   public function foo(callable $call): self
   {
     $call instanceof Closure;
-    //    ^ keyword
+//        ^^^^^^^^^^ @keyword
     fn ($a, $b) => $a + $b;
-    // <- keyword
+//  ^^ @keyword
     static $a;
-    // <- keyword
+//  ^^^^^^ @keyword
     global $a;
-    // <- keyword
+//  ^^^^^^ @keyword
     clone $call;
-    // <- keyword
+//  ^^^^^ @keyword
     match ($a) {
-    // <- keyword
+//  ^^^^^ @keyword
       default => "other",
-      // <- keyword
+//    ^^^^^^^ @keyword
     };
 
     switch ($a) {
-    // <- keyword
+//  ^^^^^^ @keyword
       case 'value':
-      // <- keyword
+//    ^^^^ @keyword
         break;
-        // <- keyword
+//      ^^^^^ @keyword
       default:
-      // <- keyword
+//    ^^^^^^^ @keyword
     }
-
     yield $a;
-    // <- keyword
-
+//  ^^^^^ @keyword
     return $a;
-    // <- keyword
-
+//  ^^^^^^ @keyword
     goto a;
-    // <- keyword
-
+//  ^^^^ @keyword
     echo "a";
-    // <- keyword
-
+//  ^^^^ @keyword
     print "a";
-    // <- keyword
-
+//  ^^^^^ @keyword
+    print("a");
+//  ^^^^^ @keyword
     exit;
-    // <- keyword
+//  ^^^^ @keyword
     exit();
-//  ^^^^ function.builtin
+//  ^^^^ @function.builtin
     exit(1);
-    // <- function.builtin
+//  ^^^^ @function.builtin
   }
 }
 
 throw new Exception("oh");
-// <- keyword
-//    ^ keyword
+// <- @keyword
+//    ^^^ @keyword
 
 interface T {}
-// <- keyword
+// <- @keyword
 
 trait T { public function small(): void {} }
-// <- keyword
+// <- @keyword
 trait U { public function small(): void {} }
-// <- keyword
+// <- @keyword
