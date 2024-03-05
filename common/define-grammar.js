@@ -169,6 +169,7 @@ module.exports = function defineGrammar(dialect) {
         $.try_statement,
         $.declare_statement,
         $.echo_statement,
+        $.exit_statement,
         $.unset_statement,
         $.const_declaration,
         $.function_definition,
@@ -592,6 +593,12 @@ module.exports = function defineGrammar(dialect) {
 
       echo_statement: $ => seq(
         keyword('echo'), $._expressions, $._semicolon,
+      ),
+
+      exit_statement: $ => seq(
+        keyword('exit'),
+        optional(seq('(', optional($._expression), ')')),
+        $._semicolon,
       ),
 
       unset_statement: $ => seq(

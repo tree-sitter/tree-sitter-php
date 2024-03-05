@@ -27,6 +27,7 @@
 
 (array_creation_expression "array" @function.builtin)
 (list_literal "list" @function.builtin)
+(exit_statement "exit" @function.builtin "(")
 
 (method_declaration
   name: (name) @function.method)
@@ -98,7 +99,7 @@
   "endif"
   "endswitch"
   "endwhile"
-  ; "exit"
+  "exit"
   "extends"
   "final"
   "finally"
@@ -119,7 +120,7 @@
   "namespace"
   "new"
   "or"
-  ; "print"
+  "print"
   "private"
   "protected"
   "public"

@@ -131,3 +131,13 @@ goto a;
 
 echo "a";
 // <- keyword
+
+print "a";
+// <- keyword
+
+exit;
+// <- keyword
+exit();
+// <- function.builtin
+exit(1);
+// <- function.builtin

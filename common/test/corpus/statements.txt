@@ -443,3 +443,23 @@ goto foo;
   (php_tag)
   (named_label_statement (name))
   (goto_statement (name)))
+
+=========================================
+Exit statements
+=========================================
+
+<?php
+
+exit;
+exit();
+exit(1);
+exit('Goodbye');
+
+---
+
+(program
+  (php_tag)
+  (exit_statement)
+  (exit_statement)
+  (exit_statement (integer))
+  (exit_statement (string (string_value))))
