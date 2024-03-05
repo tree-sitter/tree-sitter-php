@@ -1,13 +1,33 @@
 <?php
 // <- tag
 
-if ($a) {} elseif ($b) {} else {}
+declare(strict_types=1);
 // <- keyword
+
+include "file.php";
+// <- keyword
+include_once "file.php";
+// <- keyword
+
+require "file.php";
+// <- keyword
+require_once "file.php";
+// <- keyword
+
+namespace A\B;
+// <- keyword
+
+if ($a) {} elseif ($b) {} else {}
 //         ^ keyword
 //                        ^ keyword
+if ($a and $b or $c xor $d) {}
+//     ^ keyword
+//            ^ keyword
+//                  ^ keyword
 
-for ($i = 0; $i < 1; $i++) {}
+for ($i = 0; $i < 1; $i++) { continue; }
 // <- keyword
+//                           ^ keyword
 
 while ($b) {}
 // <- keyword
@@ -23,34 +43,91 @@ foreach ($foos as $foo) {}
 // <- keyword
 //             ^ keyword
 
-try {} catch (Exception $e) {}
+try {} catch (Exception $e) {} finally {}
 // <- keyword
 //     ^ keyword
+//                             ^ keyword
 
 function a() {}
 // <- keyword
 
-class A {}
+abstract class A
 // <- keyword
+//       ^ keyword
+{
+  private const BAR = 1;
+  // <- keyword
+  //      ^ keyword
+  protected readonly static $a;
+  // <- keyword
+  //        ^ keyword
+  //                 ^ keyword
+  final public $b;
+  // <- keyword
+  public function foo(): static {}
+  // <- keyword
+  //     ^ keyword
+}
+
+class B extends A implements T
+//      ^ keyword
+//                ^ keyword
+{
+  use T, U {
+  // <- keyword
+    U::small insteadof T;
+    //       ^ keyword
+  }
+  public function foo(callable $call): self
+  {
+    $call instanceof Closure;
+    //    ^ keyword
+    fn ($a, $b) => $a + $b;
+    // <- keyword
+    static $a;
+    // <- keyword
+    global $a;
+    // <- keyword
+    clone $call;
+    // <- keyword
+    match ($a) {
+    // <- keyword
+      default => "other",
+      // <- keyword
+    };
+
+    switch ($a) {
+    // <- keyword
+      case 'value':
+      // <- keyword
+        break;
+        // <- keyword
+      default:
+      // <- keyword
+    }
+
+    yield $a;
+    // <- keyword
+
+    return $a;
+    // <- keyword
+  }
+}
 
 throw new Exception("oh");
 // <- keyword
 //    ^ keyword
 
-function b(
-  int $a,
-  // <- type.builtin
-
-  string $b,
-  // <- type.builtin
-
-  Person $e
-  // ^ type
-): Dog {}
-// ^ type
-
 interface T {}
-// ^ keyword
+// <- keyword
 
-trait T {}
-// ^ keyword
+trait T { public function small(): void {} }
+// <- keyword
+trait U { public function small(): void {} }
+// <- keyword
+
+goto a;
+// <- keyword
+
+echo "a";
+// <- keyword
