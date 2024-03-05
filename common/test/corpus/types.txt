@@ -340,7 +340,7 @@ function a(string $var) : static {
         (variable_name (name))
       )
     )
-    (primitive_type)
+    (named_type (name))
     (compound_statement)
   )
 )

@@ -64,9 +64,11 @@ abstract class A
   //                 ^ keyword
   final public $b;
   // <- keyword
-  public function foo(): static {}
+  public static function foo(): static {}
   // <- keyword
   //     ^ keyword
+  //            ^ keyword
+  //                            ^ !keyword
 }
 
 class B extends A implements T
@@ -111,6 +113,22 @@ class B extends A implements T
 
     return $a;
     // <- keyword
+
+    goto a;
+    // <- keyword
+
+    echo "a";
+    // <- keyword
+
+    print "a";
+    // <- keyword
+
+    exit;
+    // <- keyword
+    exit();
+//  ^^^^ function.builtin
+    exit(1);
+    // <- function.builtin
   }
 }
 
@@ -125,19 +143,3 @@ trait T { public function small(): void {} }
 // <- keyword
 trait U { public function small(): void {} }
 // <- keyword
-
-goto a;
-// <- keyword
-
-echo "a";
-// <- keyword
-
-print "a";
-// <- keyword
-
-exit;
-// <- keyword
-exit();
-// <- function.builtin
-exit(1);
-// <- function.builtin
