@@ -139,3 +139,6 @@ trait T { public function small(): void {} }
 // <- @keyword
 trait U { public function small(): void {} }
 // <- @keyword
+enum Foo { case Bar; }
+//^^ @keyword
+//         ^^^^  @keyword

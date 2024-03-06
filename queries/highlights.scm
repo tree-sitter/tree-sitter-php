@@ -28,6 +28,7 @@
   "endif"
   "endswitch"
   "endwhile"
+  "enum"
   "exit"
   "extends"
   "final"
