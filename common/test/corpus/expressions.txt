@@ -1521,3 +1521,26 @@ $漢字;
         (nowdoc_body
           (nowdoc_string))
         (heredoc_end))))
+
+===============================================
+Yield expressions
+===============================================
+
+<?php
+
+yield;
+yield $a;
+yield from $a;
+
+---
+
+(program
+  (php_tag)
+  (expression_statement
+    (yield_expression))
+  (expression_statement
+    (yield_expression
+      (array_element_initializer
+        (variable_name (name)))))
+  (expression_statement
+    (yield_expression (variable_name (name)))))

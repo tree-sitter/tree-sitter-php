@@ -169,6 +169,7 @@ module.exports = function defineGrammar(dialect) {
         $.try_statement,
         $.declare_statement,
         $.echo_statement,
+        $.exit_statement,
         $.unset_statement,
         $.const_declaration,
         $.function_definition,
@@ -563,7 +564,6 @@ module.exports = function defineGrammar(dialect) {
         'string',
         'void',
         'mixed',
-        'static', // only legal as a return type
         'false',
         'null',
         'true',
@@ -592,6 +592,12 @@ module.exports = function defineGrammar(dialect) {
 
       echo_statement: $ => seq(
         keyword('echo'), $._expressions, $._semicolon,
+      ),
+
+      exit_statement: $ => seq(
+        keyword('exit'),
+        optional(seq('(', optional($._expression), ')')),
+        $._semicolon,
       ),
 
       unset_statement: $ => seq(
@@ -1506,7 +1512,7 @@ module.exports = function defineGrammar(dialect) {
           ['*', PREC.TIMES],
           ['/', PREC.TIMES],
           ['%', PREC.TIMES],
-        // @ts-ignore
+          // @ts-ignore
         ].map(([op, p]) => prec.left(p, seq(
           field('left', $._expression),
           // @ts-ignore

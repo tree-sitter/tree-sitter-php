@@ -1,6 +1,75 @@
-(php_tag) @tag
-"?>" @tag
+[
+  (php_tag)
+  "?>"
+] @tag
 
+; Keywords
+
+[
+  "abstract"
+  "and"
+  "as"
+  "break"
+  "case"
+  "catch"
+  "class"
+  "clone"
+  "const"
+  "continue"
+  "declare"
+  "default"
+  "do"
+  "echo"
+  "else"
+  "elseif"
+  "enddeclare"
+  "endfor"
+  "endforeach"
+  "endif"
+  "endswitch"
+  "endwhile"
+  "enum"
+  "exit"
+  "extends"
+  "final"
+  "finally"
+  "fn"
+  "for"
+  "foreach"
+  "function"
+  "global"
+  "goto"
+  "if"
+  "implements"
+  "include"
+  "include_once"
+  "instanceof"
+  "insteadof"
+  "interface"
+  "match"
+  "namespace"
+  "new"
+  "or"
+  "print"
+  "private"
+  "protected"
+  "public"
+  "readonly"
+  "require"
+  "require_once"
+  "return"
+  "switch"
+  "throw"
+  "trait"
+  "try"
+  "use"
+  "while"
+  "xor"
+  "yield"
+  (yield_expression "from")
+  (static_modifier)
+  (function_static_declaration "static")
+] @keyword
 
 ; Variables
 
@@ -8,25 +77,36 @@
 
 (variable_name) @variable
 
-((name) @constructor
- (#match? @constructor "^[A-Z]"))
+(method_declaration name: (name) @constructor
+  (#eq? @constructor "__construct"))
+
+(object_creation_expression [
+  (name) @constructor
+  (qualified_name (name) @constructor)
+])
 
 ((name) @constant
  (#match? @constant "^_?[A-Z][A-Z\\d_]+$"))
 ((name) @constant.builtin
  (#match? @constant.builtin "^__[A-Z][A-Z\d_]+__$"))
+(const_declaration (const_element (name) @constant))
 
 ; Types
 
 (primitive_type) @type.builtin
 (cast_type) @type.builtin
-(named_type (name) @type) @type
-(named_type (qualified_name) @type) @type
+(named_type [
+  (name) @type
+  (qualified_name (name) @type)
+]) @type
+(named_type (name) @type.builtin
+  (#any-of? @type.builtin "static" "self"))
 
 ; Functions
 
 (array_creation_expression "array" @function.builtin)
 (list_literal "list" @function.builtin)
+(exit_statement "exit" @function.builtin "(")
 
 (method_declaration
   name: (name) @function.method)
@@ -72,69 +152,3 @@
  (#eq? @variable.builtin "this"))
 
 "$" @operator
-
-; Keywords
-
-[
-  "abstract"
-  "and"
-  "as"
-  "break"
-  "case"
-  "catch"
-  "class"
-  "clone"
-  "const"
-  "continue"
-  "declare"
-  "default"
-  "do"
-  "echo"
-  "else"
-  "elseif"
-  "enddeclare"
-  "endfor"
-  "endforeach"
-  "endif"
-  "endswitch"
-  "endwhile"
-  ; "exit"
-  "extends"
-  "final"
-  "finally"
-  "fn"
-  "for"
-  "foreach"
-  "function"
-  "global"
-  "goto"
-  "if"
-  "implements"
-  "include"
-  "include_once"
-  "instanceof"
-  "insteadof"
-  "interface"
-  "match"
-  "namespace"
-  "new"
-  "or"
-  ; "print"
-  "private"
-  "protected"
-  "public"
-  "readonly"
-  "require"
-  "require_once"
-  "return"
-  "static"
-  "switch"
-  "throw"
-  "trait"
-  "try"
-  "use"
-  "while"
-  "xor"
-  ; "yield from"
-  "yield"
-] @keyword

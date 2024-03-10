@@ -254,6 +254,10 @@
         "named": true
       },
       {
+        "type": "exit_statement",
+        "named": true
+      },
+      {
         "type": "expression_statement",
         "named": true
       },
@@ -1995,6 +1999,21 @@
     "children": {
       "multiple": false,
       "required": true,
+      "types": [
+        {
+          "type": "_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "exit_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
       "types": [
         {
           "type": "_expression",
@@ -5413,6 +5432,10 @@
   {
     "type": "escape_sequence",
     "named": true
+  },
+  {
+    "type": "exit",
+    "named": false
   },
   {
     "type": "extends",
