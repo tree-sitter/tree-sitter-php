@@ -1310,7 +1310,7 @@ module.exports = function defineGrammar(dialect) {
           '`',
           /[0-7]{1,3}/,
           /x[0-9A-Fa-f]{1,2}/,
-          /u{[0-9A-Fa-f]+}/,
+          /u\{[0-9A-Fa-f]+\}/,
         ),
       )),
 

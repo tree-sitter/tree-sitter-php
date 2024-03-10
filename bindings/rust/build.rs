@@ -16,7 +16,7 @@ fn main() {
         php_only_dir.join("parser.c"),
         php_only_dir.join("scanner.c"),
     ] {
-        c_config.file(&path);
+        c_config.file(path);
         println!("cargo:rerun-if-changed={}", path.to_str().unwrap());
     }
 

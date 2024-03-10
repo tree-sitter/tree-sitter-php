@@ -3,13 +3,18 @@
   "tree-sitter": [
     {
       "scope": "source.php",
-      "file-types": ["php"],
+      "file-types": [
+        "php"
+      ],
       "highlights": "../queries/highlights.scm",
       "injections": [
         "../queries/injections.scm",
         "../queries/injections-text.scm"
       ],
-      "tags": "../queries/tags.scm"
+      "tags": "../queries/tags.scm",
+      "external-files": [
+        "../common/scanner.h"
+      ]
     }
   ]
 }
