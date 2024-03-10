@@ -7076,7 +7076,7 @@
               },
               {
                 "type": "PATTERN",
-                "value": "u{[0-9A-Fa-f]+}"
+                "value": "u\\{[0-9A-Fa-f]+\\}"
               }
             ]
           }
