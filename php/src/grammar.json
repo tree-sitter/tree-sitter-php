@@ -1929,17 +1929,8 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "class_constant_access_expression"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "name"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "class_constant_access_expression"
           },
           {
             "type": "ALIAS",
