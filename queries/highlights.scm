@@ -66,10 +66,11 @@
   "while"
   "xor"
   "yield"
-  (yield_expression "from")
   (static_modifier)
-  (function_static_declaration "static")
 ] @keyword
+
+(yield_expression "from" @keyword)
+(function_static_declaration "static" @keyword)
 
 ; Variables
 
