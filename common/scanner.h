@@ -69,6 +69,7 @@
 
 enum TokenType {
     AUTOMATIC_SEMICOLON,
+    STRING_VALUE,
     ENCAPSED_STRING_CHARS,
     ENCAPSED_STRING_CHARS_AFTER_VARIABLE,
     EXECUTION_STRING_CHARS,
@@ -288,6 +289,23 @@ static inline bool scan_nowdoc_string(Scanner *scanner, TSLexer *lexer) {
     return false;
 }
 
+static bool scan_string_value(Scanner *scanner, TSLexer *lexer) {
+    for (bool has_content = false;; has_content = true) {
+        lexer->mark_end(lexer);
+        if (lexer->lookahead == '\'' || lexer->eof(lexer)) {
+            return has_content;
+        }
+        if (lexer->lookahead == '\\') {
+            advance(lexer);
+            if (lexer->lookahead == '\'' || lexer->lookahead == '\\') {
+                return has_content;
+            }
+        }
+        advance(lexer);
+    }
+    return false;
+}
+
 static bool scan_encapsed_part_string(Scanner *scanner, TSLexer *lexer, bool is_after_variable, bool is_heredoc,
                                       bool is_execution_string) {
     bool has_consumed_content = false;
@@ -446,6 +464,11 @@ static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
     scanner->has_leading_whitespace = false;
 
     lexer->mark_end(lexer);
+
+    if (valid_symbols[STRING_VALUE]) {
+        lexer->result_symbol = STRING_VALUE;
+        return scan_string_value(scanner, lexer);
+    }
 
     if (valid_symbols[ENCAPSED_STRING_CHARS_AFTER_VARIABLE]) {
         lexer->result_symbol = ENCAPSED_STRING_CHARS_AFTER_VARIABLE;

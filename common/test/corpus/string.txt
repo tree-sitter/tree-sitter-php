@@ -971,3 +971,18 @@ Unicode escape sequences
   (expression_statement (encapsed_string (escape_sequence))) (comment)
   (expression_statement (encapsed_string (escape_sequence))) (comment))
 
+==============================
+#234 Single quoted string with escape sequences and comment chars
+==============================
+
+<?php
+
+'#^(\\\')#';
+
+---
+
+(program
+  (php_tag)
+  (expression_statement
+    (string
+      (string_value) (escape_sequence) (escape_sequence) (string_value))))

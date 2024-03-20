@@ -53,6 +53,7 @@ module.exports = function defineGrammar(dialect) {
 
     externals: $ => [
       $._automatic_semicolon,
+      $.string_value,
       $.encapsed_string_chars,
       $.encapsed_string_chars_after_variable,
       $.execution_string_chars,
@@ -1348,16 +1349,14 @@ module.exports = function defineGrammar(dialect) {
         '"',
       )),
 
-      string: $ => seq(
+      string: $ => prec.right(seq(
         choice(/[bB]'/, '\''),
         repeat(choice(
           alias(token(choice('\\\\', '\\\'')), $.escape_sequence),
           $.string_value,
         )),
         '\'',
-      ),
-
-      string_value: _ => token(prec(1, repeat1(/\\?[^'\\]/))),
+      )),
 
       heredoc_body: $ => seq($._new_line,
         repeat1(prec.right(
