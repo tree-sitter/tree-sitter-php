@@ -50,6 +50,15 @@ try {} catch (Exception $e) {} finally {}
 function a() {}
 // <- @keyword
 
+static function a() {}
+// <- @keyword
+
+static function () {}
+// <- @keyword
+
+static fn () => 1;
+// <- @keyword
+
 abstract class A
 // <- @keyword
 //       ^^^^^ @keyword

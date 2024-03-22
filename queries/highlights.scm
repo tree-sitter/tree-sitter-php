@@ -6,7 +6,6 @@
 ; Keywords
 
 [
-  "abstract"
   "and"
   "as"
   "break"
@@ -31,7 +30,6 @@
   "enum"
   "exit"
   "extends"
-  "final"
   "finally"
   "fn"
   "for"
@@ -51,10 +49,6 @@
   "new"
   "or"
   "print"
-  "private"
-  "protected"
-  "public"
-  "readonly"
   "require"
   "require_once"
   "return"
@@ -66,7 +60,11 @@
   "while"
   "xor"
   "yield"
+  (abstract_modifier)
+  (final_modifier)
+  (readonly_modifier)
   (static_modifier)
+  (visibility_modifier)
 ] @keyword
 
 (yield_expression "from" @keyword)
