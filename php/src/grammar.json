@@ -4945,14 +4945,12 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "ALIAS",
+              "type": "FIELD",
+              "name": "static_modifier",
               "content": {
-                "type": "PATTERN",
-                "value": "static",
-                "flags": "i"
-              },
-              "named": false,
-              "value": "static"
+                "type": "SYMBOL",
+                "name": "static_modifier"
+              }
             },
             {
               "type": "BLANK"
