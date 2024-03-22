@@ -669,6 +669,8 @@ header_register_callback(
 ob_start(function($buffer) use (&$storage) { $storage .= $buffer; }, 20);
 ob_start(function($buffer) use (&$storage,) { $storage .= $buffer; }, 20);
 
+static function &($a) { return $a; };
+
 ---
 
 (program
@@ -705,7 +707,19 @@ ob_start(function($buffer) use (&$storage,) { $storage .= $buffer; }, 20);
             body: (compound_statement (expression_statement (augmented_assignment_expression
               left: (variable_name (name))
               right: (variable_name (name)))))))
-        (argument (integer))))))
+        (argument (integer)))))
+  (expression_statement
+    (anonymous_function_creation_expression
+      static_modifier: (static_modifier)
+      reference_modifier: (reference_modifier)
+      parameters: (formal_parameters
+        (simple_parameter
+          name: (variable_name
+            (name))))
+      body: (compound_statement
+        (return_statement
+          (variable_name
+            (name)))))))
 
 
 ================================
