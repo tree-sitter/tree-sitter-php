@@ -91,13 +91,13 @@ echo "\"\t\\'" . '\n\\\'a\\\b\\';
 (program
   (php_tag)
   (echo_statement (binary_expression
-    (encapsed_string (escape_sequence) (escape_sequence) (escape_sequence) (string_value))
-    (string (string_value)
+    (encapsed_string (escape_sequence) (escape_sequence) (escape_sequence) (string_content))
+    (string (string_content)
       (escape_sequence)
       (escape_sequence)
-      (string_value)
+      (string_content)
       (escape_sequence)
-      (string_value)
+      (string_content)
       (escape_sequence)))))
 
 ==========================
@@ -111,5 +111,5 @@ Shell command
 
 (program
   (php_tag)
-  (expression_statement (shell_command_expression (string_value)))
-  (expression_statement (shell_command_expression (string_value))))
+  (expression_statement (shell_command_expression (string_content)))
+  (expression_statement (shell_command_expression (string_content))))

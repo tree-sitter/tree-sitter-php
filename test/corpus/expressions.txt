@@ -148,7 +148,7 @@ $a = (array) include 'some.php';
       left: (variable_name (name))
       right: (cast_expression
         type: (cast_type)
-        value: (include_expression (string (string_value)))
+        value: (include_expression (string (string_content)))
       )
     )
   )
@@ -231,13 +231,13 @@ list(, $name1) = $data[0];
         (array_element_initializer
           (array_creation_expression
             (array_element_initializer (integer))
-            (array_element_initializer (string (string_value)))
+            (array_element_initializer (string (string_content)))
           )
         )
         (array_element_initializer
           (array_creation_expression
             (array_element_initializer (integer))
-            (array_element_initializer (string (string_value)))
+            (array_element_initializer (string (string_content)))
           )
         )
       )
@@ -400,8 +400,8 @@ true ? false : true ? "a" : "b";
         (boolean)
         (boolean)
         (boolean))
-      (encapsed_string (string_value))
-      (encapsed_string (string_value)))))
+      (encapsed_string (string_content))
+      (encapsed_string (string_content)))))
 
 =================================================
 Associativity of null-coalescence
@@ -466,7 +466,7 @@ $i .= "a" . "b";
       (assignment_expression
         (variable_name
           (name))
-        (encapsed_string (string_value)))))
+        (encapsed_string (string_content)))))
   (expression_statement
     (augmented_assignment_expression
       (variable_name
@@ -480,15 +480,15 @@ $i .= "a" . "b";
       (variable_name
         (name))
       (binary_expression
-        (encapsed_string (string_value))
-        (encapsed_string (string_value)))))
+        (encapsed_string (string_content))
+        (encapsed_string (string_content)))))
   (expression_statement
     (binary_expression
-      (encapsed_string (string_value))
+      (encapsed_string (string_content))
       (augmented_assignment_expression
         (variable_name
           (name))
-        (encapsed_string (string_value))))))
+        (encapsed_string (string_content))))))
 
 =======================================
 Nested assignemnts
@@ -610,9 +610,9 @@ Concatenation precedence
   (php_tag)
   (expression_statement
     (binary_expression
-      (encapsed_string (string_value))
+      (encapsed_string (string_content))
       (binary_expression
-        (encapsed_string (string_value))
+        (encapsed_string (string_content))
         (integer)
       )
     )
@@ -646,9 +646,9 @@ $a = [...$values];
       (arguments
         (argument
           (array_creation_expression
-            (array_element_initializer (encapsed_string (string_value)) (encapsed_string (string_value)))
-            (array_element_initializer (encapsed_string (string_value)) (encapsed_string (string_value)))
-            (array_element_initializer (encapsed_string (string_value)) (encapsed_string (string_value))))))))
+            (array_element_initializer (encapsed_string (string_content)) (encapsed_string (string_content)))
+            (array_element_initializer (encapsed_string (string_content)) (encapsed_string (string_content)))
+            (array_element_initializer (encapsed_string (string_content)) (encapsed_string (string_content))))))))
   (expression_statement
     (assignment_expression
       (variable_name (name))
@@ -683,7 +683,7 @@ static function &($a) { return $a; };
           (anonymous_function_creation_expression
             parameters: (formal_parameters)
             body: (compound_statement
-              (echo_statement (encapsed_string (string_value)))))))))
+              (echo_statement (encapsed_string (string_content)))))))))
   (expression_statement
     (function_call_expression
       function: (name)
@@ -1032,7 +1032,7 @@ $statement = match ($a) {
             (member_call_expression
               (variable_name (name))
               (name)
-              (arguments (argument (string (string_value))))
+              (arguments (argument (string (string_content))))
             )
           )
         )
@@ -1365,7 +1365,7 @@ class A {
       (subscript_expression
         (variable_name (name))
         (binary_expression
-          (string (string_value))
+          (string (string_content))
           (function_call_expression
             (qualified_name
               (namespace_name_as_prefix)
@@ -1381,10 +1381,10 @@ class A {
   )
   (expression_statement
     (array_creation_expression
-      (array_element_initializer (string (string_value)))
+      (array_element_initializer (string (string_content)))
       (array_element_initializer (by_ref (variable_name (name))))
-      (array_element_initializer (string (string_value)) (string (string_value)))
-      (array_element_initializer (string (string_value)) (by_ref (variable_name (name))))
+      (array_element_initializer (string (string_content)) (string (string_content)))
+      (array_element_initializer (string (string_content)) (by_ref (variable_name (name))))
     )
   )
   (expression_statement
@@ -1405,7 +1405,7 @@ class A {
   (expression_statement
     (assignment_expression
       (list_literal
-        (string (string_value))
+        (string (string_content))
         (by_ref (variable_name (name)))
       )
       (variable_name (name))
@@ -1422,7 +1422,7 @@ class A {
   (expression_statement
     (assignment_expression
       (list_literal
-        (string (string_value))
+        (string (string_content))
         (by_ref (variable_name (name)))
       )
       (variable_name (name))
@@ -1527,7 +1527,7 @@ $漢字;
       (heredoc
         (heredoc_start)
         (heredoc_body
-          (string_value))
+          (string_content))
         (heredoc_end)))
     (expression_statement
       (nowdoc
