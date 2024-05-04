@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-php",
-  "version": "0.22.3",
+  "version": "0.22.4",
   "description": "PHP grammar for tree-sitter",
   "repository": "github:tree-sitter/tree-sitter-php",
   "license": "MIT",

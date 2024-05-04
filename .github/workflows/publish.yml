@@ -14,7 +14,7 @@ jobs:
     secrets:
       NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
     with:
-      grammars: ["php", "php_only"]
+      grammars: "php"
   crates:
     uses: tree-sitter/workflows/.github/workflows/package-crates.yml@main
     secrets:
