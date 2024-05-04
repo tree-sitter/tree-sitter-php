@@ -1,1 +1,1 @@
-module.exports = require('./index').php_only;
+module.exports = require('.').php_only;

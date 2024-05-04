@@ -1,13 +1,12 @@
 /**
  * @author Josh Vera <vera@github.com>
- * @author Christian Frøystad <christian@xist.no>
  * @author Max Brunsfeld <maxbrunsfeld@gmail.com>
+ * @author Amaan Qureshi <amaanq12@gmail.com>
+ * @author Caleb White <cdwhite3@pm.me>
+ * @author Christian Frøystad <christian@xist.no>
  * @license MIT
  */
 
-/* eslint-disable arrow-parens */
-/* eslint-disable camelcase */
-/* eslint-disable-next-line spaced-comment */
 /// <reference types="tree-sitter-cli/dsl" />
 // @ts-check
 
