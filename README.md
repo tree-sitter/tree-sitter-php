@@ -5,6 +5,7 @@
 [![matrix][matrix]](https://matrix.to/#/#tree-sitter-chat:matrix.org)
 [![crates][crates]](https://crates.io/crates/tree-sitter-php)
 [![npm][npm]](https://www.npmjs.com/package/tree-sitter-php)
+[![pypi][pypi]](https://pypi.org/project/tree-sitter-php)
 
 PHP grammar for [tree-sitter](https://github.com/tree-sitter/tree-sitter).
 
@@ -13,3 +14,4 @@ PHP grammar for [tree-sitter](https://github.com/tree-sitter/tree-sitter).
 [matrix]: https://img.shields.io/matrix/tree-sitter-chat%3Amatrix.org?logo=matrix&label=matrix
 [npm]: https://img.shields.io/npm/v/tree-sitter-php?logo=npm
 [crates]: https://img.shields.io/crates/v/tree-sitter-php?logo=rust
+[pypi]: https://img.shields.io/pypi/v/tree-sitter-php?logo=pypi&logoColor=ffd242

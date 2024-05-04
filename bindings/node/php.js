@@ -1,1 +1,1 @@
-module.exports = require('./index').php;
+module.exports = require('.').php;

@@ -2,43 +2,77 @@
   "name": "tree-sitter-php",
   "version": "0.22.2",
   "description": "PHP grammar for tree-sitter",
+  "repository": "github:tree-sitter/tree-sitter-php",
+  "license": "MIT",
+  "author": "Josh Vera",
+  "contributors": [
+    {
+      "name": "Max Brunsfeld",
+      "email": "maxbrunsfeld@gmail.com"
+    },
+    {
+      "name": "Amaan Qureshi",
+      "email": "amaanq12@gmail.com"
+    },
+    {
+      "name": "Caleb White",
+      "email": "cdwhite3@pm.me"
+    },
+    {
+      "name": "Christian Frøystad",
+      "email": "christian@xist.no"
+    }
+  ],
+  "maintainers": [
+    {
+      "name": "Amaan Qureshi",
+      "email": "amaanq12@gmail.com"
+    }
+  ],
   "main": "bindings/node",
+  "types": "bindings/node",
   "keywords": [
-    "parser",
-    "lexer",
+    "parsing",
+    "incremental",
+    "tree-sitter",
     "php"
   ],
-  "author": "Josh Vera",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/tree-sitter/tree-sitter-php/issues"
-  },
-  "homepage": "https://github.com/tree-sitter/tree-sitter-php#readme",
+  "files": [
+    "binding.gyp",
+    "prebuilds/**",
+    "bindings/node/*",
+    "queries/*",
+    "php/grammar.js",
+    "php_only/grammar.js",
+    "php/package.json",
+    "php_only/package.json",
+    "php/src/**",
+    "php_only/src/**"
+  ],
   "dependencies": {
-    "nan": "^2.19.0",
-    "tree-sitter": "^0.20.6"
+    "node-addon-api": "^8.0.0",
+    "node-gyp-build": "^4.8.1"
+  },
+  "peerDependencies": {
+    "tree-sitter": "^0.21.0"
+  },
+  "peerDependenciesMeta": {
+    "tree_sitter": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "eslint": ">=8.57.0",
     "eslint-config-google": "^0.14.0",
-    "node-gyp": "^10.0.1",
-    "shelljs": "^0.8.5",
-    "tree-sitter-cli": "^0.21.0"
+    "tree-sitter-cli": "^0.22.4",
+    "prebuildify": "^6.0.0"
   },
   "scripts": {
-    "build": "npm run build-php && npm run build-php_only && node-gyp rebuild",
-    "build-php": "cd php && tree-sitter generate --no-bindings",
-    "build-php_only": "cd php_only && tree-sitter generate --no-bindings",
+    "install": "node-gyp-build",
+    "prebuildify": "prebuildify --napi --strip",
     "lint": "eslint common/define-grammar.js",
-    "test": "npm run test-php && npm run test-php_only && npm run test-load",
-    "test-examples": "script/parse-examples",
-    "test-load": "node -e \"console.log(require('./php').name, require('./php_only').name)\"",
-    "test-php": "cd php && tree-sitter test",
-    "test-php_only": "cd php_only && tree-sitter test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tree-sitter/tree-sitter-php.git"
+    "parse": "tree-sitter parse",
+    "test": "tree-sitter test"
   },
   "tree-sitter": [
     {
@@ -53,9 +87,53 @@
         "queries/injections-text.scm"
       ],
       "tags": "queries/tags.scm",
-      "external-files": [
-        "common/scanner.h"
+      "external-files": "common/scanner.h"
+    },
+    {
+      "path": "php_only",
+      "external-files": "common/scanner.h"
+    }
+  ],
+  "eslintConfig": {
+    "env": {
+      "commonjs": true,
+      "es2021": true
+    },
+    "extends": "google",
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+    },
+    "rules": {
+      "arrow-parens": "off",
+      "camel-case": "off",
+      "indent": [
+        "error",
+        2,
+        {
+          "SwitchCase": 1
+        }
+      ],
+      "max-len": [
+        "error",
+        {
+          "code": 160,
+          "ignoreComments": true,
+          "ignoreUrls": true,
+          "ignoreStrings": true
+        }
+      ],
+      "spaced-comment": [
+        "warn",
+        "always",
+        {
+          "line": {
+            "markers": [
+              "/"
+            ]
+          }
+        }
       ]
     }
-  ]
+  }
 }
