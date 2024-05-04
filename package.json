@@ -32,8 +32,8 @@
   "main": "bindings/node",
   "types": "bindings/node",
   "keywords": [
-    "parsing",
     "incremental",
+    "parsing",
     "tree-sitter",
     "php"
   ],
@@ -47,7 +47,8 @@
     "php/package.json",
     "php_only/package.json",
     "php/src/**",
-    "php_only/src/**"
+    "php_only/src/**",
+    "common/**"
   ],
   "dependencies": {
     "node-addon-api": "^8.0.0",
@@ -64,8 +65,8 @@
   "devDependencies": {
     "eslint": ">=8.57.0",
     "eslint-config-google": "^0.14.0",
-    "tree-sitter-cli": "^0.22.4",
-    "prebuildify": "^6.0.0"
+    "tree-sitter-cli": "^0.22.5",
+    "prebuildify": "^6.0.1"
   },
   "scripts": {
     "install": "node-gyp-build",
