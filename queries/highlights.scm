@@ -135,7 +135,7 @@
 ; Basic tokens
 [
   (string)
-  (string_value)
+  (string_content)
   (encapsed_string)
   (heredoc)
   (heredoc_body)

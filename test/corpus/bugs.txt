@@ -1,5 +1,5 @@
 =========================================
-#131: Parse error when using self as constant
+Parse error when using self as constant
 =========================================
 
 <?php
@@ -14,15 +14,15 @@ var_dump(self);
     (function_call_expression
       function: (name)
       arguments: (arguments
-        (argument (string (string_value)))
-        (argument (string (string_value))))))
+        (argument (string (string_content)))
+        (argument (string (string_content))))))
   (expression_statement
     (function_call_expression
       function: (name)
       arguments: (arguments (argument (name))))))
 
 =========================================
-#133: Incorrect precedence for error suppression operator
+Incorrect precedence for error suppression operator
 =========================================
 
 <?php
@@ -40,16 +40,16 @@ var_dump(self);
           arguments: (arguments
             (argument
               (encapsed_string
-                (string_value))))))
+                (string_content))))))
       right: (function_call_expression
         function: (name)
         arguments: (arguments
           (argument
             (encapsed_string
-              (string_value))))))))
+              (string_content))))))))
 
 =========================================
-#161: Error when using expressions as named argument
+Error when using expressions as named argument
 =========================================
 
 <?php
@@ -165,7 +165,7 @@ foo(void: null);
         arguments: (arguments (argument name: (name) (null))))))
 
 =========================================
-#221: Error when closing tag is in a string
+Error when closing tag is in a string
 =========================================
 
 <?php
@@ -185,7 +185,7 @@ $foo = '?>';
     (expression_statement
       (assignment_expression
         left: (variable_name (name))
-        right: (encapsed_string (string_value))))
+        right: (encapsed_string (string_content))))
     (expression_statement
       (assignment_expression
         left: (variable_name
@@ -193,7 +193,7 @@ $foo = '?>';
         right: (heredoc
           identifier: (heredoc_start)
           value: (heredoc_body
-            (string_value))
+            (string_content))
           end_tag: (heredoc_end))))
     (expression_statement
       (assignment_expression
@@ -207,10 +207,10 @@ $foo = '?>';
     (expression_statement
       (assignment_expression
         left: (variable_name (name))
-        right: (string (string_value)))))
+        right: (string (string_content)))))
 
 =========================================
-#223: Error with comment inside binary expression
+Error with comment inside binary expression
 =========================================
 
 <?php

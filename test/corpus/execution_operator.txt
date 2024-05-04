@@ -11,7 +11,7 @@ Quotes in backticks
   (php_tag)
   (expression_statement
     (shell_command_expression
-      (string_value))))
+      (string_content))))
 
 ================================================================================
 Escape sequences in backticks
@@ -27,9 +27,9 @@ Escape sequences in backticks
   (php_tag)
   (expression_statement
     (shell_command_expression
-      (string_value)
+      (string_content)
       (escape_sequence)
-      (string_value)))
+      (string_content)))
   (expression_statement
     (shell_command_expression
       (escape_sequence)
@@ -51,7 +51,7 @@ $cmd = 'ls';
     (assignment_expression
       (variable_name
         (name))
-      (string (string_value))))
+      (string (string_content))))
   (expression_statement
     (shell_command_expression
       (variable_name
@@ -83,7 +83,7 @@ $obj->cmd = 'ls';
         (variable_name
           (name))
         (name))
-      (string (string_value))))
+      (string (string_content))))
   (expression_statement
     (shell_command_expression
       (member_access_expression
@@ -109,7 +109,7 @@ $cmd = array('ls');
         (name))
       (array_creation_expression
         (array_element_initializer
-          (string (string_value))))))
+          (string (string_content))))))
   (expression_statement
     (shell_command_expression
       (subscript_expression
@@ -133,7 +133,7 @@ $cmd = 'ls';
     (assignment_expression
       (variable_name
         (name))
-      (string (string_value))))
+      (string (string_content))))
   (expression_statement
     (shell_command_expression
       (variable_name
@@ -153,9 +153,9 @@ Nesting of expression in backticks
   (expression_statement
     (binary_expression
       (shell_command_expression
-        (string_value))
+        (string_content))
       (shell_command_expression
-        (string_value)))))
+        (string_content)))))
 
 ================================================================================
 Nested escaped backticks
@@ -171,7 +171,7 @@ Nested escaped backticks
   (expression_statement
     (shell_command_expression
       (escape_sequence)
-      (string_value)
+      (string_content)
       (escape_sequence))))
 
 ================================================================================
@@ -187,4 +187,4 @@ Comment in backticks
   (php_tag)
   (expression_statement
     (shell_command_expression
-      (string_value))))
+      (string_content))))
