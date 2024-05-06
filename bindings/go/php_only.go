@@ -3,7 +3,7 @@ package tree_sitter_php
 // #cgo CPPFLAGS: -I../../php_only/src
 // #cgo CFLAGS: -std=c11 -fPIC
 // #include "../../php_only/src/parser.c"
-// #include "../../php_only//src/scanner.c"
+// #include "../../php_only/src/scanner.c"
 import "C"
 
 import "unsafe"

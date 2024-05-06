@@ -7,8 +7,8 @@ typedef struct TSLanguage TSLanguage;
 extern "C" {
 #endif
 
-extern TSLanguage *tree_sitter_php();
-extern TSLanguage *tree_sitter_php_only();
+const TSLanguage *tree_sitter_php();
+const TSLanguage *tree_sitter_php_only();
 
 #ifdef __cplusplus
 }
