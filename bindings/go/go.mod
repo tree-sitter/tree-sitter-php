@@ -1,4 +1,4 @@
-module github.com/tree-sitter-grammars/tree-sitter-markdown
+module github.com/tree-sitter/tree-sitter-php
 
 go 1.22
 
