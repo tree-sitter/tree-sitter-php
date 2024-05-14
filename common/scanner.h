@@ -473,8 +473,7 @@ static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
         array_delete(&word);
 
         lexer->mark_end(lexer);
-        String last_word = array_pop(&scanner->heredocs).word;
-        array_delete(&last_word);
+        array_delete(&array_pop(&scanner->heredocs).word);
         return true;
     }
 
