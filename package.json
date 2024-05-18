@@ -71,6 +71,7 @@
   "scripts": {
     "install": "node-gyp-build",
     "prebuildify": "prebuildify --napi --strip",
+    "generate": "for dir in php php_only; do cd $dir && tree-sitter generate --no-bindings && cd ..; done",
     "lint": "eslint common/define-grammar.js",
     "parse": "tree-sitter parse",
     "test": "tree-sitter test"
