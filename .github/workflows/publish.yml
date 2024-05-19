@@ -13,8 +13,6 @@ jobs:
     uses: tree-sitter/workflows/.github/workflows/package-npm.yml@main
     secrets:
       NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-    with:
-      grammars: "php"
   crates:
     uses: tree-sitter/workflows/.github/workflows/package-crates.yml@main
     secrets:
