@@ -537,11 +537,9 @@ okay to do';
       (string_content)))
   (expression_statement
     (string
-      (string_content)
       (string_content)))
   (expression_statement
     (string
-      (string_content)
       (string_content)))
   (expression_statement
     (string
@@ -1172,12 +1170,6 @@ if (preg_match('#([\w\(\)\.\,\;]|[`]{1})$#', $var)
           (arguments
             (argument
               (string
-                (string_content)
-                (string_content)
-                (string_content)
-                (string_content)
-                (string_content)
-                (string_content)
                 (string_content)))
             (argument
               (variable_name
@@ -1188,14 +1180,7 @@ if (preg_match('#([\w\(\)\.\,\;]|[`]{1})$#', $var)
             (argument
               (string
                 (string_content)
-                (string_content)
-                (string_content)
-                (string_content)
-                (string_content)
-                (string_content)
-                (string_content)
                 (escape_sequence)
-                (string_content)
                 (string_content)))
             (argument
               (variable_name
