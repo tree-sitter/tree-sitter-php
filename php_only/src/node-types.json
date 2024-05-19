@@ -2396,13 +2396,9 @@
         ]
       },
       "identifier": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": "\"",
-            "named": false
-          },
           {
             "type": "heredoc_start",
             "named": true

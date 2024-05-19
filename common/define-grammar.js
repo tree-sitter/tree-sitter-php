@@ -1391,7 +1391,10 @@ module.exports = function defineGrammar(dialect) {
       _interpolated_string_body_heredoc: $ => repeat1(
         choice(
           $.escape_sequence,
-          seq($.variable_name, alias($.encapsed_string_chars_after_variable_heredoc, $.string_content)),
+          seq(
+            $.variable_name,
+            alias($.encapsed_string_chars_after_variable_heredoc, $.string_content),
+          ),
           alias($.encapsed_string_chars_heredoc, $.string_content),
           $._simple_string_part,
           $._complex_string_part,
@@ -1426,32 +1429,24 @@ module.exports = function defineGrammar(dialect) {
 
       heredoc: $ => seq(
         token('<<<'),
-        field('identifier', choice(
-          $.heredoc_start,
-          seq('"', $.heredoc_start, token.immediate('"')),
-        )),
+        optional('"'),
+        field('identifier', $.heredoc_start),
+        optional(token.immediate('"')),
         choice(
           seq(
             field('value', $.heredoc_body),
             $._new_line,
-            field('end_tag', $.heredoc_end),
           ),
-          seq(
-            field('value', optional($.heredoc_body)),
-            field('end_tag', $.heredoc_end),
-          ),
+          field('value', optional($.heredoc_body)),
         ),
+        field('end_tag', $.heredoc_end),
       ),
 
       _new_line: _ => /\r?\n|\r/,
 
-      nowdoc_body: $ => seq($._new_line,
-        choice(
-          repeat1(
-            $.nowdoc_string,
-          ),
-          alias('', $.nowdoc_string),
-        ),
+      nowdoc_body: $ => seq(
+        $._new_line,
+        repeat1($.nowdoc_string),
       ),
 
       nowdoc: $ => seq(
@@ -1463,13 +1458,10 @@ module.exports = function defineGrammar(dialect) {
           seq(
             field('value', $.nowdoc_body),
             $._new_line,
-            field('end_tag', $.heredoc_end),
           ),
-          seq(
-            field('value', optional($.nowdoc_body)),
-            field('end_tag', $.heredoc_end),
-          ),
+          field('value', optional($.nowdoc_body)),
         ),
+        field('end_tag', $.heredoc_end),
       ),
 
       _interpolated_execution_operator_body: $ => repeat1(
