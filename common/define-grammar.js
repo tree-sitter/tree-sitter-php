@@ -998,20 +998,11 @@ module.exports = function defineGrammar(dialect) {
         ')',
       ),
 
-      object_creation_expression: $ => prec.right(PREC.NEW, choice(
-        seq(
-          keyword('new'),
-          $._class_type_designator,
-          optional($.arguments),
-        ),
-        seq(
-          keyword('new'),
-          optional(field('attributes', $.attribute_list)),
-          keyword('class'),
-          optional($.arguments),
-          optional($.base_clause),
-          optional($.class_interface_clause),
-          $.declaration_list,
+      object_creation_expression: $ => prec.right(PREC.NEW, seq(
+        keyword('new'),
+        choice(
+          seq($._class_type_designator, optional($.arguments)),
+          $.anonymous_class,
         ),
       )),
 
@@ -1026,6 +1017,16 @@ module.exports = function defineGrammar(dialect) {
         $._variable_name,
         $.parenthesized_expression,
       ),
+
+      anonymous_class: $ => prec.right(seq(
+        optional(field('attributes', $.attribute_list)),
+        repeat($._modifier),
+        keyword('class'),
+        optional($.arguments),
+        optional($.base_clause),
+        optional($.class_interface_clause),
+        field('body', $.declaration_list),
+      )),
 
       update_expression: $ => {
         const argument = field('argument', $._variable);
