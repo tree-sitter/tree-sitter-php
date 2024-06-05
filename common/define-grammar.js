@@ -324,7 +324,6 @@ module.exports = function defineGrammar(dialect) {
         optional($.base_clause),
         optional($.class_interface_clause),
         field('body', $.declaration_list),
-        optional($._semicolon),
       )),
 
       declaration_list: $ => seq('{', repeat($._member_declaration), '}'),
