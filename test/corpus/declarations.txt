@@ -145,141 +145,115 @@ use Foo\Bar\{
 (program
   (php_tag)
   (namespace_definition
-    (namespace_name
+    name: (namespace_name
       (name)
       (name)
       (name)))
   (namespace_use_declaration
     (namespace_use_clause
       (qualified_name
-        (namespace_name_as_prefix
-          (namespace_name
-            (name)
-            (name)))
+        prefix: (namespace_name
+          (name)
+          (name))
         (name))))
   (namespace_use_declaration
     (namespace_use_clause
       (qualified_name
-        (namespace_name_as_prefix
-          (namespace_name
-            (name)
-            (name)))
+        prefix: (namespace_name
+          (name)
+          (name))
         (name))
-      (namespace_aliasing_clause
-        (name))))
+      alias: (name)))
   (namespace_use_declaration
     (namespace_use_clause
       (qualified_name
-        (namespace_name_as_prefix
-          (namespace_name
-            (name)
-            (name)))
+        prefix: (namespace_name
+          (name)
+          (name))
         (name)))
     (namespace_use_clause
       (qualified_name
-        (namespace_name_as_prefix
-          (namespace_name
-            (name)
-            (name)))
+        prefix: (namespace_name
+          (name)
+          (name))
         (name))))
   (namespace_use_declaration
     (namespace_use_clause
       (qualified_name
-        (namespace_name_as_prefix
-          (namespace_name
-            (name)
-            (name)))
+        prefix: (namespace_name
+          (name)
+          (name))
         (name))))
   (namespace_use_declaration
     (namespace_use_clause
       (qualified_name
-        (namespace_name_as_prefix
-          (namespace_name
-            (name)
-            (name)))
+        prefix: (namespace_name
+          (name)
+          (name))
         (name))
-      (namespace_aliasing_clause
+      alias: (name)))
+  (namespace_use_declaration
+    (namespace_use_clause
+      (qualified_name
+        prefix: (namespace_name
+          (name)
+          (name))
         (name))))
   (namespace_use_declaration
     (namespace_use_clause
       (qualified_name
-        (namespace_name_as_prefix
-          (namespace_name
-            (name)
-            (name)))
-        (name))))
-  (namespace_use_declaration
-    (namespace_use_clause
-      (qualified_name
-        (namespace_name_as_prefix
-          (namespace_name
-            (name)
-            (name)))
+        prefix: (namespace_name
+          (name)
+          (name))
         (name))
-      (namespace_aliasing_clause
+      alias: (name)))
+  (namespace_use_declaration
+    (namespace_name
+      (name)
+      (name))
+    body: (namespace_use_group
+      (namespace_use_clause
+        (name))
+      (namespace_use_clause
         (name))))
   (namespace_use_declaration
     (namespace_name
       (name)
       (name))
-    (namespace_use_group
-      (namespace_use_group_clause
-        (namespace_name
-          (name)))
-      (namespace_use_group_clause
-        (namespace_name
-          (name)))))
+    body: (namespace_use_group
+      (namespace_use_clause
+        (name))
+      (namespace_use_clause
+        (name))))
   (namespace_use_declaration
     (namespace_name
       (name)
       (name))
-    (namespace_use_group
-      (namespace_use_group_clause
-        (namespace_name
-          (name)))
-      (namespace_use_group_clause
-        (namespace_name
-          (name)))))
+    body: (namespace_use_group
+      (namespace_use_clause
+        (name))
+      (namespace_use_clause
+        (name))))
   (namespace_use_declaration
     (namespace_name
       (name)
       (name))
-    (namespace_use_group
-      (namespace_use_group_clause
-        (namespace_name
-          (name)))
-      (namespace_use_group_clause
-        (namespace_name
-          (name)))))
-  (namespace_use_declaration
-    (namespace_name
-      (name)
-      (name))
-    (namespace_use_group
-      (namespace_use_group_clause
-        (namespace_name
-          (name)))
-      (namespace_use_group_clause
-        (namespace_name
-          (name))
-        (namespace_aliasing_clause
-          (name)))
-      (namespace_use_group_clause
-        (namespace_name
-          (name)))
-      (namespace_use_group_clause
-        (namespace_name
-          (name))
-        (namespace_aliasing_clause
-          (name)))
-      (namespace_use_group_clause
-        (namespace_name
-          (name)))
-      (namespace_use_group_clause
-        (namespace_name
-          (name))
-        (namespace_aliasing_clause
-          (name))))))
+    body: (namespace_use_group
+      (namespace_use_clause
+        (name))
+      (namespace_use_clause
+        (name)
+        alias: (name))
+      (namespace_use_clause
+        (name))
+      (namespace_use_clause
+        (name)
+        alias: (name))
+      (namespace_use_clause
+        (name))
+      (namespace_use_clause
+        (name)
+        alias: (name)))))
 
 ==========================
 Namespace names in namespaces
@@ -721,9 +695,8 @@ class B {
       (attribute_group
         (attribute
           (qualified_name
-            (namespace_name_as_prefix
-              (namespace_name
-                (name)))
+            prefix: (namespace_name
+              (name))
             (name))))
       (attribute_group
         (attribute
@@ -806,24 +779,21 @@ class B {
           (attribute_group
             (attribute
               (qualified_name
-                (namespace_name_as_prefix
-                  (namespace_name
-                    (name)))
+                prefix: (namespace_name
+                  (name))
                 (name))
               parameters: (arguments
                 (argument
                   (object_creation_expression
                     (qualified_name
-                      (namespace_name_as_prefix
-                        (namespace_name
-                          (name)))
+                      prefix: (namespace_name
+                        (name))
                       (name))))
                 (argument
                   (object_creation_expression
                     (qualified_name
-                      (namespace_name_as_prefix
-                        (namespace_name
-                          (name)))
+                      prefix: (namespace_name
+                        (name))
                       (name))
                     (arguments
                       (argument

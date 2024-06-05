@@ -61,9 +61,6 @@ module.exports = function defineGrammar(dialect) {
 
       [$.namespace_name],
       [$.heredoc_body],
-
-      [$.namespace_name_as_prefix],
-      [$.namespace_use_declaration, $.namespace_name_as_prefix],
     ],
 
     externals: $ => [
@@ -100,11 +97,7 @@ module.exports = function defineGrammar(dialect) {
       $._semicolon,
       $._member_name,
       $._variable,
-      $._callable_variable,
-      $._callable_expression,
-      $._foreach_value,
-      $._class_name_reference,
-      $._simple_variable,
+      $._namespace_use_type,
     ],
 
     supertypes: $ => [
@@ -218,61 +211,38 @@ module.exports = function defineGrammar(dialect) {
 
       namespace_use_declaration: $ => seq(
         keyword('use'),
-        optional(choice(keyword('function'), keyword('const'))),
         choice(
-          seq(
-            commaSep1($.namespace_use_clause),
-          ),
-          seq(
-            optional('\\'),
-            $.namespace_name,
-            '\\',
-            $.namespace_use_group,
-          ),
+          commaSep1($.namespace_use_clause),
+          $._namespace_use_group,
         ),
         $._semicolon,
       ),
 
       namespace_use_clause: $ => seq(
+        field('type', optional($._namespace_use_type)),
         $._name,
-        optional($.namespace_aliasing_clause),
+        optional(seq(keyword('as'), field('alias', $.name))),
       ),
+
+      _namespace_use_type: $ => choice(keyword('function'), keyword('const')),
 
       qualified_name: $ => seq(
-        $.namespace_name_as_prefix,
+        field('prefix', seq(optional($.namespace_name), '\\')),
         $.name,
       ),
 
-      _name: $ => choice(
-        $._identifier,
-        $.qualified_name,
-      ),
+      _name: $ => choice($._identifier, $.qualified_name),
 
-      namespace_name_as_prefix: $ => choice(
-        '\\',
-        seq(optional('\\'), $.namespace_name, '\\'),
-        seq(keyword('namespace'), '\\'),
-        seq(keyword('namespace'), optional('\\'), $.namespace_name, '\\'),
-      ),
+      namespace_name: $ => seq(optional('\\'), $.name, repeat(seq('\\', $.name))),
 
-      namespace_name: $ => seq($.name, repeat(seq('\\', $.name))),
-
-      namespace_aliasing_clause: $ => seq(
-        keyword('as'),
-        $.name,
-      ),
-
-      namespace_use_group: $ => seq(
-        '{',
-        commaSep1($.namespace_use_group_clause),
-        '}',
-      ),
-
-      namespace_use_group_clause: $ => seq(
-        optional(choice(keyword('function'), keyword('const'))),
+      _namespace_use_group: $ => seq(
+        field('type', optional($._namespace_use_type)),
         $.namespace_name,
-        optional($.namespace_aliasing_clause),
+        '\\',
+        field('body', $.namespace_use_group),
       ),
+
+      namespace_use_group: $ => seq('{', commaSep1($.namespace_use_clause), '}'),
 
       trait_declaration: $ => seq(
         optional(field('attributes', $.attribute_list)),
