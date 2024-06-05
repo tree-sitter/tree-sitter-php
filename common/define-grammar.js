@@ -102,7 +102,7 @@ module.exports = function defineGrammar(dialect) {
       $._callable_expression,
       $._foreach_value,
       $._class_type_designator,
-      $._variable_name,
+      $._simple_variable,
     ],
 
     supertypes: $ => [
@@ -199,7 +199,7 @@ module.exports = function defineGrammar(dialect) {
 
       global_declaration: $ => seq(
         keyword('global'),
-        commaSep1($._variable_name),
+        commaSep1($._simple_variable),
         $._semicolon,
       ),
 
@@ -992,7 +992,7 @@ module.exports = function defineGrammar(dialect) {
         $.member_access_expression,
         $.nullsafe_member_access_expression,
         $.scoped_property_access_expression,
-        $._variable_name,
+        $._simple_variable,
         $.parenthesized_expression,
       ),
 
@@ -1102,7 +1102,7 @@ module.exports = function defineGrammar(dialect) {
       scoped_property_access_expression: $ => prec(PREC.MEMBER, seq(
         field('scope', $._scope_resolution_qualifier),
         '::',
-        field('name', $._variable_name),
+        field('name', $._simple_variable),
       )),
 
       list_literal: $ => choice($._list_destructing, $._array_destructing),
@@ -1153,7 +1153,7 @@ module.exports = function defineGrammar(dialect) {
       ),
 
       _callable_variable: $ => choice(
-        $._variable_name,
+        $._simple_variable,
         $.subscript_expression,
         $.member_call_expression,
         $.nullsafe_member_call_expression,
@@ -1256,7 +1256,7 @@ module.exports = function defineGrammar(dialect) {
         field('name', choice(
           alias($._reserved_identifier, $.name),
           $.name,
-          $._variable_name,
+          $._simple_variable,
         )),
         seq('{', field('name', $.expression), '}'),
       ),
@@ -1323,7 +1323,7 @@ module.exports = function defineGrammar(dialect) {
 
       _simple_string_part: $ => choice(
         alias($._simple_string_member_access_expression, $.member_access_expression),
-        $._variable_name,
+        $._simple_variable,
         alias($._simple_string_subscript_expression, $.subscript_expression),
       ),
 
@@ -1459,11 +1459,11 @@ module.exports = function defineGrammar(dialect) {
       _string: $ => choice($.encapsed_string, $.string, $.heredoc, $.nowdoc),
 
       dynamic_variable_name: $ => choice(
-        seq('$', $._variable_name),
+        seq('$', $._simple_variable),
         seq('$', '{', $.expression, '}'),
       ),
 
-      _variable_name: $ => choice($.dynamic_variable_name, $.variable_name),
+      _simple_variable: $ => choice($.dynamic_variable_name, $.variable_name),
 
       variable_name: $ => seq('$', $.name),
 
