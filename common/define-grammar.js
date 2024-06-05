@@ -96,7 +96,13 @@ module.exports = function defineGrammar(dialect) {
       $._name,
       $._semicolon,
       $._member_name,
+      $._simple_variable,
+      $._new_variable,
+      $._callable_variable,
       $._variable,
+      $._callable_expression,
+      $._foreach_value,
+      $._class_name_reference,
       $._namespace_use_type,
     ],
 
@@ -953,13 +959,27 @@ module.exports = function defineGrammar(dialect) {
         ),
       )),
 
+      object_creation_expression: $ => choice(
+        $._new_dereferencable_expression,
+        $._new_non_dereferencable_expression,
+      ),
+
+      _new_non_dereferencable_expression: $ => prec.right(PREC.NEW, seq(
+        keyword('new'),
+        $._class_name_reference,
+      )),
+
+      _new_dereferencable_expression: $ => prec.right(PREC.NEW, seq(
+        keyword('new'),
+        choice(
+          seq($._class_name_reference, $.arguments),
+          $.anonymous_class,
+        ),
+      )),
+
       _class_name_reference: $ => choice(
         $._name,
-        $.subscript_expression,
-        $.member_access_expression,
-        $.nullsafe_member_access_expression,
-        $.scoped_property_access_expression,
-        $._simple_variable,
+        $._new_variable,
         $.parenthesized_expression,
       ),
 
@@ -1048,11 +1068,18 @@ module.exports = function defineGrammar(dialect) {
 
       _variable: $ => choice(
         alias($.cast_variable, $.cast_expression),
+        $._new_variable,
         $._callable_variable,
         $.scoped_property_access_expression,
         $.member_access_expression,
         $.nullsafe_member_access_expression,
       ),
+
+      _variable_member_access_expression: $ => prec(PREC.MEMBER, seq(
+        field('object', $._new_variable),
+        '->',
+        $._member_name,
+      )),
 
       member_access_expression: $ => prec(PREC.MEMBER, seq(
         field('object', $._dereferencable_expression),
@@ -1060,10 +1087,22 @@ module.exports = function defineGrammar(dialect) {
         $._member_name,
       )),
 
+      _variable_nullsafe_member_access_expression: $ => prec(PREC.MEMBER, seq(
+        field('object', $._new_variable),
+        '?->',
+        $._member_name,
+      )),
+
       nullsafe_member_access_expression: $ => prec(PREC.MEMBER, seq(
         field('object', $._dereferencable_expression),
         '?->',
         $._member_name,
+      )),
+
+      _variable_scoped_property_access_expression: $ => prec(PREC.MEMBER, seq(
+        field('scope', choice($._name, $._new_variable)),
+        '::',
+        field('name', $._simple_variable),
       )),
 
       scoped_property_access_expression: $ => prec(PREC.MEMBER, seq(
@@ -1119,15 +1158,6 @@ module.exports = function defineGrammar(dialect) {
         ),
       ),
 
-      _callable_variable: $ => choice(
-        $._simple_variable,
-        $.subscript_expression,
-        $.member_call_expression,
-        $.nullsafe_member_call_expression,
-        $.scoped_call_expression,
-        $.function_call_expression,
-      ),
-
       function_call_expression: $ => prec(PREC.CALL, seq(
         field('function', choice($._name, $._callable_expression)),
         field('arguments', $.arguments),
@@ -1137,6 +1167,7 @@ module.exports = function defineGrammar(dialect) {
         $._callable_variable,
         $.parenthesized_expression,
         $._dereferencable_scalar,
+        alias($._new_dereferencable_expression, $.object_creation_expression),
       ),
 
       scoped_call_expression: $ => prec(PREC.CALL, seq(
@@ -1224,7 +1255,15 @@ module.exports = function defineGrammar(dialect) {
         seq('{', field('name', $.expression), '}'),
       ),
 
-      subscript_expression: $ => seq(
+      _variable_subscript_expression: $ => seq(
+        $._new_variable,
+        choice(
+          seq('[', optional($.expression), ']'),
+          seq('{', $.expression, '}'),
+        ),
+      ),
+
+      _dereferencable_subscript_expression: $ => seq(
         $._dereferencable_expression,
         choice(
           seq('[', optional($.expression), ']'),
@@ -1234,6 +1273,7 @@ module.exports = function defineGrammar(dialect) {
 
       _dereferencable_expression: $ => prec(PREC.DEREF, choice(
         $._variable,
+        alias($._new_dereferencable_expression, $.object_creation_expression),
         $.class_constant_access_expression,
         $.parenthesized_expression,
         $._dereferencable_scalar,
@@ -1428,7 +1468,24 @@ module.exports = function defineGrammar(dialect) {
         seq('$', '{', $.expression, '}'),
       ),
 
-      _simple_variable: $ => choice($.dynamic_variable_name, $.variable_name),
+      _simple_variable: $ => choice($.variable_name, $.dynamic_variable_name),
+
+      _new_variable: $ => choice(
+        $._simple_variable,
+        alias($._variable_subscript_expression, $.subscript_expression),
+        alias($._variable_member_access_expression, $.member_access_expression),
+        alias($._variable_nullsafe_member_access_expression, $.nullsafe_member_access_expression),
+        alias($._variable_scoped_property_access_expression, $.scoped_property_access_expression),
+      ),
+
+      _callable_variable: $ => choice(
+        $._simple_variable,
+        alias($._dereferencable_subscript_expression, $.subscript_expression),
+        $.member_call_expression,
+        $.nullsafe_member_call_expression,
+        $.function_call_expression,
+        $.scoped_call_expression,
+      ),
 
       variable_name: $ => seq('$', $.name),
 
