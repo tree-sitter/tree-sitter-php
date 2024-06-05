@@ -1367,10 +1367,7 @@ class A {
         (binary_expression
           (string (string_content))
           (function_call_expression
-            (qualified_name
-              (namespace_name_as_prefix)
-              (name)
-            )
+            (qualified_name (name))
             (arguments
               (argument (variable_name (name)))
             )

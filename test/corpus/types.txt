@@ -16,7 +16,7 @@ function b(): A\B {}
     (compound_statement))
   (function_definition
     (name) (formal_parameters)
-    (named_type (qualified_name (namespace_name_as_prefix (namespace_name (name))) (name)))
+    (named_type (qualified_name (namespace_name (name)) (name)))
     (compound_statement)))
 
 =========================
