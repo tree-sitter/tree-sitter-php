@@ -1467,14 +1467,8 @@ module.exports = function defineGrammar(dialect) {
       variable_name: $ => seq('$', $.name),
 
       variable_reference: $ => seq('&', $.variable_name),
-      by_ref: $ => seq(
-        '&',
-        choice(
-          $._callable_variable,
-          $.member_access_expression,
-          $.nullsafe_member_access_expression,
-        ),
-      ),
+
+      by_ref: $ => seq('&', $._variable),
 
       yield_expression: $ => prec.right(seq(
         keyword('yield'),
