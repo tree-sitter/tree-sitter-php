@@ -101,7 +101,7 @@ module.exports = function defineGrammar(dialect) {
       $._callable_variable,
       $._callable_expression,
       $._foreach_value,
-      $._class_type_designator,
+      $._class_name_reference,
       $._simple_variable,
     ],
 
@@ -979,12 +979,12 @@ module.exports = function defineGrammar(dialect) {
       object_creation_expression: $ => prec.right(PREC.NEW, seq(
         keyword('new'),
         choice(
-          seq($._class_type_designator, optional($.arguments)),
+          seq($._class_name_reference, optional($.arguments)),
           $.anonymous_class,
         ),
       )),
 
-      _class_type_designator: $ => choice(
+      _class_name_reference: $ => choice(
         $.qualified_name,
         $.name,
         alias($._reserved_identifier, $.name),
@@ -1495,7 +1495,7 @@ module.exports = function defineGrammar(dialect) {
         prec(PREC.INSTANCEOF, seq(
           field('left', $._unary_expression),
           field('operator', keyword('instanceof')),
-          field('right', $._class_type_designator),
+          field('right', $._class_name_reference),
         )),
         prec.right(PREC.NULL_COALESCE, seq(
           field('left', $.expression),
