@@ -65,61 +65,47 @@ class A {
   (php_tag)
   (expression_statement
     (object_creation_expression
-      (declaration_list
-        (method_declaration
-          (visibility_modifier)
+      (anonymous_class
+        (declaration_list
+          (method_declaration
+            (visibility_modifier)
+            (name)
+            (formal_parameters)
+            (compound_statement))))))
+  (expression_statement
+    (object_creation_expression
+      (anonymous_class
+        (base_clause
+          (name))
+        (class_interface_clause
           (name)
-          (formal_parameters)
-          (compound_statement)
-        )
-      )
-    )
-  )
+          (name))
+        (declaration_list))))
   (expression_statement
     (object_creation_expression
-      (base_clause
-        (name)
-      )
-      (class_interface_clause
-        (name)
-        (name)
-      )
-      (declaration_list)
-    )
-  )
+      (anonymous_class
+        (arguments)
+        (declaration_list
+          (property_declaration
+            (visibility_modifier)
+            (property_element
+              (variable_name
+                (name))))))))
   (expression_statement
     (object_creation_expression
-      (arguments)
-      (declaration_list
-        (property_declaration
-          (visibility_modifier)
-          (property_element
-            (variable_name (name))
-          )
-        )
-      )
-    )
-  )
-  (expression_statement
-    (object_creation_expression
-      (arguments
-        (argument
-          (variable_name (name))
-        )
-        (argument
-          (variable_name (name))
-        )
-      )
-      (base_clause
-        (name)
-      )
-      (declaration_list
-        (use_declaration
-          (name)
-        )
-      )
-    )
-  )
+      (anonymous_class
+        (arguments
+          (argument
+            (variable_name
+              (name)))
+          (argument
+            (variable_name
+              (name))))
+        (base_clause
+          (name))
+        (declaration_list
+          (use_declaration
+            (name))))))
   (class_declaration
     (name)
     (declaration_list
@@ -130,20 +116,19 @@ class A {
         (compound_statement
           (return_statement
             (object_creation_expression
-              (arguments (argument (variable_name (name))))
-              (base_clause (name))
-              (declaration_list
-                (const_declaration
-                  (const_element (name) (string (string_content)))
-                )
-              )
-            )
-          )
-        )
-      )
-    )
-  )
-)
+              (anonymous_class
+                (arguments
+                  (argument
+                    (variable_name
+                      (name))))
+                (base_clause
+                  (name))
+                (declaration_list
+                  (const_declaration
+                    (const_element
+                      (name)
+                      (string
+                        (string_content)))))))))))))
 
 =========================================
 Conditional class definition

@@ -762,12 +762,13 @@ class B {
     body: (declaration_list))
   (expression_statement
     (object_creation_expression
-      attributes: (attribute_list
-        (attribute_group
-          (attribute
-            (name))))
-      (arguments)
-      (declaration_list)))
+      (anonymous_class
+        attributes: (attribute_list
+          (attribute_group
+            (attribute
+              (name))))
+        (arguments)
+        body: (declaration_list))))
   (expression_statement
     (arrow_function
       attributes: (attribute_list
