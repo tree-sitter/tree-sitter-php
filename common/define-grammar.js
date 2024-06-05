@@ -10,7 +10,6 @@
 /// <reference types="tree-sitter-cli/dsl" />
 // @ts-check
 
-
 const PREC = {
   COMMA: -1,
   CAST: -1,
@@ -207,10 +206,7 @@ module.exports = function defineGrammar(dialect) {
       namespace_definition: $ => seq(
         keyword('namespace'),
         choice(
-          seq(
-            field('name', $.namespace_name),
-            $._semicolon,
-          ),
+          seq(field('name', $.namespace_name), $._semicolon),
           seq(
             field('name', optional($.namespace_name)),
             field('body', $.compound_statement),
@@ -304,11 +300,7 @@ module.exports = function defineGrammar(dialect) {
         field('body', $.enum_declaration_list),
       )),
 
-      enum_declaration_list: $ => seq(
-        '{',
-        repeat($._enum_member_declaration),
-        '}',
-      ),
+      enum_declaration_list: $ => seq('{', repeat($._enum_member_declaration), '}'),
 
       _enum_member_declaration: $ => choice(
         $.enum_case,
@@ -335,11 +327,7 @@ module.exports = function defineGrammar(dialect) {
         optional($._semicolon),
       )),
 
-      declaration_list: $ => seq(
-        '{',
-        repeat($._member_declaration),
-        '}',
-      ),
+      declaration_list: $ => seq('{', repeat($._member_declaration), '}'),
 
       final_modifier: _ => keyword('final'),
       abstract_modifier: _ => keyword('abstract'),
@@ -488,7 +476,11 @@ module.exports = function defineGrammar(dialect) {
 
       formal_parameters: $ => seq(
         '(',
-        commaSep(choice($.simple_parameter, $.variadic_parameter, $.property_promotion_parameter)),
+        commaSep(choice(
+          $.simple_parameter,
+          $.variadic_parameter,
+          $.property_promotion_parameter,
+        )),
         optional(','),
         ')',
       ),
@@ -594,9 +586,7 @@ module.exports = function defineGrammar(dialect) {
         choice($.name, alias($._reserved_identifier, $.name)), '=', $.expression,
       ),
 
-      echo_statement: $ => seq(
-        keyword('echo'), $._expressions, $._semicolon,
-      ),
+      echo_statement: $ => seq(keyword('echo'), $._expressions, $._semicolon),
 
       exit_statement: $ => seq(
         keyword('exit'),
@@ -895,21 +885,11 @@ module.exports = function defineGrammar(dialect) {
         repeat($.statement),
       ),
 
-      compound_statement: $ => seq(
-        '{',
-        repeat($.statement),
-        '}',
-      ),
+      compound_statement: $ => seq('{', repeat($.statement), '}'),
 
-      named_label_statement: $ => seq(
-        $.name,
-        ':',
-      ),
+      named_label_statement: $ => seq($.name, ':'),
 
-      expression_statement: $ => seq(
-        $.expression,
-        $._semicolon,
-      ),
+      expression_statement: $ => seq($.expression, $._semicolon),
 
       expression: $ => choice(
         $.conditional_expression,
@@ -941,9 +921,7 @@ module.exports = function defineGrammar(dialect) {
 
       error_suppression_expression: $ => prec(PREC.INC, seq('@', $.expression)),
 
-      clone_expression: $ => seq(
-        keyword('clone'), $.primary_expression,
-      ),
+      clone_expression: $ => seq(keyword('clone'), $.primary_expression),
 
       primary_expression: $ => choice(
         $._variable,
@@ -1220,13 +1198,10 @@ module.exports = function defineGrammar(dialect) {
 
       arguments: $ => seq(
         '(',
-        choice(
-          seq(
-            commaSep($.argument),
-            optional(','),
-          ),
+        optional(choice(
+          seq(commaSep1($.argument), optional(',')),
           $.variadic_placeholder,
-        ),
+        )),
         ')',
       ),
 
@@ -1283,11 +1258,7 @@ module.exports = function defineGrammar(dialect) {
           $.name,
           $._variable_name,
         )),
-        seq(
-          '{',
-          field('name', $.expression),
-          '}',
-        ),
+        seq('{', field('name', $.expression), '}'),
       ),
 
       subscript_expression: $ => seq(
@@ -1328,11 +1299,7 @@ module.exports = function defineGrammar(dialect) {
         optional(field('parameters', $.arguments)),
       ),
 
-      _complex_string_part: $ => seq(
-        '{',
-        $.expression,
-        '}',
-      ),
+      _complex_string_part: $ => seq('{', $.expression, '}'),
 
       _simple_string_member_access_expression: $ => prec(PREC.MEMBER, seq(
         field('object', $.variable_name),
