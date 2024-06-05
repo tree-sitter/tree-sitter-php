@@ -758,7 +758,7 @@ class B {
     (assignment_expression
       left: (variable_name
         (name))
-      right: (anonymous_function_creation_expression
+      right: (anonymous_function
         attributes: (attribute_list
           (attribute_group
             (attribute

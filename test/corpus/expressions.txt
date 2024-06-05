@@ -680,7 +680,7 @@ static function &($a) { return $a; };
       function: (name)
       arguments: (arguments
         (argument
-          (anonymous_function_creation_expression
+          (anonymous_function
             parameters: (formal_parameters)
             body: (compound_statement
               (echo_statement (encapsed_string (string_content)))))))))
@@ -689,7 +689,7 @@ static function &($a) { return $a; };
       function: (name)
       arguments: (arguments
         (argument
-          (anonymous_function_creation_expression
+          (anonymous_function
             parameters: (formal_parameters (simple_parameter name: (variable_name (name))))
             (anonymous_function_use_clause (by_ref (variable_name (name))))
             body: (compound_statement (expression_statement (augmented_assignment_expression
@@ -701,7 +701,7 @@ static function &($a) { return $a; };
       function: (name)
       arguments: (arguments
         (argument
-          (anonymous_function_creation_expression
+          (anonymous_function
             parameters: (formal_parameters (simple_parameter name: (variable_name (name))))
             (anonymous_function_use_clause (by_ref (variable_name (name))))
             body: (compound_statement (expression_statement (augmented_assignment_expression
@@ -709,7 +709,7 @@ static function &($a) { return $a; };
               right: (variable_name (name)))))))
         (argument (integer)))))
   (expression_statement
-    (anonymous_function_creation_expression
+    (anonymous_function
       static_modifier: (static_modifier)
       reference_modifier: (reference_modifier)
       parameters: (formal_parameters
@@ -1084,7 +1084,7 @@ $fn1 = fn($x) => $x + $y;
   )
   (expression_statement
     (arrow_function
-      (static_modifier)
+      static_modifier: (static_modifier)
       parameters: (formal_parameters
         (simple_parameter
           reference_modifier: (reference_modifier)
@@ -1295,7 +1295,7 @@ class A {
     )
   )
   (expression_statement
-    (anonymous_function_creation_expression
+    (anonymous_function
       (formal_parameters)
       (anonymous_function_use_clause
         (variable_name (name))
@@ -1305,7 +1305,7 @@ class A {
     )
   )
   (expression_statement
-    (anonymous_function_creation_expression
+    (anonymous_function
       (reference_modifier)
       (formal_parameters
         (simple_parameter

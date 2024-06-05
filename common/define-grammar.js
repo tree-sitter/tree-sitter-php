@@ -437,9 +437,32 @@ module.exports = function defineGrammar(dialect) {
         optional($._return_type),
       ),
 
+      anonymous_function: $ => seq(
+        $._anonymous_function_header,
+        field('body', $.compound_statement),
+      ),
+
+      anonymous_function_use_clause: $ => seq(
+        keyword('use'),
+        '(',
+        commaSep1(choice($.by_ref, $.variable_name)),
+        optional(','),
+        ')',
+      ),
+
+      _anonymous_function_header: $ => seq(
+        optional(field('attributes', $.attribute_list)),
+        optional(field('static_modifier', $.static_modifier)),
+        keyword('function'),
+        optional(field('reference_modifier', $.reference_modifier)),
+        field('parameters', $.formal_parameters),
+        optional($.anonymous_function_use_clause),
+        optional($._return_type),
+      ),
+
       _arrow_function_header: $ => seq(
         optional(field('attributes', $.attribute_list)),
-        optional($.static_modifier),
+        optional(field('static_modifier', $.static_modifier)),
         keyword('fn'),
         optional(field('reference_modifier', $.reference_modifier)),
         field('parameters', $.formal_parameters),
@@ -907,7 +930,7 @@ module.exports = function defineGrammar(dialect) {
         $.name,
         $.array_creation_expression,
         $.print_intrinsic,
-        $.anonymous_function_creation_expression,
+        $.anonymous_function,
         $.arrow_function,
         $.object_creation_expression,
         $.update_expression,
@@ -930,25 +953,6 @@ module.exports = function defineGrammar(dialect) {
 
       print_intrinsic: $ => seq(
         keyword('print'), $.expression,
-      ),
-
-      anonymous_function_creation_expression: $ => seq(
-        optional(field('attributes', $.attribute_list)),
-        optional(field('static_modifier', $.static_modifier)),
-        keyword('function'),
-        optional(field('reference_modifier', $.reference_modifier)),
-        field('parameters', $.formal_parameters),
-        optional($.anonymous_function_use_clause),
-        optional($._return_type),
-        field('body', $.compound_statement),
-      ),
-
-      anonymous_function_use_clause: $ => seq(
-        keyword('use'),
-        '(',
-        commaSep1(choice(alias($.variable_reference, $.by_ref), $.variable_name)),
-        optional(','),
-        ')',
       ),
 
       object_creation_expression: $ => prec.right(PREC.NEW, seq(
@@ -1488,8 +1492,6 @@ module.exports = function defineGrammar(dialect) {
       ),
 
       variable_name: $ => seq('$', $.name),
-
-      variable_reference: $ => seq('&', $.variable_name),
 
       by_ref: $ => seq('&', $._variable),
 
