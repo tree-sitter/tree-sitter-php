@@ -370,8 +370,7 @@ class Nil {
         (property_element
           (variable_name
             (name))
-          (property_initializer
-            (null))))
+          (null)))
       (method_declaration
         (visibility_modifier)
         (name)
@@ -408,8 +407,7 @@ class Falsy {
         (property_element
           (variable_name
             (name))
-          (property_initializer
-            (boolean))))
+          (boolean)))
       (method_declaration
         (visibility_modifier)
         (name)
@@ -446,8 +444,7 @@ class Truthy {
         (property_element
           (variable_name
             (name))
-          (property_initializer
-            (boolean))))
+          (boolean)))
       (method_declaration
         (visibility_modifier)
         (name)
