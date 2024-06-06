@@ -92,17 +92,7 @@ module.exports = function defineGrammar(dialect) {
     },
 
     inline: $ => [
-      $._identifier,
-      $._name,
-      $._semicolon,
-      $._member_name,
-      $._simple_variable,
-      $._new_variable,
-      $._callable_variable,
       $._variable,
-      $._callable_expression,
-      $._foreach_value,
-      $._class_name_reference,
       $._namespace_use_type,
     ],
 
@@ -1474,13 +1464,13 @@ module.exports = function defineGrammar(dialect) {
 
       _simple_variable: $ => choice($.variable_name, $.dynamic_variable_name),
 
-      _new_variable: $ => choice(
+      _new_variable: $ => prec(1, choice(
         $._simple_variable,
         alias($._variable_subscript_expression, $.subscript_expression),
         alias($._variable_member_access_expression, $.member_access_expression),
         alias($._variable_nullsafe_member_access_expression, $.nullsafe_member_access_expression),
         alias($._variable_scoped_property_access_expression, $.scoped_property_access_expression),
-      ),
+      )),
 
       _callable_variable: $ => choice(
         $._simple_variable,
