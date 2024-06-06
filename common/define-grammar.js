@@ -348,11 +348,7 @@ module.exports = function defineGrammar(dialect) {
 
       property_element: $ => seq(
         $.variable_name,
-        optional($.property_initializer),
-      ),
-
-      property_initializer: $ => seq(
-        '=', $.expression,
+        optional(seq('=', field('default_value', $.expression))),
       ),
 
       method_declaration: $ => seq(

@@ -35,11 +35,8 @@ class Exception_foo implements ThrowableInterface {
       (property_declaration
         (visibility_modifier)
         (property_element
-          (variable_name
-            (name))
-          (property_initializer
-            (encapsed_string
-              (string_content)))))
+          (variable_name (name))
+          default_value: (encapsed_string (string_content))))
       (method_declaration
         (visibility_modifier)
         name: (name)
@@ -657,10 +654,8 @@ class B {
         (visibility_modifier)
         type: (primitive_type)
         (property_element
-          (variable_name
-            (name))
-          (property_initializer
-            (string))))
+          (variable_name (name))
+          default_value: (string)))
       (method_declaration
         attributes: (attribute_list
           (attribute_group
@@ -802,10 +797,8 @@ class B {
         (visibility_modifier)
         type: (primitive_type)
         (property_element
-          (variable_name
-            (name))
-          (property_initializer
-            (string))))))
+          (variable_name (name))
+          default_value: (string)))))
   (function_definition
     attributes: (attribute_list
       (attribute_group

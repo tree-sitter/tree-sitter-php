@@ -1837,9 +1837,8 @@ new class (['value']) extends ArrayObject {}[0];
               (property_element
                 (variable_name
                   (name))
-                (property_initializer
-                  (string
-                    (string_content))))))))
+                (string
+                 (string_content)))))))
       (variable_name
         (name))))
   (expression_statement
@@ -1868,9 +1867,8 @@ new class (['value']) extends ArrayObject {}[0];
               (property_element
                 (variable_name
                   (name))
-                (property_initializer
-                  (string
-                    (string_content))))))))
+                (string
+                 (string_content)))))))
       (name)))
   (expression_statement
     (member_call_expression
