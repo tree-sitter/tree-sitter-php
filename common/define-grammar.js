@@ -334,7 +334,10 @@ module.exports = function defineGrammar(dialect) {
         repeat1($._modifier),
         optional(field('type', $.type)),
         commaSep1($.property_element),
-        $._semicolon,
+        choice(
+          $._semicolon,
+          $.property_hook_list,
+        ),
       ),
 
       _modifier: $ => prec.left(choice(
@@ -347,8 +350,25 @@ module.exports = function defineGrammar(dialect) {
       )),
 
       property_element: $ => seq(
-        $.variable_name,
+        field('name', $.variable_name),
         optional(seq('=', field('default_value', $.expression))),
+      ),
+
+      property_hook_list: $ => seq('{', repeat($.property_hook), '}'),
+
+      property_hook: $ => seq(
+        optional(field('attributes', $.attribute_list)),
+        optional(field('final', $.final_modifier)),
+        optional(field('reference_modifier', $.reference_modifier)),
+        $.name,
+        optional(field('parameters', $.formal_parameters)),
+        $._property_hook_body,
+      ),
+
+      _property_hook_body: $ => choice(
+        seq('=>', field('body', $.expression), $._semicolon),
+        field('body', $.compound_statement),
+        $._semicolon,
       ),
 
       method_declaration: $ => seq(
@@ -478,10 +498,8 @@ module.exports = function defineGrammar(dialect) {
         field('readonly', optional($.readonly_modifier)),
         field('type', optional($.type)), // Note: callable is not a valid type here, but instead of complicating the parser, we defer this checking to any intelligence using the parser
         field('name', choice($.by_ref, $.variable_name)),
-        optional(seq(
-          '=',
-          field('default_value', $.expression),
-        )),
+        optional(seq('=', field('default_value', $.expression))),
+        optional($.property_hook_list),
       ),
 
       simple_parameter: $ => seq(
@@ -489,10 +507,7 @@ module.exports = function defineGrammar(dialect) {
         field('type', optional($.type)),
         optional(field('reference_modifier', $.reference_modifier)),
         field('name', $.variable_name),
-        optional(seq(
-          '=',
-          field('default_value', $.expression),
-        )),
+        optional(seq('=', field('default_value', $.expression))),
       ),
 
       variadic_parameter: $ => seq(
@@ -1247,18 +1262,12 @@ module.exports = function defineGrammar(dialect) {
 
       _variable_subscript_expression: $ => seq(
         $._new_variable,
-        choice(
-          seq('[', optional($.expression), ']'),
-          seq('{', $.expression, '}'),
-        ),
+        seq('[', optional($.expression), ']'),
       ),
 
       _dereferencable_subscript_expression: $ => seq(
         $._dereferencable_expression,
-        choice(
-          seq('[', optional($.expression), ']'),
-          seq('{', $.expression, '}'),
-        ),
+        seq('[', optional($.expression), ']'),
       ),
 
       _dereferencable_expression: $ => prec(PREC.DEREF, choice(
@@ -1270,10 +1279,10 @@ module.exports = function defineGrammar(dialect) {
         $._name,
       )),
 
-      _dereferencable_scalar: $ => choice(
+      _dereferencable_scalar: $ => prec(PREC.DEREF, choice(
         $.array_creation_expression,
         $._string,
-      ),
+      )),
 
       array_creation_expression: $ => choice(
         seq(keyword('array'), '(', commaSep($.array_element_initializer), optional(','), ')'),
