@@ -14,7 +14,39 @@ require_once "file.php";
 // <- @keyword
 
 namespace A\B;
-// <- @keyword
+//^^^^^^^ @keyword
+//        ^ @module
+//          ^ @module
+
+use Foo\Baz as Baaz;
+//^ @keyword
+//  ^^^ @module
+//      ^^^ @type
+//          ^^ @keyword
+//             ^^^^ @type
+
+use function Foo\foo as fooo;
+//  ^^^^^^^^ @keyword
+//               ^^^ @function
+//                      ^^^^ @function
+
+use const Foo\FOO as FOOO;
+//  ^^^^^ @keyword
+//            ^^^ @constant
+//                   ^^^^ @constant
+
+use Foo\Baz\{
+//  ^^^ @module
+//      ^^^ @module
+  Bar,
+//^^^ @type
+  function foo,
+//^^^^^^^^ @keyword
+//         ^^^ @function
+  const FOO,
+//^^^^^ @keyword
+//      ^^^ @constant
+};
 
 if ($a and $b or $c xor $d) {} elseif ($b) {} else {}
 // <- @keyword
