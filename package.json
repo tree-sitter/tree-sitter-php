@@ -51,6 +51,7 @@
     "common/**"
   ],
   "dependencies": {
+    "globals": "^15.4.0",
     "node-addon-api": "^8.0.0",
     "node-gyp-build": "^4.8.1"
   },
@@ -63,7 +64,7 @@
     }
   },
   "devDependencies": {
-    "eslint": ">=8.57.0",
+    "eslint": "^9.4.0",
     "eslint-config-google": "^0.14.0",
     "prebuildify": "^6.0.1",
     "tree-sitter-cli": "^0.22.6"
@@ -95,47 +96,5 @@
       "path": "php_only",
       "external-files": "common/scanner.h"
     }
-  ],
-  "eslintConfig": {
-    "env": {
-      "commonjs": true,
-      "es2021": true
-    },
-    "extends": "google",
-    "parserOptions": {
-      "ecmaVersion": "latest",
-      "sourceType": "module"
-    },
-    "rules": {
-      "arrow-parens": "off",
-      "camel-case": "off",
-      "indent": [
-        "error",
-        2,
-        {
-          "SwitchCase": 1
-        }
-      ],
-      "max-len": [
-        "error",
-        {
-          "code": 160,
-          "ignoreComments": true,
-          "ignoreUrls": true,
-          "ignoreStrings": true
-        }
-      ],
-      "spaced-comment": [
-        "warn",
-        "always",
-        {
-          "line": {
-            "markers": [
-              "/"
-            ]
-          }
-        }
-      ]
-    }
-  }
+  ]
 }
