@@ -1166,8 +1166,7 @@ module.exports = function defineGrammar(dialect) {
       _callable_expression: $ => choice(
         $._callable_variable,
         $.parenthesized_expression,
-        $.array_creation_expression,
-        $._string,
+        $._dereferencable_scalar,
       ),
 
       scoped_call_expression: $ => prec(PREC.CALL, seq(
@@ -1267,10 +1266,14 @@ module.exports = function defineGrammar(dialect) {
         $._variable,
         $.class_constant_access_expression,
         $.parenthesized_expression,
-        $.array_creation_expression,
+        $._dereferencable_scalar,
         $._name,
-        $._string,
       )),
+
+      _dereferencable_scalar: $ => choice(
+        $.array_creation_expression,
+        $._string,
+      ),
 
       array_creation_expression: $ => choice(
         seq(keyword('array'), '(', commaSep($.array_element_initializer), optional(','), ')'),
