@@ -54,9 +54,9 @@ checksum = "adad44e29e4c806119491a7f06f03de4d1af22c3a680dd47f1e6e179439d1f56"
 
 [[package]]
 name = "tree-sitter"
-version = "0.22.5"
+version = "0.22.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "688200d842c76dd88f9a7719ecb0483f79f5a766fb1c100756d5d8a059abc71b"
+checksum = "df7cc499ceadd4dcdf7ec6d4cbc34ece92c3fa07821e287aedecd4416c516dca"
 dependencies = [
  "cc",
  "regex",
@@ -64,7 +64,7 @@ dependencies = [
 
 [[package]]
 name = "tree-sitter-php"
-version = "0.22.4"
+version = "0.22.5"
 dependencies = [
  "cc",
  "tree-sitter",
