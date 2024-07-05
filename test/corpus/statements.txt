@@ -144,29 +144,49 @@ for($a=0;$a<5;$a++) echo $a;
 for($a=0;$a<5;$a++):
   echo $a;
 endfor;
+for($a=0;$a<5;$a++) {
+  echo $a;
+}
+
 
 ---
 
 (program
   (php_tag)
   (for_statement
-    (assignment_expression
+    initialize: (assignment_expression
       left: (variable_name (name))
       right: (integer))
-    (binary_expression
+    condition: (binary_expression
       left: (variable_name (name))
       right: (integer))
-    (update_expression argument: (variable_name (name)))
-    (echo_statement (variable_name (name))))
+    update: (update_expression argument: (variable_name (name)))
+    body: (echo_statement (variable_name (name))))
   (for_statement
-    (assignment_expression
+    initialize: (assignment_expression
       left: (variable_name (name))
       right: (integer))
-    (binary_expression
+    condition: (binary_expression
       left: (variable_name (name))
       right: (integer))
-    (update_expression argument: (variable_name (name)))
-    (echo_statement (variable_name (name)))))
+    update: (update_expression argument: (variable_name (name)))
+    body: (echo_statement (variable_name (name))))
+  (for_statement
+    initialize: (assignment_expression
+      left: (variable_name
+        (name))
+      right: (integer))
+    condition: (binary_expression
+      left: (variable_name
+        (name))
+      right: (integer))
+    update: (update_expression
+      argument: (variable_name
+        (name)))
+    body: (compound_statement
+      (echo_statement
+        (variable_name
+          (name))))))
 
 ==============================
 Switch statements

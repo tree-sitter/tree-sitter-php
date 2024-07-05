@@ -724,18 +724,18 @@ module.exports = function defineGrammar(dialect) {
       for_statement: $ => seq(
         keyword('for'),
         '(',
-        optional($._expressions),
+        field('initialize', optional($._expressions)),
         ';',
-        optional($._expressions),
+        field('condition', optional($._expressions)),
         ';',
-        optional($._expressions),
+        field('update', optional($._expressions)),
         ')',
         choice(
           $._semicolon,
-          $.statement,
+          field('body', $.statement),
           seq(
             ':',
-            repeat($.statement),
+            field('body', repeat($.statement)),
             keyword('endfor'),
             $._semicolon,
           ),
