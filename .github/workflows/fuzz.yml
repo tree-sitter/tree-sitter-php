@@ -27,4 +27,4 @@ jobs:
         uses: tree-sitter/fuzz-action@v4
         with:
           directory: ${{matrix.language}}
-          tree-sitter-version: v0.22.5
+          tree-sitter-version: v0.22.6
