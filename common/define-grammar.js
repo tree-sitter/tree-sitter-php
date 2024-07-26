@@ -1250,6 +1250,7 @@ module.exports = function defineGrammar(dialect) {
             keyword('namespace', false),
             keyword('null', false),
             keyword('static', false),
+            keyword('throw', false),
             'parent',
             'self',
             /true|false/i,
