@@ -498,7 +498,7 @@ module.exports = function defineGrammar(dialect) {
         field('visibility', $.visibility_modifier),
         field('readonly', optional($.readonly_modifier)),
         field('type', optional($.type)), // Note: callable is not a valid type here, but instead of complicating the parser, we defer this checking to any intelligence using the parser
-        field('name', $.variable_name),
+        field('name', choice($.by_ref, $.variable_name)),
         optional(seq(
           '=',
           field('default_value', $.expression),

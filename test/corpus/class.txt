@@ -397,7 +397,8 @@ class Point {
     public function __construct(
         public float $x = 0.0,
         float $y = 0.0,
-        private float $z = 0.0
+        private float $z = 0.0,
+        private bool &$flag,
     ) {}
 }
 
@@ -415,27 +416,22 @@ class Point {
           (property_promotion_parameter
             visibility: (visibility_modifier)
             type: (primitive_type)
-
             name: (variable_name (name))
-            default_value: (float)
-          )
+            default_value: (float))
           (simple_parameter
             type: (primitive_type)
             name: (variable_name (name))
-            default_value: (float)
-          )
+            default_value: (float))
           (property_promotion_parameter
             visibility: (visibility_modifier)
             type: (primitive_type)
             name: (variable_name (name))
-            default_value: (float)
-          )
-        )
-        body: (compound_statement)
-      )
-    )
-  )
-)
+            default_value: (float))
+          (property_promotion_parameter
+            visibility: (visibility_modifier)
+            type: (primitive_type)
+            name: (by_ref (variable_name (name)))))
+        body: (compound_statement)))))
 
 ================================================================================
 Readonly properties
