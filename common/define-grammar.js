@@ -10,7 +10,6 @@
 /// <reference types="tree-sitter-cli/dsl" />
 // @ts-check
 
-
 const PREC = {
   COMMA: -1,
   CAST: -1,
@@ -62,9 +61,6 @@ module.exports = function defineGrammar(dialect) {
 
       [$.namespace_name],
       [$.heredoc_body],
-
-      [$.namespace_name_as_prefix],
-      [$.namespace_use_declaration, $.namespace_name_as_prefix],
     ],
 
     externals: $ => [
@@ -96,14 +92,8 @@ module.exports = function defineGrammar(dialect) {
     },
 
     inline: $ => [
-      $._semicolon,
-      $._member_name,
       $._variable,
-      $._callable_variable,
-      $._callable_expression,
-      $._foreach_value,
-      $._class_type_designator,
-      $._variable_name,
+      $._namespace_use_type,
     ],
 
     supertypes: $ => [
@@ -200,17 +190,14 @@ module.exports = function defineGrammar(dialect) {
 
       global_declaration: $ => seq(
         keyword('global'),
-        commaSep1($._variable_name),
+        commaSep1($._simple_variable),
         $._semicolon,
       ),
 
       namespace_definition: $ => seq(
         keyword('namespace'),
         choice(
-          seq(
-            field('name', $.namespace_name),
-            $._semicolon,
-          ),
+          seq(field('name', $.namespace_name), $._semicolon),
           seq(
             field('name', optional($.namespace_name)),
             field('body', $.compound_statement),
@@ -220,60 +207,38 @@ module.exports = function defineGrammar(dialect) {
 
       namespace_use_declaration: $ => seq(
         keyword('use'),
-        optional(choice(keyword('function'), keyword('const'))),
         choice(
-          seq(
-            commaSep1($.namespace_use_clause),
-          ),
-          seq(
-            optional('\\'),
-            $.namespace_name,
-            '\\',
-            $.namespace_use_group,
-          ),
+          commaSep1($.namespace_use_clause),
+          $._namespace_use_group,
         ),
         $._semicolon,
       ),
 
       namespace_use_clause: $ => seq(
-        choice(
-          $.name,
-          alias($._reserved_identifier, $.name),
-          $.qualified_name,
-        ),
-        optional($.namespace_aliasing_clause),
+        field('type', optional($._namespace_use_type)),
+        $._name,
+        optional(seq(keyword('as'), field('alias', $.name))),
       ),
+
+      _namespace_use_type: $ => choice(keyword('function'), keyword('const')),
 
       qualified_name: $ => seq(
-        $.namespace_name_as_prefix,
+        field('prefix', seq(optional($.namespace_name), '\\')),
         $.name,
       ),
 
-      namespace_name_as_prefix: $ => choice(
-        '\\',
-        seq(optional('\\'), $.namespace_name, '\\'),
-        seq(keyword('namespace'), '\\'),
-        seq(keyword('namespace'), optional('\\'), $.namespace_name, '\\'),
-      ),
+      _name: $ => choice($._identifier, $.qualified_name),
 
-      namespace_name: $ => seq($.name, repeat(seq('\\', $.name))),
+      namespace_name: $ => seq(optional('\\'), $.name, repeat(seq('\\', $.name))),
 
-      namespace_aliasing_clause: $ => seq(
-        keyword('as'),
-        $.name,
-      ),
-
-      namespace_use_group: $ => seq(
-        '{',
-        commaSep1($.namespace_use_group_clause),
-        '}',
-      ),
-
-      namespace_use_group_clause: $ => seq(
-        optional(choice(keyword('function'), keyword('const'))),
+      _namespace_use_group: $ => seq(
+        field('type', optional($._namespace_use_type)),
         $.namespace_name,
-        optional($.namespace_aliasing_clause),
+        '\\',
+        field('body', $.namespace_use_group),
       ),
+
+      namespace_use_group: $ => seq('{', commaSep1($.namespace_use_clause), '}'),
 
       trait_declaration: $ => seq(
         optional(field('attributes', $.attribute_list)),
@@ -292,7 +257,7 @@ module.exports = function defineGrammar(dialect) {
 
       base_clause: $ => seq(
         keyword('extends'),
-        commaSep1(choice($.name, alias($._reserved_identifier, $.name), $.qualified_name)),
+        commaSep1($._name),
       ),
 
       enum_declaration: $ => prec.right(seq(
@@ -304,11 +269,7 @@ module.exports = function defineGrammar(dialect) {
         field('body', $.enum_declaration_list),
       )),
 
-      enum_declaration_list: $ => seq(
-        '{',
-        repeat($._enum_member_declaration),
-        '}',
-      ),
+      enum_declaration_list: $ => seq('{', repeat($._enum_member_declaration), '}'),
 
       _enum_member_declaration: $ => choice(
         $.enum_case,
@@ -332,14 +293,9 @@ module.exports = function defineGrammar(dialect) {
         optional($.base_clause),
         optional($.class_interface_clause),
         field('body', $.declaration_list),
-        optional($._semicolon),
       )),
 
-      declaration_list: $ => seq(
-        '{',
-        repeat($._member_declaration),
-        '}',
-      ),
+      declaration_list: $ => seq('{', repeat($._member_declaration), '}'),
 
       final_modifier: _ => keyword('final'),
       abstract_modifier: _ => keyword('abstract'),
@@ -347,7 +303,7 @@ module.exports = function defineGrammar(dialect) {
 
       class_interface_clause: $ => seq(
         keyword('implements'),
-        commaSep1(choice($.name, alias($._reserved_identifier, $.name), $.qualified_name)),
+        commaSep1($._name),
       ),
 
       _member_declaration: $ => choice(
@@ -378,7 +334,10 @@ module.exports = function defineGrammar(dialect) {
         repeat1($._modifier),
         optional(field('type', $.type)),
         commaSep1($.property_element),
-        $._semicolon,
+        choice(
+          $._semicolon,
+          $.property_hook_list,
+        ),
       ),
 
       _modifier: $ => prec.left(choice(
@@ -391,12 +350,25 @@ module.exports = function defineGrammar(dialect) {
       )),
 
       property_element: $ => seq(
-        $.variable_name,
-        optional($.property_initializer),
+        field('name', $.variable_name),
+        optional(seq('=', field('default_value', $.expression))),
       ),
 
-      property_initializer: $ => seq(
-        '=', $.expression,
+      property_hook_list: $ => seq('{', repeat($.property_hook), '}'),
+
+      property_hook: $ => seq(
+        optional(field('attributes', $.attribute_list)),
+        optional(field('final', $.final_modifier)),
+        optional(field('reference_modifier', $.reference_modifier)),
+        $.name,
+        optional(field('parameters', $.formal_parameters)),
+        $._property_hook_body,
+      ),
+
+      _property_hook_body: $ => choice(
+        seq('=>', field('body', $.expression), $._semicolon),
+        field('body', $.compound_statement),
+        $._semicolon,
       ),
 
       method_declaration: $ => seq(
@@ -414,7 +386,7 @@ module.exports = function defineGrammar(dialect) {
 
       use_declaration: $ => seq(
         keyword('use'),
-        commaSep1(choice($.name, alias($._reserved_identifier, $.name), $.qualified_name)),
+        commaSep1($._name),
         choice($.use_list, $._semicolon),
       ),
 
@@ -466,14 +438,37 @@ module.exports = function defineGrammar(dialect) {
       _function_definition_header: $ => seq(
         keyword('function'),
         optional($.reference_modifier),
-        field('name', choice($.name, alias($._reserved_identifier, $.name))),
+        field('name', $._identifier),
         field('parameters', $.formal_parameters),
+        optional($._return_type),
+      ),
+
+      anonymous_function: $ => seq(
+        $._anonymous_function_header,
+        field('body', $.compound_statement),
+      ),
+
+      anonymous_function_use_clause: $ => seq(
+        keyword('use'),
+        '(',
+        commaSep1(choice($.by_ref, $.variable_name)),
+        optional(','),
+        ')',
+      ),
+
+      _anonymous_function_header: $ => seq(
+        optional(field('attributes', $.attribute_list)),
+        optional(field('static_modifier', $.static_modifier)),
+        keyword('function'),
+        optional(field('reference_modifier', $.reference_modifier)),
+        field('parameters', $.formal_parameters),
+        optional($.anonymous_function_use_clause),
         optional($._return_type),
       ),
 
       _arrow_function_header: $ => seq(
         optional(field('attributes', $.attribute_list)),
-        optional($.static_modifier),
+        optional(field('static_modifier', $.static_modifier)),
         keyword('fn'),
         optional(field('reference_modifier', $.reference_modifier)),
         field('parameters', $.formal_parameters),
@@ -488,7 +483,11 @@ module.exports = function defineGrammar(dialect) {
 
       formal_parameters: $ => seq(
         '(',
-        commaSep(choice($.simple_parameter, $.variadic_parameter, $.property_promotion_parameter)),
+        commaSep(choice(
+          $.simple_parameter,
+          $.variadic_parameter,
+          $.property_promotion_parameter,
+        )),
         optional(','),
         ')',
       ),
@@ -499,10 +498,8 @@ module.exports = function defineGrammar(dialect) {
         field('readonly', optional($.readonly_modifier)),
         field('type', optional($.type)), // Note: callable is not a valid type here, but instead of complicating the parser, we defer this checking to any intelligence using the parser
         field('name', choice($.by_ref, $.variable_name)),
-        optional(seq(
-          '=',
-          field('default_value', $.expression),
-        )),
+        optional(seq('=', field('default_value', $.expression))),
+        optional($.property_hook_list),
       ),
 
       simple_parameter: $ => seq(
@@ -510,10 +507,7 @@ module.exports = function defineGrammar(dialect) {
         field('type', optional($.type)),
         optional(field('reference_modifier', $.reference_modifier)),
         field('name', $.variable_name),
-        optional(seq(
-          '=',
-          field('default_value', $.expression),
-        )),
+        optional(seq('=', field('default_value', $.expression))),
       ),
 
       variadic_parameter: $ => seq(
@@ -590,13 +584,9 @@ module.exports = function defineGrammar(dialect) {
 
       _return_type: $ => seq(':', field('return_type', choice($.type, $.bottom_type))),
 
-      const_element: $ => seq(
-        choice($.name, alias($._reserved_identifier, $.name)), '=', $.expression,
-      ),
+      const_element: $ => seq($._identifier, '=', $.expression),
 
-      echo_statement: $ => seq(
-        keyword('echo'), $._expressions, $._semicolon,
-      ),
+      echo_statement: $ => seq(keyword('echo'), $._expressions, $._semicolon),
 
       exit_statement: $ => seq(
         keyword('exit'),
@@ -895,21 +885,11 @@ module.exports = function defineGrammar(dialect) {
         repeat($.statement),
       ),
 
-      compound_statement: $ => seq(
-        '{',
-        repeat($.statement),
-        '}',
-      ),
+      compound_statement: $ => seq('{', repeat($.statement), '}'),
 
-      named_label_statement: $ => seq(
-        $.name,
-        ':',
-      ),
+      named_label_statement: $ => seq($.name, ':'),
 
-      expression_statement: $ => seq(
-        $.expression,
-        $._semicolon,
-      ),
+      expression_statement: $ => seq($.expression, $._semicolon),
 
       expression: $ => choice(
         $.conditional_expression,
@@ -941,9 +921,7 @@ module.exports = function defineGrammar(dialect) {
 
       error_suppression_expression: $ => prec(PREC.INC, seq('@', $.expression)),
 
-      clone_expression: $ => seq(
-        keyword('clone'), $.primary_expression,
-      ),
+      clone_expression: $ => seq(keyword('clone'), $.primary_expression),
 
       primary_expression: $ => choice(
         $._variable,
@@ -953,7 +931,7 @@ module.exports = function defineGrammar(dialect) {
         $.name,
         $.array_creation_expression,
         $.print_intrinsic,
-        $.anonymous_function_creation_expression,
+        $.anonymous_function,
         $.arrow_function,
         $.object_creation_expression,
         $.update_expression,
@@ -969,8 +947,7 @@ module.exports = function defineGrammar(dialect) {
         $._scope_resolution_qualifier,
         '::',
         choice(
-          $.name,
-          alias($._reserved_identifier, $.name),
+          $._identifier,
           seq('{', alias($.expression, $.name), '}'),
         ),
       ),
@@ -979,53 +956,47 @@ module.exports = function defineGrammar(dialect) {
         keyword('print'), $.expression,
       ),
 
-      anonymous_function_creation_expression: $ => seq(
-        optional(field('attributes', $.attribute_list)),
-        optional(field('static_modifier', $.static_modifier)),
-        keyword('function'),
-        optional(field('reference_modifier', $.reference_modifier)),
-        field('parameters', $.formal_parameters),
-        optional($.anonymous_function_use_clause),
-        optional($._return_type),
-        field('body', $.compound_statement),
-      ),
-
-      anonymous_function_use_clause: $ => seq(
-        keyword('use'),
-        '(',
-        commaSep1(choice(alias($.variable_reference, $.by_ref), $.variable_name)),
-        optional(','),
-        ')',
-      ),
-
-      object_creation_expression: $ => prec.right(PREC.NEW, choice(
-        seq(
-          keyword('new'),
-          $._class_type_designator,
-          optional($.arguments),
-        ),
-        seq(
-          keyword('new'),
-          optional(field('attributes', $.attribute_list)),
-          keyword('class'),
-          optional($.arguments),
-          optional($.base_clause),
-          optional($.class_interface_clause),
-          $.declaration_list,
+      object_creation_expression: $ => prec.right(PREC.NEW, seq(
+        keyword('new'),
+        choice(
+          seq($._class_name_reference, optional($.arguments)),
+          $.anonymous_class,
         ),
       )),
 
-      _class_type_designator: $ => choice(
-        $.qualified_name,
-        $.name,
-        alias($._reserved_identifier, $.name),
-        $.subscript_expression,
-        $.member_access_expression,
-        $.nullsafe_member_access_expression,
-        $.scoped_property_access_expression,
-        $._variable_name,
+      object_creation_expression: $ => choice(
+        $._new_dereferencable_expression,
+        $._new_non_dereferencable_expression,
+      ),
+
+      _new_non_dereferencable_expression: $ => prec.right(PREC.NEW, seq(
+        keyword('new'),
+        $._class_name_reference,
+      )),
+
+      _new_dereferencable_expression: $ => prec.right(PREC.NEW, seq(
+        keyword('new'),
+        choice(
+          seq($._class_name_reference, $.arguments),
+          $.anonymous_class,
+        ),
+      )),
+
+      _class_name_reference: $ => choice(
+        $._name,
+        $._new_variable,
         $.parenthesized_expression,
       ),
+
+      anonymous_class: $ => prec.right(seq(
+        optional(field('attributes', $.attribute_list)),
+        repeat($._modifier),
+        keyword('class'),
+        optional($.arguments),
+        optional($.base_clause),
+        optional($.class_interface_clause),
+        field('body', $.declaration_list),
+      )),
 
       update_expression: $ => {
         const argument = field('argument', $._variable);
@@ -1102,15 +1073,28 @@ module.exports = function defineGrammar(dialect) {
 
       _variable: $ => choice(
         alias($.cast_variable, $.cast_expression),
+        $._new_variable,
         $._callable_variable,
         $.scoped_property_access_expression,
         $.member_access_expression,
         $.nullsafe_member_access_expression,
       ),
 
+      _variable_member_access_expression: $ => prec(PREC.MEMBER, seq(
+        field('object', $._new_variable),
+        '->',
+        $._member_name,
+      )),
+
       member_access_expression: $ => prec(PREC.MEMBER, seq(
         field('object', $._dereferencable_expression),
         '->',
+        $._member_name,
+      )),
+
+      _variable_nullsafe_member_access_expression: $ => prec(PREC.MEMBER, seq(
+        field('object', $._new_variable),
+        '?->',
         $._member_name,
       )),
 
@@ -1120,10 +1104,16 @@ module.exports = function defineGrammar(dialect) {
         $._member_name,
       )),
 
+      _variable_scoped_property_access_expression: $ => prec(PREC.MEMBER, seq(
+        field('scope', choice($._name, $._new_variable)),
+        '::',
+        field('name', $._simple_variable),
+      )),
+
       scoped_property_access_expression: $ => prec(PREC.MEMBER, seq(
         field('scope', $._scope_resolution_qualifier),
         '::',
-        field('name', $._variable_name),
+        field('name', $._simple_variable),
       )),
 
       list_literal: $ => choice($._list_destructing, $._array_destructing),
@@ -1173,25 +1163,16 @@ module.exports = function defineGrammar(dialect) {
         ),
       ),
 
-      _callable_variable: $ => choice(
-        $._variable_name,
-        $.subscript_expression,
-        $.member_call_expression,
-        $.nullsafe_member_call_expression,
-        $.scoped_call_expression,
-        $.function_call_expression,
-      ),
-
       function_call_expression: $ => prec(PREC.CALL, seq(
-        field('function', choice($.name, alias($._reserved_identifier, $.name), $.qualified_name, $._callable_expression)),
+        field('function', choice($._name, $._callable_expression)),
         field('arguments', $.arguments),
       )),
 
       _callable_expression: $ => choice(
         $._callable_variable,
         $.parenthesized_expression,
-        $.array_creation_expression,
-        $._string,
+        $._dereferencable_scalar,
+        alias($._new_dereferencable_expression, $.object_creation_expression),
       ),
 
       scoped_call_expression: $ => prec(PREC.CALL, seq(
@@ -1203,9 +1184,7 @@ module.exports = function defineGrammar(dialect) {
 
       _scope_resolution_qualifier: $ => choice(
         $.relative_scope,
-        $.name,
-        alias($._reserved_identifier, $.name),
-        $.qualified_name,
+        $._name,
         $._dereferencable_expression,
       ),
 
@@ -1219,13 +1198,10 @@ module.exports = function defineGrammar(dialect) {
 
       arguments: $ => seq(
         '(',
-        choice(
-          seq(
-            commaSep($.argument),
-            optional(','),
-          ),
+        optional(choice(
+          seq(commaSep1($.argument), optional(',')),
           $.variadic_placeholder,
-        ),
+        )),
         ')',
       ),
 
@@ -1278,33 +1254,33 @@ module.exports = function defineGrammar(dialect) {
 
       _member_name: $ => choice(
         field('name', choice(
-          alias($._reserved_identifier, $.name),
-          $.name,
-          $._variable_name,
+          $._identifier,
+          $._simple_variable,
         )),
-        seq(
-          '{',
-          field('name', $.expression),
-          '}',
-        ),
+        seq('{', field('name', $.expression), '}'),
       ),
 
-      subscript_expression: $ => seq(
+      _variable_subscript_expression: $ => seq(
+        $._new_variable,
+        seq('[', optional($.expression), ']'),
+      ),
+
+      _dereferencable_subscript_expression: $ => seq(
         $._dereferencable_expression,
-        choice(
-          seq('[', optional($.expression), ']'),
-          seq('{', $.expression, '}'),
-        ),
+        seq('[', optional($.expression), ']'),
       ),
 
       _dereferencable_expression: $ => prec(PREC.DEREF, choice(
         $._variable,
+        alias($._new_dereferencable_expression, $.object_creation_expression),
         $.class_constant_access_expression,
         $.parenthesized_expression,
+        $._dereferencable_scalar,
+        $._name,
+      )),
+
+      _dereferencable_scalar: $ => prec(PREC.DEREF, choice(
         $.array_creation_expression,
-        $.name,
-        alias($._reserved_identifier, $.name),
-        $.qualified_name,
         $._string,
       )),
 
@@ -1323,15 +1299,11 @@ module.exports = function defineGrammar(dialect) {
       attribute_list: $ => repeat1($.attribute_group),
 
       attribute: $ => seq(
-        choice($.name, alias($._reserved_identifier, $.name), $.qualified_name),
+        $._name,
         optional(field('parameters', $.arguments)),
       ),
 
-      _complex_string_part: $ => seq(
-        '{',
-        $.expression,
-        '}',
-      ),
+      _complex_string_part: $ => seq('{', $.expression, '}'),
 
       _simple_string_member_access_expression: $ => prec(PREC.MEMBER, seq(
         field('object', $.variable_name),
@@ -1355,7 +1327,7 @@ module.exports = function defineGrammar(dialect) {
 
       _simple_string_part: $ => choice(
         alias($._simple_string_member_access_expression, $.member_access_expression),
-        $._variable_name,
+        $._simple_variable,
         alias($._simple_string_subscript_expression, $.subscript_expression),
       ),
 
@@ -1491,23 +1463,32 @@ module.exports = function defineGrammar(dialect) {
       _string: $ => choice($.encapsed_string, $.string, $.heredoc, $.nowdoc),
 
       dynamic_variable_name: $ => choice(
-        seq('$', $._variable_name),
+        seq('$', $._simple_variable),
         seq('$', '{', $.expression, '}'),
       ),
 
-      _variable_name: $ => choice($.dynamic_variable_name, $.variable_name),
+      _simple_variable: $ => choice($.variable_name, $.dynamic_variable_name),
+
+      _new_variable: $ => prec(1, choice(
+        $._simple_variable,
+        alias($._variable_subscript_expression, $.subscript_expression),
+        alias($._variable_member_access_expression, $.member_access_expression),
+        alias($._variable_nullsafe_member_access_expression, $.nullsafe_member_access_expression),
+        alias($._variable_scoped_property_access_expression, $.scoped_property_access_expression),
+      )),
+
+      _callable_variable: $ => choice(
+        $._simple_variable,
+        alias($._dereferencable_subscript_expression, $.subscript_expression),
+        $.member_call_expression,
+        $.nullsafe_member_call_expression,
+        $.function_call_expression,
+        $.scoped_call_expression,
+      ),
 
       variable_name: $ => seq('$', $.name),
 
-      variable_reference: $ => seq('&', $.variable_name),
-      by_ref: $ => seq(
-        '&',
-        choice(
-          $._callable_variable,
-          $.member_access_expression,
-          $.nullsafe_member_access_expression,
-        ),
-      ),
+      by_ref: $ => seq('&', $._variable),
 
       yield_expression: $ => prec.right(seq(
         keyword('yield'),
@@ -1527,7 +1508,7 @@ module.exports = function defineGrammar(dialect) {
         prec(PREC.INSTANCEOF, seq(
           field('left', $._unary_expression),
           field('operator', keyword('instanceof')),
-          field('right', $._class_type_designator),
+          field('right', $._class_name_reference),
         )),
         prec.right(PREC.NULL_COALESCE, seq(
           field('left', $.expression),
@@ -1611,6 +1592,11 @@ module.exports = function defineGrammar(dialect) {
         'self',
         'parent',
         keyword('static'),
+      ),
+
+      _identifier: $ => choice(
+        $.name,
+        alias($._reserved_identifier, $.name),
       ),
 
       comment: _ => token(choice(

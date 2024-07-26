@@ -70,6 +70,41 @@
 (yield_expression "from" @keyword)
 (function_static_declaration "static" @keyword)
 
+; Namespace
+
+(namespace_definition
+  name: (namespace_name
+    (name) @module))
+
+(namespace_name
+  (name) @module)
+
+(namespace_use_clause
+  [
+    (name) @type
+    (qualified_name
+      (name) @type)
+    alias: (name) @type
+  ])
+
+(namespace_use_clause
+  type: "function"
+  [
+    (name) @function
+    (qualified_name
+      (name) @function)
+    alias: (name) @function
+  ])
+
+(namespace_use_clause
+  type: "const"
+  [
+    (name) @constant
+    (qualified_name
+      (name) @constant)
+    alias: (name) @constant
+  ])
+
 ; Variables
 
 (relative_scope) @variable.builtin

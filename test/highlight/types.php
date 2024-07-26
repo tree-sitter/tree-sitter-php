@@ -1,10 +1,11 @@
 <?php
 
-function b(int $a, string $b, Person $e): Dog {}
+function b(int $a, string $b, Person $e): Foo\Dog {}
 //         ^^^ @type.builtin
 //                 ^^^^^^ @type.builtin
 //                            ^^^^^^ @type
-//                                        ^^^ @type
+//                                        ^^^ @module
+//                                            ^^^ @type
 
 function a(array $b) {
 //         ^^^^^ @type.builtin
