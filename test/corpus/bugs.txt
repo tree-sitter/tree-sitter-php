@@ -72,6 +72,7 @@ foo(parent: null);
 foo(self: null);
 foo(static: null);
 foo(string: null);
+foo(throw: null);
 foo(true: null);
 foo(void: null);
 
@@ -79,6 +80,10 @@ foo(void: null);
 
 (program
   (php_tag)
+    (expression_statement
+      (function_call_expression
+        function: (name)
+        arguments: (arguments (argument name: (name) (null)))))
     (expression_statement
       (function_call_expression
         function: (name)
