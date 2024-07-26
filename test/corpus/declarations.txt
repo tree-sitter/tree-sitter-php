@@ -567,6 +567,14 @@ function a(#[Test] $a) {
   $c;
 }
 
+#[Test]
+interface A {
+}
+
+#[Test]
+trait B {
+}
+
 class PostsController
 {
   #[Test]
@@ -641,6 +649,20 @@ class B {
       (expression_statement
         (variable_name
           (name)))))
+  (interface_declaration
+    attributes: (attribute_list
+      (attribute_group
+        (attribute
+          (name))))
+    name: (name)
+    body: (declaration_list))
+  (trait_declaration
+    attributes: (attribute_list
+      (attribute_group
+        (attribute
+          (name))))
+    name: (name)
+    body: (declaration_list))
   (class_declaration
     name: (name)
     body: (declaration_list

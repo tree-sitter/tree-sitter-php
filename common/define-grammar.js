@@ -276,12 +276,14 @@ module.exports = function defineGrammar(dialect) {
       ),
 
       trait_declaration: $ => seq(
+        optional(field('attributes', $.attribute_list)),
         keyword('trait'),
         field('name', $.name),
         field('body', $.declaration_list),
       ),
 
       interface_declaration: $ => seq(
+        optional(field('attributes', $.attribute_list)),
         keyword('interface'),
         field('name', $.name),
         optional($.base_clause),
