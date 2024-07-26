@@ -2569,6 +2569,16 @@
     "type": "interface_declaration",
     "named": true,
     "fields": {
+      "attributes": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "attribute_list",
+            "named": true
+          }
+        ]
+      },
       "body": {
         "multiple": false,
         "required": true,
@@ -3902,6 +3912,10 @@
         "required": true,
         "types": [
           {
+            "type": "by_ref",
+            "named": true
+          },
+          {
             "type": "variable_name",
             "named": true
           }
@@ -4678,6 +4692,16 @@
     "type": "trait_declaration",
     "named": true,
     "fields": {
+      "attributes": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "attribute_list",
+            "named": true
+          }
+        ]
+      },
       "body": {
         "multiple": false,
         "required": true,
