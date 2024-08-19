@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	tree_sitter "github.com/smacker/go-tree-sitter"
-	"github.com/tree-sitter-grammars/tree-sitter-php"
+	tree_sitter_php "github.com/tree-sitter/tree-sitter-php/bindings/go"
 )
 
 func TestCanLoadPHPGrammar(t *testing.T) {
