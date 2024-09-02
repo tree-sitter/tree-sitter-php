@@ -6,12 +6,35 @@ let package = Package(
   products: [
     .library(name: "TreeSitterPHP", targets: ["TreeSitterPHP"]),
   ],
-  dependencies: [],
+  dependencies: [
+    .package(url: "https://github.com/ChimeHQ/SwiftTreeSitter", from: "0.8.0"),
+  ],
   targets: [
     .target(
       name: "TreeSitterPHP",
       path: ".",
       exclude: [
+        "Cargo.toml",
+        "Makefile",
+        "binding.gyp",
+        "bindings/c",
+        "bindings/go",
+        "bindings/node",
+        "bindings/python",
+        "bindings/rust",
+        "prebuilds",
+        "grammar.js",
+        "package.json",
+        "package-lock.json",
+        "pyproject.toml",
+        "setup.py",
+        "test",
+        "examples",
+        ".editorconfig",
+        ".github",
+        ".gitignore",
+        ".gitattributes",
+        ".gitmodules",
       ],
       sources: [
         "php/src/parser.c",
@@ -24,6 +47,14 @@ let package = Package(
       ],
       publicHeadersPath: "bindings/swift",
       cSettings: [.headerSearchPath("php/src")]
+    ),
+    .testTarget(
+      name: "TreeSitterPHPTests",
+      dependencies: [
+        "SwiftTreeSitter",
+        "TreeSitterPHP",
+      ],
+      path: "bindings/swift/TreeSitterPHPTests"
     )
   ]
 )
