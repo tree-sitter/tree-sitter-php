@@ -23,8 +23,8 @@ class BdistWheel(bdist_wheel):
 
 
 setup(
-    packages=find_packages("bindings/php"),
-    package_dir={"": "bindings/php"},
+    packages=find_packages("bindings/python"),
+    package_dir={"": "bindings/python"},
     package_data={
         "tree_sitter_php": ["*.pyi", "py.typed"],
         "tree_sitter_php.queries": ["*.scm"],
