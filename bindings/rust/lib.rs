@@ -12,9 +12,10 @@
 //! ?>
 //! "#;
 //! let mut parser = Parser::new();
+//! let language = tree_sitter_php::LANGUAGE_PHP;
 //! parser
-//!     .set_language(&tree_sitter_php::language_php())
-//!     .expect("Error loading PHP grammar");
+//!     .set_language(&language.into())
+//!     .expect("Error loading PHP parser");
 //! let tree = parser.parse(code, None).unwrap();
 //! assert!(!tree.root_node().has_error());
 //! ```
@@ -24,26 +25,18 @@
 //! [Parser]: https://docs.rs/tree-sitter/*/tree_sitter/struct.Parser.html
 //! [tree-sitter]: https://tree-sitter.github.io/
 
-use tree_sitter::Language;
+use tree_sitter_language::LanguageFn;
 
 extern "C" {
-    fn tree_sitter_php() -> Language;
-    fn tree_sitter_php_only() -> Language;
+    fn tree_sitter_php() -> *const ();
+    fn tree_sitter_php_only() -> *const ();
 }
 
-/// Get the tree-sitter [Language][] for PHP.
-///
-/// [Language]: https://docs.rs/tree-sitter/*/tree_sitter/struct.Language.html
-pub fn language_php() -> Language {
-    unsafe { tree_sitter_php() }
-}
+/// The tree-sitter [`LanguageFn`] for PHP.
+pub const LANGUAGE_PHP: LanguageFn = unsafe { LanguageFn::from_raw(tree_sitter_php) };
 
-/// Get the tree-sitter [Language][] for PHP Only.
-///
-/// [Language]: https://docs.rs/tree-sitter/*/tree_sitter/struct.Language.html
-pub fn language_php_only() -> Language {
-    unsafe { tree_sitter_php_only() }
-}
+/// The tree-sitter [`LanguageFn`] for PHP-Only.
+pub const LANGUAGE_PHP_ONLY: LanguageFn = unsafe { LanguageFn::from_raw(tree_sitter_php_only) };
 
 /// The content of the [`node-types.json`][] file for this grammar.
 ///
@@ -66,7 +59,7 @@ mod tests {
     fn test_can_load_grammar() {
         let mut parser = tree_sitter::Parser::new();
         parser
-            .set_language(&super::language_php())
-            .expect("Error loading PHP grammar");
+            .set_language(&super::LANGUAGE_PHP.into())
+            .expect("Error loading PHP parser");
     }
 }

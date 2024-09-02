@@ -51,31 +51,30 @@
     "common/**"
   ],
   "dependencies": {
-    "globals": "^15.4.0",
-    "node-addon-api": "^8.0.0",
-    "node-gyp-build": "^4.8.1"
+    "globals": "^15.9.0",
+    "node-addon-api": "^8.1.0",
+    "node-gyp-build": "^4.8.2"
   },
   "peerDependencies": {
     "tree-sitter": "^0.21.1"
   },
   "peerDependenciesMeta": {
-    "tree_sitter": {
+    "tree-sitter": {
       "optional": true
     }
   },
   "devDependencies": {
-    "eslint": "^9.4.0",
+    "eslint": "^9.9.1",
     "eslint-config-google": "^0.14.0",
     "prebuildify": "^6.0.1",
     "tree-sitter-cli": "^0.23.0"
   },
   "scripts": {
     "install": "node-gyp-build",
-    "prebuildify": "prebuildify --napi --strip",
-    "generate": "for dir in php php_only; do cd $dir && tree-sitter generate --no-bindings && cd ..; done",
     "lint": "eslint common/define-grammar.js",
-    "parse": "tree-sitter parse",
-    "test": "tree-sitter test"
+    "prestart": "tree-sitter build php --wasm -o php/tree-sitter-php.wasm",
+    "start": "tree-sitter playground --grammar-path php",
+    "test": "node --test bindings/node/*_test.js"
   },
   "tree-sitter": [
     {

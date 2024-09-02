@@ -5,12 +5,12 @@ typedef struct TSLanguage TSLanguage;
 TSLanguage *tree_sitter_php(void);
 TSLanguage *tree_sitter_php_only(void);
 
-static PyObject* _binding_language_php(PyObject *self, PyObject *args) {
-    return PyLong_FromVoidPtr(tree_sitter_php());
+static PyObject* _binding_language_php(PyObject *Py_UNUSED(self), PyObject *Py_UNUSED(args)) {
+    return PyCapsule_New(tree_sitter_php(), "tree_sitter.Language", NULL);
 }
 
-static PyObject* _binding_language_php_only(PyObject *self, PyObject *args) {
-    return PyLong_FromVoidPtr(tree_sitter_php_only());
+static PyObject* _binding_language_php_only(PyObject *Py_UNUSED(self), PyObject *Py_UNUSED(args)) {
+    return PyCapsule_New(tree_sitter_php_only(), "tree_sitter.Language", NULL);
 }
 
 static PyMethodDef methods[] = {

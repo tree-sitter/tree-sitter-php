@@ -1,8 +1,12 @@
-* text eol=lf
+* text=auto eol=lf
 
-src/*.json linguist-generated
-src/parser.c linguist-generated
-src/tree_sitter/* linguist-generated
+php/src/*.json linguist-generated
+php/src/parser.c linguist-generated
+php/src/tree_sitter/* linguist-generated
+
+php_only/src/*.json linguist-generated
+php_only/src/parser.c linguist-generated
+php_only/src/tree_sitter/* linguist-generated
 
 bindings/** linguist-generated
 binding.gyp linguist-generated
