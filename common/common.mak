@@ -75,7 +75,7 @@ ifneq ($(STRIP),)
 	$(STRIP) $@
 endif
 
-$(LANGUAGE_NAME).pc: bindings/c/$(LANGUAGE_NAME).pc.in
+$(LANGUAGE_NAME).pc: ../bindings/c/$(LANGUAGE_NAME).pc.in
 	sed  -e 's|@URL@|$(PARSER_URL)|' \
 		-e 's|@VERSION@|$(VERSION)|' \
 		-e 's|@LIBDIR@|$(LIBDIR)|' \
