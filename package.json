@@ -72,7 +72,6 @@
   "scripts": {
     "install": "node-gyp-build",
     "lint": "eslint common/define-grammar.js",
-    "generate": "for dir in php php_only; do cd $dir && tree-sitter generate --no-bindings && cd ..; done",
     "prestart": "tree-sitter build php --wasm -o php/tree-sitter-php.wasm",
     "start": "tree-sitter playground --grammar-path php",
     "test": "node --test bindings/node/*_test.js"
