@@ -80,14 +80,6 @@
   (name) @module)
 
 (namespace_use_clause
-  [
-    (name) @type
-    (qualified_name
-      (name) @type)
-    alias: (name) @type
-  ])
-
-(namespace_use_clause
   type: "function"
   [
     (name) @function
