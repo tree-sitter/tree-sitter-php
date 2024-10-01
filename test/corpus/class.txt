@@ -1010,3 +1010,82 @@ class User implements Named {
                   (name))))
             (name)
             (compound_statement)))))))
+
+=========================================
+Asymmetric Property Visibility
+=========================================
+
+<?php
+
+class User {
+    public private(set) string $foo;
+    private(set) (Foo&Bar)|null $foo;
+    private (Foo&Bar)|null $foo;
+    public protected(set) string $foo;
+    protected(set) string $foo;
+    public function __construct(
+        private(set) string $title,
+        private(set) Author $author,
+        private(set) int $pubYear,
+    ) {}
+}
+
+---
+
+(program
+  (php_tag)
+  (class_declaration
+    (name)
+    (declaration_list
+      (property_declaration
+        (visibility_modifier)
+        (visibility_modifier (operation))
+        (primitive_type)
+        (property_element
+          (variable_name (name))))
+      (property_declaration
+        (visibility_modifier (operation))
+        (disjunctive_normal_form_type
+          (intersection_type
+            (named_type (name))
+            (named_type (name)))
+          (primitive_type))
+        (property_element
+          (variable_name (name))))
+      (property_declaration
+        (visibility_modifier)
+        (disjunctive_normal_form_type
+          (intersection_type
+            (named_type (name))
+            (named_type (name)))
+          (primitive_type))
+        (property_element
+          (variable_name (name))))
+      (property_declaration
+        (visibility_modifier)
+        (visibility_modifier (operation))
+        (primitive_type)
+        (property_element
+          (variable_name (name))))
+      (property_declaration
+        (visibility_modifier (operation))
+        (primitive_type)
+        (property_element
+          (variable_name (name))))
+      (method_declaration
+        (visibility_modifier)
+        (name)
+        (formal_parameters
+          (property_promotion_parameter
+            (visibility_modifier (operation))
+            (primitive_type)
+            (variable_name (name)))
+          (property_promotion_parameter
+            (visibility_modifier (operation))
+            (named_type (name))
+            (variable_name (name)))
+          (property_promotion_parameter
+            (visibility_modifier (operation))
+            (primitive_type)
+            (variable_name (name))))
+        (compound_statement)))))
