@@ -423,10 +423,17 @@ module.exports = function defineGrammar(dialect) {
         ),
       ),
 
-      visibility_modifier: _ => choice(
-        keyword('public'),
-        keyword('protected'),
-        keyword('private'),
+      visibility_modifier: $ => seq(
+        choice(
+          keyword('public'),
+          keyword('protected'),
+          keyword('private'),
+        ),
+        optional(seq(
+          token.immediate('('),
+          alias($.name, $.operation),
+          token.immediate(')'),
+        )),
       ),
 
       function_definition: $ => seq(
