@@ -5321,7 +5321,17 @@
   {
     "type": "visibility_modifier",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "operation",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "while_statement",
@@ -5867,6 +5877,10 @@
   {
     "type": "null",
     "named": false
+  },
+  {
+    "type": "operation",
+    "named": true
   },
   {
     "type": "or",
