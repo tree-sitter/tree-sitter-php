@@ -3843,6 +3843,7 @@
   {
     "type": "program",
     "named": true,
+    "root": true,
     "fields": {},
     "children": {
       "multiple": true,
@@ -4832,11 +4833,6 @@
         ]
       }
     }
-  },
-  {
-    "type": "text",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "throw_expression",

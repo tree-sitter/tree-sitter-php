@@ -1,4 +1,5 @@
 {
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "php",
   "word": "name",
   "rules": {
@@ -1983,8 +1984,11 @@
               "type": "SEQ",
               "members": [
                 {
-                  "type": "STRING",
-                  "value": "("
+                  "type": "IMMEDIATE_TOKEN",
+                  "content": {
+                    "type": "STRING",
+                    "value": "("
+                  }
                 },
                 {
                   "type": "ALIAS",
@@ -1996,8 +2000,11 @@
                   "value": "operation"
                 },
                 {
-                  "type": "STRING",
-                  "value": ")"
+                  "type": "IMMEDIATE_TOKEN",
+                  "content": {
+                    "type": "STRING",
+                    "value": ")"
+                  }
                 }
               ]
             },
