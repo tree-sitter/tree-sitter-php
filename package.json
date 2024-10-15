@@ -48,11 +48,11 @@
     "php_only/package.json",
     "php/src/**",
     "php_only/src/**",
-    "common/**"
+    "common/**",
+    "*.wasm"
   ],
   "dependencies": {
-    "globals": "^15.9.0",
-    "node-addon-api": "^8.1.0",
+    "node-addon-api": "^8.2.1",
     "node-gyp-build": "^4.8.2"
   },
   "peerDependencies": {
@@ -64,36 +64,14 @@
     }
   },
   "devDependencies": {
-    "eslint": "^9.9.1",
-    "eslint-config-google": "^0.14.0",
+    "eslint": "^9.12.0",
+    "eslint-config-treesitter": "^1.0.2",
     "prebuildify": "^6.0.1",
-    "tree-sitter-cli": "^0.23.0"
+    "tree-sitter-cli": "^0.24.3"
   },
   "scripts": {
     "install": "node-gyp-build",
     "lint": "eslint common/define-grammar.js",
-    "prestart": "tree-sitter build php --wasm -o php/tree-sitter-php.wasm",
-    "start": "tree-sitter playground --grammar-path php",
     "test": "node --test bindings/node/*_test.js"
-  },
-  "tree-sitter": [
-    {
-      "scope": "source.php",
-      "file-types": [
-        "php"
-      ],
-      "path": "php",
-      "highlights": "queries/highlights.scm",
-      "injections": [
-        "queries/injections.scm",
-        "queries/injections-text.scm"
-      ],
-      "tags": "queries/tags.scm",
-      "external-files": "common/scanner.h"
-    },
-    {
-      "path": "php_only",
-      "external-files": "common/scanner.h"
-    }
-  ]
+  }
 }

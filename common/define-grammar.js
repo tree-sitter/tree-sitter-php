@@ -220,7 +220,7 @@ module.exports = function defineGrammar(dialect) {
         optional(seq(keyword('as'), field('alias', $.name))),
       ),
 
-      _namespace_use_type: $ => choice(keyword('function'), keyword('const')),
+      _namespace_use_type: _ => choice(keyword('function'), keyword('const')),
 
       qualified_name: $ => seq(
         field('prefix', seq(optional($.namespace_name), '\\')),
@@ -963,14 +963,6 @@ module.exports = function defineGrammar(dialect) {
         keyword('print'), $.expression,
       ),
 
-      object_creation_expression: $ => prec.right(PREC.NEW, seq(
-        keyword('new'),
-        choice(
-          seq($._class_name_reference, optional($.arguments)),
-          $.anonymous_class,
-        ),
-      )),
-
       object_creation_expression: $ => choice(
         $._new_dereferencable_expression,
         $._new_non_dereferencable_expression,
@@ -1630,9 +1622,9 @@ module.exports = function defineGrammar(dialect) {
  * and will alias the regex to the word if aliasAsWord is true
  *
  * @param {string} word
- * @param {boolean} aliasAsWord?
+ * @param {boolean} aliasAsWord
  *
- * @return {RegExp|AliasRule}
+ * @returns {RegExp|AliasRule}
  */
 function keyword(word, aliasAsWord = true) {
   /** @type {RegExp|AliasRule} */
@@ -1646,8 +1638,7 @@ function keyword(word, aliasAsWord = true) {
  *
  * @param {Rule} rule
  *
- * @return {SeqRule}
- *
+ * @returns {SeqRule}
  */
 function commaSep1(rule) {
   return seq(rule, repeat(seq(',', rule)));
@@ -1658,8 +1649,7 @@ function commaSep1(rule) {
  *
  * @param {Rule} rule
  *
- * @return {ChoiceRule}
- *
+ * @returns {ChoiceRule}
  */
 function commaSep(rule) {
   return optional(commaSep1(rule));
@@ -1670,7 +1660,7 @@ function commaSep(rule) {
  *
  * @param {Rule} rule
  *
- * @return {SeqRule}
+ * @returns {SeqRule}
  */
 function pipeSep1(rule) {
   return seq(rule, repeat(seq('|', rule)));
@@ -1680,8 +1670,7 @@ function pipeSep1(rule) {
  * Creates a rule to  match one or more of the rules separated by an ampersand
  *
  * @param {Rule} rule
- *
- * @return {SeqRule}
+ * @returns {SeqRule}
  */
 function ampSep1(rule) {
   return seq(rule, repeat(seq(token('&'), rule)));

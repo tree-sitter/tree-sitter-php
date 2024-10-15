@@ -5,8 +5,8 @@ all install uninstall clean:
 	$(MAKE) -C php_only $@
 
 generate:
-	cd php && $(TS) generate --no-bindings
-	cd php_only && $(TS) generate --no-bindings
+	cd php && $(TS) generate
+	cd php_only && $(TS) generate
 
 test:
 	$(TS) test
