@@ -2010,23 +2010,7 @@
         "required": false,
         "types": [
           {
-            "type": "encapsed_string",
-            "named": true
-          },
-          {
-            "type": "heredoc",
-            "named": true
-          },
-          {
-            "type": "integer",
-            "named": true
-          },
-          {
-            "type": "nowdoc",
-            "named": true
-          },
-          {
-            "type": "string",
+            "type": "expression",
             "named": true
           }
         ]

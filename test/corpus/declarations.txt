@@ -872,6 +872,18 @@ enum Suit: string
   }
 }
 
+enum D: int
+{
+    case Minus_1 = -1;
+    case Zero = 0;
+    case Plus_1 = +1;
+}
+
+enum E: string
+{
+    case StringConcat = 'Hello ' . "World";
+}
+
 ---
 
 (program
@@ -944,4 +956,30 @@ enum Suit: string
                       (name)
                       (name)))
                   (string
-                    (string_content)))))))))))
+                    (string_content))))))))))
+  (enum_declaration
+    (name)
+    (primitive_type)
+    (enum_declaration_list
+      (enum_case
+        (name)
+        (unary_op_expression
+          (integer)))
+      (enum_case
+        (name)
+        (integer))
+      (enum_case
+        (name)
+        (unary_op_expression
+          (integer)))))
+  (enum_declaration
+    (name)
+    (primitive_type)
+    (enum_declaration_list
+      (enum_case
+        (name)
+        (binary_expression
+          (string
+            (string_content))
+          (encapsed_string
+            (string_content)))))))
