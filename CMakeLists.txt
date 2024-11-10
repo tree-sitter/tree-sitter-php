@@ -58,6 +58,6 @@ add_subdirectory(php tree-sitter-php)
 
 add_subdirectory(php_only tree-sitter-php_only)
 
-add_custom_target(test "${TREE_SITTER_CLI}" test
+add_custom_target(ts-test "${TREE_SITTER_CLI}" test
                   WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
                   COMMENT "tree-sitter test")
