@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 project(tree-sitter-php
-        VERSION "0.23.8"
+        VERSION "0.23.9"
 		DESCRIPTION "PHP & PHP-Only grammars for tree-sitter"
         HOMEPAGE_URL "https://github.com/tree-sitter/tree-sitter-php"
         LANGUAGES C)
