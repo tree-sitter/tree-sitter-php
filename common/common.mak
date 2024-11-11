@@ -3,7 +3,7 @@ $(error Windows is not supported)
 endif
 
 HOMEPAGE_URL := https://github.com/tree-sitter/tree-sitter-php
-VERSION := 0.23.7
+VERSION := 0.23.8
 
 # repository
 SRC_DIR := src
