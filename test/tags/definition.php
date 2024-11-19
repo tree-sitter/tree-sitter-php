@@ -24,5 +24,3 @@ class A {
 //                  ^ definition.function
     }
 }
-
-
