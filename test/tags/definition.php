@@ -13,7 +13,7 @@ trait U {
 }
 
 function f() {
-         ^ definition.function
+//       ^ definition.function
 }
 
 class A {
