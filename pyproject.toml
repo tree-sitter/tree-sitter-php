@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "tree-sitter-php"
 description = "PHP grammar for tree-sitter"
-version = "0.23.10"
+version = "0.23.11"
 keywords = ["incremental", "parsing", "tree-sitter", "php"]
 classifiers = [
   "Intended Audience :: Developers",
