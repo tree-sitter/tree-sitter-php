@@ -1501,42 +1501,46 @@
       }
     },
     "property_element": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "FIELD",
-          "name": "name",
-          "content": {
-            "type": "SYMBOL",
-            "name": "variable_name"
-          }
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "="
-                },
-                {
-                  "type": "FIELD",
-                  "name": "default_value",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "expression"
-                  }
-                }
-              ]
-            },
-            {
-              "type": "BLANK"
+      "type": "RESERVED",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "FIELD",
+            "name": "name",
+            "content": {
+              "type": "SYMBOL",
+              "name": "variable_name"
             }
-          ]
-        }
-      ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": "="
+                  },
+                  {
+                    "type": "FIELD",
+                    "name": "default_value",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "expression"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        ]
+      },
+      "context_name": "properties"
     },
     "property_hook_list": {
       "type": "SEQ",
@@ -1700,8 +1704,12 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "_function_definition_header"
+          "type": "RESERVED",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_function_definition_header"
+          },
+          "context_name": "properties"
         },
         {
           "type": "CHOICE",
@@ -2588,90 +2596,94 @@
       ]
     },
     "simple_parameter": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "FIELD",
-              "name": "attributes",
-              "content": {
-                "type": "SYMBOL",
-                "name": "attribute_list"
-              }
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "FIELD",
-          "name": "type",
-          "content": {
+      "type": "RESERVED",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
             "type": "CHOICE",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "type"
+                "type": "FIELD",
+                "name": "attributes",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "attribute_list"
+                }
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "FIELD",
+            "name": "type",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "type"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            }
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "reference_modifier",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "reference_modifier"
+                }
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "FIELD",
+            "name": "name",
+            "content": {
+              "type": "SYMBOL",
+              "name": "variable_name"
+            }
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": "="
+                  },
+                  {
+                    "type": "FIELD",
+                    "name": "default_value",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "expression"
+                    }
+                  }
+                ]
               },
               {
                 "type": "BLANK"
               }
             ]
           }
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "FIELD",
-              "name": "reference_modifier",
-              "content": {
-                "type": "SYMBOL",
-                "name": "reference_modifier"
-              }
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "FIELD",
-          "name": "name",
-          "content": {
-            "type": "SYMBOL",
-            "name": "variable_name"
-          }
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "="
-                },
-                {
-                  "type": "FIELD",
-                  "name": "default_value",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "expression"
-                  }
-                }
-              ]
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        }
-      ]
+        ]
+      },
+      "context_name": "properties"
     },
     "variadic_parameter": {
       "type": "SEQ",
@@ -2777,17 +2789,21 @@
       ]
     },
     "named_type": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "name"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "qualified_name"
-        }
-      ]
+      "type": "RESERVED",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "name"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "qualified_name"
+          }
+        ]
+      },
+      "context_name": "types"
     },
     "optional_type": {
       "type": "SEQ",
@@ -3092,21 +3108,25 @@
       ]
     },
     "const_element": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_identifier"
-        },
-        {
-          "type": "STRING",
-          "value": "="
-        },
-        {
-          "type": "SYMBOL",
-          "name": "expression"
-        }
-      ]
+      "type": "RESERVED",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_identifier"
+          },
+          {
+            "type": "STRING",
+            "value": "="
+          },
+          {
+            "type": "SYMBOL",
+            "name": "expression"
+          }
+        ]
+      },
+      "context_name": "constants"
     },
     "echo_statement": {
       "type": "SEQ",
@@ -5013,48 +5033,52 @@
       ]
     },
     "class_constant_access_expression": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_scope_resolution_qualifier"
-        },
-        {
-          "type": "STRING",
-          "value": "::"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "_identifier"
-            },
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "{"
-                },
-                {
-                  "type": "ALIAS",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "expression"
+      "type": "RESERVED",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_scope_resolution_qualifier"
+          },
+          {
+            "type": "STRING",
+            "value": "::"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_identifier"
+              },
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": "{"
                   },
-                  "named": true,
-                  "value": "name"
-                },
-                {
-                  "type": "STRING",
-                  "value": "}"
-                }
-              ]
-            }
-          ]
-        }
-      ]
+                  {
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "expression"
+                    },
+                    "named": true,
+                    "value": "name"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "context_name": "constants"
     },
     "print_intrinsic": {
       "type": "SEQ",
@@ -6391,84 +6415,88 @@
       ]
     },
     "_argument_name": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "FIELD",
-          "name": "name",
-          "content": {
-            "type": "ALIAS",
+      "type": "RESERVED",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "FIELD",
+            "name": "name",
             "content": {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "name"
-                },
-                {
-                  "type": "PATTERN",
-                  "value": "array",
-                  "flags": "i"
-                },
-                {
-                  "type": "PATTERN",
-                  "value": "fn",
-                  "flags": "i"
-                },
-                {
-                  "type": "PATTERN",
-                  "value": "function",
-                  "flags": "i"
-                },
-                {
-                  "type": "PATTERN",
-                  "value": "match",
-                  "flags": "i"
-                },
-                {
-                  "type": "PATTERN",
-                  "value": "namespace",
-                  "flags": "i"
-                },
-                {
-                  "type": "PATTERN",
-                  "value": "null",
-                  "flags": "i"
-                },
-                {
-                  "type": "PATTERN",
-                  "value": "static",
-                  "flags": "i"
-                },
-                {
-                  "type": "PATTERN",
-                  "value": "throw",
-                  "flags": "i"
-                },
-                {
-                  "type": "STRING",
-                  "value": "parent"
-                },
-                {
-                  "type": "STRING",
-                  "value": "self"
-                },
-                {
-                  "type": "PATTERN",
-                  "value": "true|false",
-                  "flags": "i"
-                }
-              ]
-            },
-            "named": true,
-            "value": "name"
+              "type": "ALIAS",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "name"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "array",
+                    "flags": "i"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "fn",
+                    "flags": "i"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "function",
+                    "flags": "i"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "match",
+                    "flags": "i"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "namespace",
+                    "flags": "i"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "null",
+                    "flags": "i"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "static",
+                    "flags": "i"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "throw",
+                    "flags": "i"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "parent"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "self"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "true|false",
+                    "flags": "i"
+                  }
+                ]
+              },
+              "named": true,
+              "value": "name"
+            }
+          },
+          {
+            "type": "STRING",
+            "value": ":"
           }
-        },
-        {
-          "type": "STRING",
-          "value": ":"
-        }
-      ]
+        ]
+      },
+      "context_name": "properties"
     },
     "member_call_expression": {
       "type": "PREC",
@@ -7848,8 +7876,12 @@
           "value": "$"
         },
         {
-          "type": "SYMBOL",
-          "name": "name"
+          "type": "RESERVED",
+          "content": {
+            "type": "SYMBOL",
+            "name": "name"
+          },
+          "context_name": "variables"
         }
       ]
     },
@@ -9271,5 +9303,926 @@
     "primary_expression",
     "type",
     "literal"
-  ]
+  ],
+  "reserved": {
+    "global": [
+      {
+        "type": "PATTERN",
+        "value": "abstract",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "and",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "as",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "break",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "callable",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "case",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "catch",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "class",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "clone",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "const",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "continue",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "declare",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "default",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "do",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "echo",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "else",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "elseif",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "enddeclare",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "endfor",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "endforeach",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "endif",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "endswitch",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "endwhile",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "extends",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "final",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "finally",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "fn",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "for",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "foreach",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "function",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "global",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "goto",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "if",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "implements",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "include",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "include_once",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "instanceof",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "insteadof",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "interface",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "match",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "namespace",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "new",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "or",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "print",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "private",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "protected",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "public",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "readonly",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "require",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "require_once",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "return",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "switch",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "throw",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "trait",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "try",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "use",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "while",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "xor",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "yield",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "static",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "var",
+        "flags": "i"
+      }
+    ],
+    "variables": [
+      {
+        "type": "PATTERN",
+        "value": "abstract",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "and",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "as",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "break",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "callable",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "case",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "catch",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "class",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "clone",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "const",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "continue",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "declare",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "default",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "do",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "echo",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "else",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "elseif",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "enddeclare",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "endfor",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "endforeach",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "endif",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "endswitch",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "endwhile",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "extends",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "final",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "finally",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "fn",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "for",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "foreach",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "function",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "global",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "goto",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "if",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "implements",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "include",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "include_once",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "instanceof",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "insteadof",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "interface",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "match",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "namespace",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "new",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "or",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "print",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "private",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "protected",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "public",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "readonly",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "require",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "require_once",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "return",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "switch",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "throw",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "trait",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "try",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "use",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "while",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "xor",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "yield",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "static",
+        "flags": "i"
+      }
+    ],
+    "types": [
+      {
+        "type": "PATTERN",
+        "value": "abstract",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "and",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "as",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "break",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "callable",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "case",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "catch",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "class",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "clone",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "const",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "continue",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "declare",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "default",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "do",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "echo",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "else",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "elseif",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "enddeclare",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "endfor",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "endforeach",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "endif",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "endswitch",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "endwhile",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "extends",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "final",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "finally",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "fn",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "for",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "foreach",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "function",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "global",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "goto",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "if",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "implements",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "include",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "include_once",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "instanceof",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "insteadof",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "interface",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "match",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "namespace",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "new",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "or",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "print",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "private",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "protected",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "public",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "readonly",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "require",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "require_once",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "return",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "switch",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "throw",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "trait",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "try",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "use",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "while",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "xor",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "yield",
+        "flags": "i"
+      },
+      {
+        "type": "PATTERN",
+        "value": "var",
+        "flags": "i"
+      }
+    ],
+    "constants": [
+      {
+        "type": "PATTERN",
+        "value": "class",
+        "flags": "i"
+      }
+    ],
+    "properties": []
+  }
 }
