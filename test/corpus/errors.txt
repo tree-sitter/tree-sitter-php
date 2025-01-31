@@ -1,0 +1,44 @@
+=================================================
+Error detected at globally reserved keyword
+=================================================
+
+<?php
+$object->
+class Test {  // 'class' should not be treated as a property
+}
+
+class Example {
+    public function test() {
+        $this->    // incomplete
+        function process() {}  // function should be recognized
+    }
+}
+
+---
+
+(program
+  (php_tag)
+  (ERROR
+    (variable_name
+      (name)))
+  (class_declaration
+    (name)
+    (declaration_list
+      (comment)))
+  (class_declaration
+    (name)
+    (declaration_list
+      (method_declaration
+        (visibility_modifier)
+        (name)
+        (formal_parameters)
+        (compound_statement
+          (ERROR
+            (variable_name
+              (name)))
+          (comment)
+          (function_definition
+            (name)
+            (formal_parameters)
+            (compound_statement))
+          (comment))))))
