@@ -180,6 +180,10 @@
         "named": true
       },
       {
+        "type": "relative_name",
+        "named": true
+      },
+      {
         "type": "scoped_call_expression",
         "named": true
       },
@@ -800,6 +804,10 @@
         {
           "type": "qualified_name",
           "named": true
+        },
+        {
+          "type": "relative_name",
+          "named": true
         }
       ]
     }
@@ -973,6 +981,10 @@
         {
           "type": "qualified_name",
           "named": true
+        },
+        {
+          "type": "relative_name",
+          "named": true
         }
       ]
     }
@@ -1143,6 +1155,10 @@
           },
           {
             "type": "qualified_name",
+            "named": true
+          },
+          {
+            "type": "relative_name",
             "named": true
           },
           {
@@ -1422,6 +1438,10 @@
           "named": true
         },
         {
+          "type": "relative_name",
+          "named": true
+        },
+        {
           "type": "relative_scope",
           "named": true
         },
@@ -1536,6 +1556,10 @@
         },
         {
           "type": "qualified_name",
+          "named": true
+        },
+        {
+          "type": "relative_name",
           "named": true
         }
       ]
@@ -2346,6 +2370,10 @@
             "named": true
           },
           {
+            "type": "relative_name",
+            "named": true
+          },
+          {
             "type": "scoped_call_expression",
             "named": true
           },
@@ -2962,6 +2990,10 @@
             "named": true
           },
           {
+            "type": "relative_name",
+            "named": true
+          },
+          {
             "type": "scoped_call_expression",
             "named": true
           },
@@ -3087,6 +3119,10 @@
           },
           {
             "type": "qualified_name",
+            "named": true
+          },
+          {
+            "type": "relative_name",
             "named": true
           },
           {
@@ -3241,6 +3277,10 @@
         },
         {
           "type": "qualified_name",
+          "named": true
+        },
+        {
+          "type": "relative_name",
           "named": true
         }
       ]
@@ -3541,6 +3581,10 @@
             "named": true
           },
           {
+            "type": "relative_name",
+            "named": true
+          },
+          {
             "type": "scoped_call_expression",
             "named": true
           },
@@ -3669,6 +3713,10 @@
             "named": true
           },
           {
+            "type": "relative_name",
+            "named": true
+          },
+          {
             "type": "scoped_call_expression",
             "named": true
           },
@@ -3730,6 +3778,10 @@
         },
         {
           "type": "qualified_name",
+          "named": true
+        },
+        {
+          "type": "relative_name",
           "named": true
         },
         {
@@ -4210,6 +4262,40 @@
     "fields": {}
   },
   {
+    "type": "relative_name",
+    "named": true,
+    "fields": {
+      "prefix": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "\\",
+            "named": false
+          },
+          {
+            "type": "namespace",
+            "named": false
+          },
+          {
+            "type": "namespace_name",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "relative_scope",
     "named": true,
     "fields": {}
@@ -4364,6 +4450,10 @@
             "named": true
           },
           {
+            "type": "relative_name",
+            "named": true
+          },
+          {
             "type": "relative_scope",
             "named": true
           },
@@ -4475,6 +4565,10 @@
           },
           {
             "type": "qualified_name",
+            "named": true
+          },
+          {
+            "type": "relative_name",
             "named": true
           },
           {
@@ -4748,6 +4842,10 @@
         },
         {
           "type": "qualified_name",
+          "named": true
+        },
+        {
+          "type": "relative_name",
           "named": true
         },
         {
@@ -5147,6 +5245,10 @@
         },
         {
           "type": "qualified_name",
+          "named": true
+        },
+        {
+          "type": "relative_name",
           "named": true
         },
         {
