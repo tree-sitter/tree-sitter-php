@@ -216,20 +216,29 @@ module.exports = function defineGrammar(dialect) {
 
       namespace_use_clause: $ => seq(
         field('type', optional($._namespace_use_type)),
-        $._name,
+        choice($.name, $.qualified_name),
         optional(seq(keyword('as'), field('alias', $.name))),
       ),
 
       _namespace_use_type: _ => choice(keyword('function'), keyword('const')),
 
       qualified_name: $ => seq(
-        field('prefix', seq(optional($.namespace_name), '\\')),
+        field('prefix', seq(optional('\\'), optional($.namespace_name), '\\')),
         $.name,
       ),
 
-      _name: $ => choice($._identifier, $.qualified_name),
+      relative_name: $ => seq(
+        field('prefix', seq(
+          keyword('namespace'),
+          optional(seq('\\', $.namespace_name)),
+          '\\',
+        )),
+        $.name,
+      ),
 
-      namespace_name: $ => seq(optional('\\'), $.name, repeat(seq('\\', $.name))),
+      _name: $ => choice($._identifier, $.qualified_name, $.relative_name),
+
+      namespace_name: $ => seq($.name, repeat(seq('\\', $.name))),
 
       _namespace_use_group: $ => seq(
         field('type', optional($._namespace_use_type)),
@@ -538,7 +547,7 @@ module.exports = function defineGrammar(dialect) {
         $.primitive_type,
       ),
 
-      named_type: $ => choice($.name, $.qualified_name),
+      named_type: $ => choice($.name, $.qualified_name, $.relative_name),
 
       optional_type: $ => seq(
         '?',
@@ -935,6 +944,7 @@ module.exports = function defineGrammar(dialect) {
         $.literal,
         $.class_constant_access_expression,
         $.qualified_name,
+        $.relative_name,
         $.name,
         $.array_creation_expression,
         $.print_intrinsic,

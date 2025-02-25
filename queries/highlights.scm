@@ -105,6 +105,8 @@
     alias: (name) @constant
   ])
 
+(relative_name "namespace" @module.builtin)
+
 ; Variables
 
 (relative_scope) @variable.builtin
@@ -117,6 +119,7 @@
 (object_creation_expression [
   (name) @constructor
   (qualified_name (name) @constructor)
+  (relative_name (name) @constructor)
 ])
 
 ((name) @constant
@@ -132,9 +135,17 @@
 (named_type [
   (name) @type
   (qualified_name (name) @type)
+  (relative_name (name) @type)
 ]) @type
 (named_type (name) @type.builtin
   (#any-of? @type.builtin "static" "self"))
+
+(scoped_call_expression
+  scope: [
+    (name) @type
+    (qualified_name (name) @type)
+    (relative_name (name) @type)
+  ])
 
 ; Functions
 
@@ -146,7 +157,11 @@
   name: (name) @function.method)
 
 (function_call_expression
-  function: [(qualified_name (name)) (name)] @function)
+  function: [
+    (qualified_name (name))
+    (relative_name (name))
+    (name)
+  ] @function)
 
 (scoped_call_expression
   name: (name) @function)
