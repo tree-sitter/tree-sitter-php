@@ -281,6 +281,62 @@ namespace Be \ ta {
         name: (name)
         body: (declaration_list)))))
 
+==========================
+Relative namespace names
+==========================
+
+<?php
+
+namespace Foo\Bar\Baz;
+
+function test() {
+    $a = namespace\CONSTANT;
+    $a = namespace\sub\CONSTANT;
+    new namespace\Qux();
+    new namespace\sub\Qux();
+}
+
+---
+
+(program
+  (php_tag)
+  (namespace_definition
+    (namespace_name
+      (name)
+      (name)
+      (name)))
+  (function_definition
+    (name)
+    (formal_parameters)
+    (compound_statement
+      (expression_statement
+        (assignment_expression
+          (variable_name
+            (name))
+          (relative_name
+            (name))))
+      (expression_statement
+        (assignment_expression
+          (variable_name
+            (name))
+          (relative_name
+            (namespace_name
+              (name))
+            (name))))
+      (expression_statement
+        (object_creation_expression
+          (relative_name
+            (name))
+          (arguments)))
+      (expression_statement
+        (object_creation_expression
+          (relative_name
+            (namespace_name
+              (name))
+            (name))
+          (arguments))))))
+
+
 ==============================
 Class declarations
 ==============================
