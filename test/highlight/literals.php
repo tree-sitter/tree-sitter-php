@@ -4,7 +4,7 @@
 echo <<<OMG
   something
 OMG;
-// <- @string
+//   ^^^^^^ @string
 
 echo true, TRUE, false, FALSE;
 //   ^^^^ @constant.builtin
