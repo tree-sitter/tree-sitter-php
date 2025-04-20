@@ -955,7 +955,6 @@ module.exports = function defineGrammar(dialect) {
         $.shell_command_expression,
         $.parenthesized_expression,
         $.throw_expression,
-        $.arrow_function,
       ),
 
       parenthesized_expression: $ => seq('(', $.expression, ')'),
