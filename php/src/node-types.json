@@ -1120,6 +1120,10 @@
             "named": false
           },
           {
+            "type": "|>",
+            "named": false
+          },
+          {
             "type": "||",
             "named": false
           }
@@ -5763,7 +5767,8 @@
   },
   {
     "type": "comment",
-    "named": true
+    "named": true,
+    "extra": true
   },
   {
     "type": "const",
@@ -5855,11 +5860,11 @@
   },
   {
     "type": "float",
-    "named": false
+    "named": true
   },
   {
     "type": "float",
-    "named": true
+    "named": false
   },
   {
     "type": "fn",
@@ -6091,6 +6096,10 @@
   },
   {
     "type": "|=",
+    "named": false
+  },
+  {
+    "type": "|>",
     "named": false
   },
   {
