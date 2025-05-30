@@ -58,18 +58,30 @@ pub const TAGS_QUERY: &str = include_str!("../../queries/tags.scm");
 #[cfg(test)]
 mod tests {
     #[test]
-    fn test_can_load_php_grammar() {
+    fn test_php_grammar() {
         let mut parser = tree_sitter::Parser::new();
         parser
             .set_language(&super::LANGUAGE_PHP.into())
             .expect("Error loading PHP parser");
+
+        let code = r#"<?php echo "Hello, World!";"#;
+
+        let tree = parser.parse(code, None).unwrap();
+        let root = tree.root_node();
+        assert!(!root.has_error());
     }
 
     #[test]
-    fn test_can_load_php_only_grammar() {
+    fn test_php_only_grammar() {
         let mut parser = tree_sitter::Parser::new();
         parser
             .set_language(&super::LANGUAGE_PHP_ONLY.into())
             .expect("Error loading PHP-Only parser");
+
+        let code = r#"echo "Hello, World!";"#;
+
+        let tree = parser.parse(code, None).unwrap();
+        let root = tree.root_node();
+        assert!(!root.has_error());
     }
 }

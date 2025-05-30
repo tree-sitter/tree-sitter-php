@@ -9,7 +9,6 @@ version = "0.23.12"
 keywords = ["incremental", "parsing", "tree-sitter", "php"]
 classifiers = [
   "Intended Audience :: Developers",
-  "License :: OSI Approved :: MIT License",
   "Topic :: Software Development :: Compilers",
   "Topic :: Text Processing :: Linguistic",
   "Typing :: Typed",
@@ -18,16 +17,16 @@ authors = [
   { name = "Max Brunsfeld", email = "maxbrunsfeld@gmail.com" },
   { name = "Amaan Qureshi", email = "amaanq12@gmail.com" },
 ]
-requires-python = ">=3.9"
-license.text = "MIT"
+requires-python = ">=3.10"
+license = "MIT"
 readme = "README.md"
 
 [project.urls]
 Homepage = "https://github.com/tree-sitter/tree-sitter-php"
 
 [project.optional-dependencies]
-core = ["tree-sitter~=0.23"]
+core = ["tree-sitter~=0.24"]
 
 [tool.cibuildwheel]
-build = "cp39-*"
+build = "cp310-*"
 build-frontend = "build"
