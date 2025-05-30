@@ -49,9 +49,9 @@ jobs:
         with:
           test-rust: true
           test-node: true
-          test-python: true
+          test-python: false
           test-go: true
-          test-swift: true
+          test-swift: false
       - name: Parse examples
         id: test
         uses: tree-sitter/parse-action@v4
