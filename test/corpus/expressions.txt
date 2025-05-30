@@ -1971,3 +1971,418 @@ yield from $a;
         (variable_name (name)))))
   (expression_statement
     (yield_expression (variable_name (name)))))
+
+===============================================
+Pipe operator
+===============================================
+
+<?php
+
+$numberOfAdmins = getUsers()
+    |> fn ($list) => array_filter($list, isAdmin(...)) 
+    |> count(...);
+
+$result = "Hello World"
+    |> htmlentities(...)
+    |> str_split(...)
+    |> fn($x) => array_map(strtoupper(...), $x)
+    |> fn($x) => array_filter($x, fn($v) => $v != 'O');
+
+$res1 = 5 + 2 |> someFunc(...);
+$res1 = (5 + 2) |> someFunc(...);
+$res1 = 'beep' |> strlen(...) == 4;
+
+$user = $id
+     |> get_username(...)
+     ?? 'default';
+
+$res1 = 5 |> ($user_specified_func ?? defaultFunc(...));
+$res1 = 5 |> ($config['flag'] ? enabledFunc(...) : disabledFunc(...));
+
+$newString = match ($format) {
+    'snake_case' => $string
+        |> splitString(...)
+        |> fn($x) => implode('_', $x)
+        |> strtolower(...),
+    'lowerCamel' => $string
+        |> splitString(...)
+        |> fn($x) => array_map(ucfirst(...), $x)
+        |> fn($x) => implode('', $x)
+        |> lcfirst(...),
+};
+
+class BunchOfTags
+{
+    private array $widgets = [];
+ 
+    public array $tags {
+        get => $this->widgets
+            |> fn($x) => array_column($x, 'tags')
+            |> fn($x) => array_merge(...$x)
+            |> array_unique(...)
+            |> array_values(...);
+    }
+}
+ 
+$loadSeveral = fn($id) => $id 
+      |> loadMany(...) 
+      |> fn(array $records) => array_map(makeWidget(...), $records);
+
+---
+
+(program
+  (php_tag)
+  (expression_statement
+    (assignment_expression
+      (variable_name
+        (name))
+      (binary_expression
+        (function_call_expression
+          (name)
+          (arguments))
+        (arrow_function
+          (formal_parameters
+            (simple_parameter
+              (variable_name
+                (name))))
+          (binary_expression
+            (function_call_expression
+              (name)
+              (arguments
+                (argument
+                  (variable_name
+                    (name)))
+                (argument
+                  (function_call_expression
+                    (name)
+                    (arguments
+                      (variadic_placeholder))))))
+            (function_call_expression
+              (name)
+              (arguments
+                (variadic_placeholder))))))))
+  (expression_statement
+    (assignment_expression
+      (variable_name
+        (name))
+      (binary_expression
+        (binary_expression
+          (binary_expression
+            (encapsed_string
+              (string_content))
+            (function_call_expression
+              (name)
+              (arguments
+                (variadic_placeholder))))
+          (function_call_expression
+            (name)
+            (arguments
+              (variadic_placeholder))))
+        (arrow_function
+          (formal_parameters
+            (simple_parameter
+              (variable_name
+                (name))))
+          (binary_expression
+            (function_call_expression
+              (name)
+              (arguments
+                (argument
+                  (function_call_expression
+                    (name)
+                    (arguments
+                      (variadic_placeholder))))
+                (argument
+                  (variable_name
+                    (name)))))
+            (arrow_function
+              (formal_parameters
+                (simple_parameter
+                  (variable_name
+                    (name))))
+              (function_call_expression
+                (name)
+                (arguments
+                  (argument
+                    (variable_name
+                      (name)))
+                  (argument
+                    (arrow_function
+                      (formal_parameters
+                        (simple_parameter
+                          (variable_name
+                            (name))))
+                      (binary_expression
+                        (variable_name
+                          (name))
+                        (string
+                          (string_content)))))))))))))
+  (expression_statement
+    (assignment_expression
+      (variable_name
+        (name))
+      (binary_expression
+        (binary_expression
+          (integer)
+          (integer))
+        (function_call_expression
+          (name)
+          (arguments
+            (variadic_placeholder))))))
+  (expression_statement
+    (assignment_expression
+      (variable_name
+        (name))
+      (binary_expression
+        (parenthesized_expression
+          (binary_expression
+            (integer)
+            (integer)))
+        (function_call_expression
+          (name)
+          (arguments
+            (variadic_placeholder))))))
+  (expression_statement
+    (assignment_expression
+      (variable_name
+        (name))
+      (binary_expression
+        (binary_expression
+          (string
+            (string_content))
+          (function_call_expression
+            (name)
+            (arguments
+              (variadic_placeholder))))
+        (integer))))
+  (expression_statement
+    (assignment_expression
+      (variable_name
+        (name))
+      (binary_expression
+        (binary_expression
+          (variable_name
+            (name))
+          (function_call_expression
+            (name)
+            (arguments
+              (variadic_placeholder))))
+        (string
+          (string_content)))))
+  (expression_statement
+    (assignment_expression
+      (variable_name
+        (name))
+      (binary_expression
+        (integer)
+        (parenthesized_expression
+          (binary_expression
+            (variable_name
+              (name))
+            (function_call_expression
+              (name)
+              (arguments
+                (variadic_placeholder))))))))
+  (expression_statement
+    (assignment_expression
+      (variable_name
+        (name))
+      (binary_expression
+        (integer)
+        (parenthesized_expression
+          (conditional_expression
+            (subscript_expression
+              (variable_name
+                (name))
+              (string
+                (string_content)))
+            (function_call_expression
+              (name)
+              (arguments
+                (variadic_placeholder)))
+            (function_call_expression
+              (name)
+              (arguments
+                (variadic_placeholder))))))))
+  (expression_statement
+    (assignment_expression
+      (variable_name
+        (name))
+      (match_expression
+        (parenthesized_expression
+          (variable_name
+            (name)))
+        (match_block
+          (match_conditional_expression
+            (match_condition_list
+              (string
+                (string_content)))
+            (binary_expression
+              (binary_expression
+                (variable_name
+                  (name))
+                (function_call_expression
+                  (name)
+                  (arguments
+                    (variadic_placeholder))))
+              (arrow_function
+                (formal_parameters
+                  (simple_parameter
+                    (variable_name
+                      (name))))
+                (binary_expression
+                  (function_call_expression
+                    (name)
+                    (arguments
+                      (argument
+                        (string
+                          (string_content)))
+                      (argument
+                        (variable_name
+                          (name)))))
+                  (function_call_expression
+                    (name)
+                    (arguments
+                      (variadic_placeholder)))))))
+          (match_conditional_expression
+            (match_condition_list
+              (string
+                (string_content)))
+            (binary_expression
+              (binary_expression
+                (variable_name
+                  (name))
+                (function_call_expression
+                  (name)
+                  (arguments
+                    (variadic_placeholder))))
+              (arrow_function
+                (formal_parameters
+                  (simple_parameter
+                    (variable_name
+                      (name))))
+                (binary_expression
+                  (function_call_expression
+                    (name)
+                    (arguments
+                      (argument
+                        (function_call_expression
+                          (name)
+                          (arguments
+                            (variadic_placeholder))))
+                      (argument
+                        (variable_name
+                          (name)))))
+                  (arrow_function
+                    (formal_parameters
+                      (simple_parameter
+                        (variable_name
+                          (name))))
+                    (binary_expression
+                      (function_call_expression
+                        (name)
+                        (arguments
+                          (argument
+                            (string))
+                          (argument
+                            (variable_name
+                              (name)))))
+                      (function_call_expression
+                        (name)
+                        (arguments
+                          (variadic_placeholder)))))))))))))
+  (class_declaration
+    (name)
+    (declaration_list
+      (property_declaration
+        (visibility_modifier)
+        (primitive_type)
+        (property_element
+          (variable_name
+            (name))
+          (array_creation_expression)))
+      (property_declaration
+        (visibility_modifier)
+        (primitive_type)
+        (property_element
+          (variable_name
+            (name)))
+        (property_hook_list
+          (property_hook
+            (name)
+            (binary_expression
+              (member_access_expression
+                (variable_name
+                  (name))
+                (name))
+              (arrow_function
+                (formal_parameters
+                  (simple_parameter
+                    (variable_name
+                      (name))))
+                (binary_expression
+                  (function_call_expression
+                    (name)
+                    (arguments
+                      (argument
+                        (variable_name
+                          (name)))
+                      (argument
+                        (string
+                          (string_content)))))
+                  (arrow_function
+                    (formal_parameters
+                      (simple_parameter
+                        (variable_name
+                          (name))))
+                    (binary_expression
+                      (binary_expression
+                        (function_call_expression
+                          (name)
+                          (arguments
+                            (argument
+                              (variadic_unpacking
+                                (variable_name
+                                  (name))))))
+                        (function_call_expression
+                          (name)
+                          (arguments
+                            (variadic_placeholder))))
+                      (function_call_expression
+                        (name)
+                        (arguments
+                          (variadic_placeholder)))))))))))))
+  (expression_statement
+    (assignment_expression
+      (variable_name
+        (name))
+      (arrow_function
+        (formal_parameters
+          (simple_parameter
+            (variable_name
+              (name))))
+        (binary_expression
+          (binary_expression
+            (variable_name
+              (name))
+            (function_call_expression
+              (name)
+              (arguments
+                (variadic_placeholder))))
+          (arrow_function
+            (formal_parameters
+              (simple_parameter
+                (primitive_type)
+                (variable_name
+                  (name))))
+            (function_call_expression
+              (name)
+              (arguments
+                (argument
+                  (function_call_expression
+                    (name)
+                    (arguments
+                      (variadic_placeholder))))
+                (argument
+                  (variable_name
+                    (name)))))))))))
