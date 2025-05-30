@@ -2104,6 +2104,10 @@
       "required": false,
       "types": [
         {
+          "type": "const_declaration",
+          "named": true
+        },
+        {
           "type": "enum_case",
           "named": true
         },
@@ -4935,8 +4939,12 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
+        {
+          "type": "php_end_tag",
+          "named": true
+        },
         {
           "type": "php_tag",
           "named": true
@@ -5678,10 +5686,6 @@
     "named": false
   },
   {
-    "type": "?>",
-    "named": false
-  },
-  {
     "type": "??",
     "named": false
   },
@@ -5743,10 +5747,6 @@
   },
   {
     "type": "break",
-    "named": false
-  },
-  {
-    "type": "callable",
     "named": false
   },
   {
@@ -5847,10 +5847,6 @@
     "named": false
   },
   {
-    "type": "false",
-    "named": false
-  },
-  {
     "type": "final",
     "named": false
   },
@@ -5860,11 +5856,11 @@
   },
   {
     "type": "float",
-    "named": true
+    "named": false
   },
   {
     "type": "float",
-    "named": false
+    "named": true
   },
   {
     "type": "fn",
@@ -5876,10 +5872,6 @@
   },
   {
     "type": "foreach",
-    "named": false
-  },
-  {
-    "type": "from",
     "named": false
   },
   {
@@ -5939,19 +5931,11 @@
     "named": false
   },
   {
-    "type": "iterable",
-    "named": false
-  },
-  {
     "type": "list",
     "named": false
   },
   {
     "type": "match",
-    "named": false
-  },
-  {
-    "type": "mixed",
     "named": false
   },
   {
@@ -5971,6 +5955,10 @@
     "named": false
   },
   {
+    "type": "object",
+    "named": false
+  },
+  {
     "type": "operation",
     "named": true
   },
@@ -5981,6 +5969,10 @@
   {
     "type": "parent",
     "named": false
+  },
+  {
+    "type": "php_end_tag",
+    "named": true
   },
   {
     "type": "php_tag",
@@ -6051,10 +6043,6 @@
     "named": false
   },
   {
-    "type": "true",
-    "named": false
-  },
-  {
     "type": "try",
     "named": false
   },
@@ -6071,10 +6059,6 @@
     "named": true
   },
   {
-    "type": "void",
-    "named": false
-  },
-  {
     "type": "while",
     "named": false
   },
@@ -6084,6 +6068,10 @@
   },
   {
     "type": "yield",
+    "named": false
+  },
+  {
+    "type": "yield from",
     "named": false
   },
   {
