@@ -315,6 +315,44 @@ abstract class A {
         (formal_parameters)
         (compound_statement)))))
 
+
+=========================================
+Reserved keywords properties and methods
+=========================================
+
+<?php
+
+class A {
+    public $static;
+    public $self;
+    public $parent;
+    public $match;
+    public $function;
+    function static() {}
+    function self() {}
+    function parent() {}
+    function match() {}
+    function function() {}
+}
+
+---
+
+(program
+  (php_tag)
+  (class_declaration
+    (name)
+    (declaration_list
+      (property_declaration (visibility_modifier) (property_element (variable_name (name))))
+      (property_declaration (visibility_modifier) (property_element (variable_name (name))))
+      (property_declaration (visibility_modifier) (property_element (variable_name (name))))
+      (property_declaration (visibility_modifier) (property_element (variable_name (name))))
+      (property_declaration (visibility_modifier) (property_element (variable_name (name))))
+      (method_declaration (name) (formal_parameters) (compound_statement))
+      (method_declaration (name) (formal_parameters) (compound_statement))
+      (method_declaration (name) (formal_parameters) (compound_statement))
+      (method_declaration (name) (formal_parameters) (compound_statement))
+      (method_declaration (name) (formal_parameters) (compound_statement)))))
+
 =========================================
 Property Types
 =========================================

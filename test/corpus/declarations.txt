@@ -1,4 +1,24 @@
 =========================================
+Class declarations
+=========================================
+
+<?php
+
+class Foo {}
+class Enum {}
+
+---
+
+(program
+  (php_tag)
+  (class_declaration
+    name: (name)
+    body: (declaration_list))
+  (class_declaration
+    name: (name)
+    body: (declaration_list)))
+
+=========================================
 Interface declarations
 =========================================
 
@@ -280,6 +300,24 @@ namespace Be \ ta {
       (class_declaration
         name: (name)
         body: (declaration_list)))))
+
+==========================
+Reserved keyword in namespace
+==========================
+
+<?php
+
+namespace Foo\Default\Baz;
+
+---
+
+(program
+  (php_tag)
+  (namespace_definition
+    (namespace_name
+      (name)
+      (name)
+      (name))))
 
 ==========================
 Relative namespace names
@@ -940,6 +978,23 @@ enum E: string
     case StringConcat = 'Hello ' . "World";
 }
 
+enum NativeType: string
+{
+    case Array          = 'array';
+    case Bool           = 'bool';
+    case Callable       = 'callable';
+    case ClosedResource = 'resource (closed)';
+    case Float          = 'float';
+    case Int            = 'int';
+    case Iterable       = 'iterable';
+    case Null           = 'null';
+    case Numeric        = 'numeric';
+    case Object         = 'object';
+    case Resource       = 'resource';
+    case Scalar         = 'scalar';
+    case String         = 'string';
+}
+
 ---
 
 (program
@@ -1038,4 +1093,21 @@ enum E: string
           (string
             (string_content))
           (encapsed_string
-            (string_content)))))))
+            (string_content))))))
+  (enum_declaration
+    (name)
+    (primitive_type)
+    (enum_declaration_list
+      (enum_case (name) (string (string_content)))
+      (enum_case (name) (string (string_content)))
+      (enum_case (name) (string (string_content)))
+      (enum_case (name) (string (string_content)))
+      (enum_case (name) (string (string_content)))
+      (enum_case (name) (string (string_content)))
+      (enum_case (name) (string (string_content)))
+      (enum_case (name) (string (string_content)))
+      (enum_case (name) (string (string_content)))
+      (enum_case (name) (string (string_content)))
+      (enum_case (name) (string (string_content)))
+      (enum_case (name) (string (string_content)))
+      (enum_case (name) (string (string_content))))))
