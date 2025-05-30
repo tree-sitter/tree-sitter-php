@@ -1,0 +1,43 @@
+=================================================
+Error detected at globally reserved keyword
+=================================================
+
+<?php
+
+class
+trait Foo {} // trait should be recognized
+
+class Example {
+    public function test() {
+        'do'
+        foreach ($users as $user) {} // should be recognized
+    }
+}
+
+---
+
+(program
+  (php_tag)
+  (ERROR)
+  (trait_declaration
+    (name)
+    (declaration_list))
+  (comment)
+  (class_declaration
+    (name)
+    (declaration_list
+      (method_declaration
+        (visibility_modifier)
+        (name)
+        (formal_parameters)
+        (compound_statement
+          (ERROR
+            (string
+              (string_content)))
+          (foreach_statement
+            (variable_name
+              (name))
+            (variable_name
+              (name))
+            (compound_statement))
+          (comment))))))
