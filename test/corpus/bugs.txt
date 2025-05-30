@@ -236,3 +236,27 @@ if (
         (comment)
         right: (boolean)))
     body: (compound_statement)))
+
+=========================================
+Class constants can contain primitive types
+=========================================
+
+<?php
+
+class Foo {
+    public const STRING = 'foo';
+}
+
+---
+
+(program
+  (php_tag)
+  (class_declaration
+    (name)
+    (declaration_list
+      (const_declaration
+        (visibility_modifier)
+        (const_element
+          (name)
+          (string
+            (string_content)))))))

@@ -160,11 +160,25 @@ Reserved words as function calls
 
 <?php
 $foo = new static($this->current());
+$foo = new self($this->current());
+$foo = new parent($this->current());
 
 ---
 
 (program
   (php_tag)
+  (expression_statement (assignment_expression
+    (variable_name (name))
+    (object_creation_expression
+      (name)
+      (arguments
+        (argument (member_call_expression (variable_name (name)) (name) (arguments)))))))
+  (expression_statement (assignment_expression
+    (variable_name (name))
+    (object_creation_expression
+      (name)
+      (arguments
+        (argument (member_call_expression (variable_name (name)) (name) (arguments)))))))
   (expression_statement (assignment_expression
     (variable_name (name))
     (object_creation_expression
@@ -189,6 +203,36 @@ m::self();
       (name)
       (name)
       (arguments))))
+
+==========================
+Member call expressions
+==========================
+
+<?php
+
+$m->foo;
+$m->public;
+$m->protected;
+$m->static;
+$m->self;
+$m->parent;
+$m->array;
+$m->function;
+$m->var;
+
+---
+
+(program
+  (php_tag)
+  (expression_statement (member_access_expression (variable_name (name)) (name)))
+  (expression_statement (member_access_expression (variable_name (name)) (name)))
+  (expression_statement (member_access_expression (variable_name (name)) (name)))
+  (expression_statement (member_access_expression (variable_name (name)) (name)))
+  (expression_statement (member_access_expression (variable_name (name)) (name)))
+  (expression_statement (member_access_expression (variable_name (name)) (name)))
+  (expression_statement (member_access_expression (variable_name (name)) (name)))
+  (expression_statement (member_access_expression (variable_name (name)) (name)))
+  (expression_statement (member_access_expression (variable_name (name)) (name))))
 
 ========================================
 Symmetric array destructuring
@@ -427,7 +471,7 @@ Associativity of negation
 
 <?php
 -1 * -1;
-!$i instanceof object;
+!$i instanceof Foo;
 
 ---
 
@@ -1484,6 +1528,27 @@ $statement = match ($a) {
 )
 
 ===============================================
+Class constant access
+===============================================
+
+<?php
+Foo::CONSTANT;
+Foo::class;
+
+---
+
+(program
+  (php_tag)
+  (expression_statement
+    (class_constant_access_expression
+      (name)
+      (name)))
+  (expression_statement
+    (class_constant_access_expression
+      (name)
+      (name))))
+
+===============================================
 Dynamic class constant access
 ===============================================
 
@@ -1971,6 +2036,49 @@ yield from $a;
         (variable_name (name)))))
   (expression_statement
     (yield_expression (variable_name (name)))))
+
+===============================================
+Instanceof
+===============================================
+
+<?php
+
+$a instanceof B;
+$a instanceof self;
+$a instanceof static;
+$a instanceof $this;
+$a instanceof parent;
+
+---
+
+(program
+  (php_tag)
+  (expression_statement
+    (binary_expression
+      (variable_name
+        (name))
+      (name)))
+  (expression_statement
+    (binary_expression
+      (variable_name
+        (name))
+      (name)))
+  (expression_statement
+    (binary_expression
+      (variable_name
+        (name))
+      (name)))
+  (expression_statement
+    (binary_expression
+      (variable_name
+        (name))
+      (variable_name
+        (name))))
+  (expression_statement
+    (binary_expression
+      (variable_name
+        (name))
+      (name))))
 
 ===============================================
 Pipe operator
