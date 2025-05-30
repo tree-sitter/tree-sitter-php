@@ -60,6 +60,7 @@
   "while"
   "xor"
   "yield"
+  "yield from"
   (abstract_modifier)
   (final_modifier)
   (readonly_modifier)
@@ -67,7 +68,6 @@
   (visibility_modifier)
 ] @keyword
 
-(yield_expression "from" @keyword)
 (function_static_declaration "static" @keyword)
 
 ; Namespace

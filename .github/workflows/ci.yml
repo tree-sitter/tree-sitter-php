@@ -62,3 +62,4 @@ jobs:
             examples/**/*.php
           invalid-files: |
             examples/framework/tests/Foundation/fixtures/bad-syntax-strategy.php
+            examples/WordPress/wp-includes/php-compat/readonly.php
