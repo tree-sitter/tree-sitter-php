@@ -530,80 +530,7 @@ class A {
       (property_declaration
         (visibility_modifier)
         (readonly_modifier)
-        (named_type
-          (name))
-        (property_element
-          (variable_name
-            (name))))
-      (property_declaration
-        (readonly_modifier)
-        (visibility_modifier)
         (primitive_type)
-        (property_element
-          (variable_name
-            (name))))
-      (property_declaration
-        (readonly_modifier)
-        (visibility_modifier)
-        (primitive_type)
-        (property_element
-          (variable_name
-            (name))))
-      (property_declaration
-        (readonly_modifier)
-        (visibility_modifier)
-        (primitive_type)
-        (property_element
-          (variable_name
-            (name))))
-      (property_declaration
-        (readonly_modifier)
-        (visibility_modifier)
-        (primitive_type)
-        (property_element
-          (variable_name
-            (name))))
-      (property_declaration
-        (readonly_modifier)
-        (visibility_modifier)
-        (named_type
-          (name))
-        (property_element
-          (variable_name
-            (name))))
-      (property_declaration
-        (visibility_modifier)
-        (readonly_modifier)
-        (primitive_type)
-        (property_element
-          (variable_name
-            (name))))
-      (property_declaration
-        (visibility_modifier)
-        (readonly_modifier)
-        (primitive_type)
-        (property_element
-          (variable_name
-            (name))))
-      (property_declaration
-        (visibility_modifier)
-        (readonly_modifier)
-        (primitive_type)
-        (property_element
-          (variable_name
-            (name))))
-      (property_declaration
-        (visibility_modifier)
-        (readonly_modifier)
-        (primitive_type)
-        (property_element
-          (variable_name
-            (name))))
-      (property_declaration
-        (visibility_modifier)
-        (readonly_modifier)
-        (named_type
-          (name))
         (property_element
           (variable_name
             (name))))
@@ -638,14 +565,6 @@ class A {
       (property_declaration
         (readonly_modifier)
         (visibility_modifier)
-        (named_type
-          (name))
-        (property_element
-          (variable_name
-            (name))))
-      (property_declaration
-        (visibility_modifier)
-        (readonly_modifier)
         (primitive_type)
         (property_element
           (variable_name
@@ -674,8 +593,14 @@ class A {
       (property_declaration
         (visibility_modifier)
         (readonly_modifier)
-        (named_type
-          (name))
+        (primitive_type)
+        (property_element
+          (variable_name
+            (name))))
+      (property_declaration
+        (visibility_modifier)
+        (readonly_modifier)
+        (primitive_type)
         (property_element
           (variable_name
             (name))))
@@ -710,13 +635,76 @@ class A {
       (property_declaration
         (readonly_modifier)
         (visibility_modifier)
-        (named_type
-          (name))
+        (primitive_type)
+        (property_element
+          (variable_name
+            (name))))
+      (property_declaration
+        (visibility_modifier)
+        (readonly_modifier)
+        (primitive_type)
+        (property_element
+          (variable_name
+            (name))))
+      (property_declaration
+        (visibility_modifier)
+        (readonly_modifier)
+        (primitive_type)
+        (property_element
+          (variable_name
+            (name))))
+      (property_declaration
+        (visibility_modifier)
+        (readonly_modifier)
+        (primitive_type)
+        (property_element
+          (variable_name
+            (name))))
+      (property_declaration
+        (visibility_modifier)
+        (readonly_modifier)
+        (primitive_type)
+        (property_element
+          (variable_name
+            (name))))
+      (property_declaration
+        (visibility_modifier)
+        (readonly_modifier)
+        (primitive_type)
         (property_element
           (variable_name
             (name))))
       (property_declaration
         (readonly_modifier)
+        (visibility_modifier)
+        (primitive_type)
+        (property_element
+          (variable_name
+            (name))))
+      (property_declaration
+        (readonly_modifier)
+        (visibility_modifier)
+        (primitive_type)
+        (property_element
+          (variable_name
+            (name))))
+      (property_declaration
+        (readonly_modifier)
+        (visibility_modifier)
+        (primitive_type)
+        (property_element
+          (variable_name
+            (name))))
+      (property_declaration
+        (readonly_modifier)
+        (visibility_modifier)
+        (primitive_type)
+        (property_element
+          (variable_name
+            (name))))
+      (property_declaration
+        (readonly_modifier)
+        (visibility_modifier)
         (primitive_type)
         (property_element
           (variable_name
@@ -741,8 +729,13 @@ class A {
             (name))))
       (property_declaration
         (readonly_modifier)
-        (named_type
-          (name))
+        (primitive_type)
+        (property_element
+          (variable_name
+            (name))))
+      (property_declaration
+        (readonly_modifier)
+        (primitive_type)
         (property_element
           (variable_name
             (name)))))))
