@@ -28,7 +28,7 @@ let package = Package(
     .testTarget(
       name: "TreeSitterPHPTests",
       dependencies: [
-        "SwiftTreeSitter",
+        .product(name: "SwiftTreeSitter", package: "swift-tree-sitter"),
         "TreeSitterPHP",
       ],
       path: "bindings/swift/TreeSitterPHPTests"
