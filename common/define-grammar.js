@@ -369,6 +369,7 @@ module.exports = function defineGrammar(dialect) {
       ),
 
       const_declaration: $ => seq(
+        optional(field('attributes', $.attribute_list)),
         repeat($._modifier),
         keyword('const'),
         optional(field('type', $.type)),
