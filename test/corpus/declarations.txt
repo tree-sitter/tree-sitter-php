@@ -630,6 +630,9 @@ Attributes
 <?php
 
 #[Test]
+const CONSTANT = 'constant value';
+
+#[Test]
 function a(#[Test] $a) {
   $c;
 }
@@ -698,6 +701,15 @@ class B {
 
 (program
   (php_tag)
+  (const_declaration
+    attributes: (attribute_list
+      (attribute_group
+        (attribute
+          (name))))
+    (const_element
+      (name)
+      (string
+        (string_content))))
   (function_definition
     attributes: (attribute_list
       (attribute_group
