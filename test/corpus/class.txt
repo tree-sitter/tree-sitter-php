@@ -1050,6 +1050,7 @@ Asymmetric Property Visibility
 
 class User {
     public private(set) string $foo;
+    public private(set) static string $foo;
     private(set) (Foo&Bar)|null $foo;
     private (Foo&Bar)|null $foo;
     public protected(set) string $foo;
@@ -1071,6 +1072,13 @@ class User {
       (property_declaration
         (visibility_modifier)
         (visibility_modifier (operation))
+        (primitive_type)
+        (property_element
+          (variable_name (name))))
+      (property_declaration
+        (visibility_modifier)
+        (visibility_modifier (operation))
+        (static_modifier)
         (primitive_type)
         (property_element
           (variable_name (name))))
