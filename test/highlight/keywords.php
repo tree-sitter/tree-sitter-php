@@ -135,7 +135,7 @@ class B extends A implements T
     yield $a;
 //  ^^^^^ @keyword
     yield from $a;
-//        ^^^^ @keyword
+//  ^^^^^^^^^^ @keyword
     return $a;
 //  ^^^^^^ @keyword
     goto a;

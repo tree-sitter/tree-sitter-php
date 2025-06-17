@@ -1,4 +1,24 @@
 =========================================
+Class declarations
+=========================================
+
+<?php
+
+class Foo {}
+class Enum {}
+
+---
+
+(program
+  (php_tag)
+  (class_declaration
+    name: (name)
+    body: (declaration_list))
+  (class_declaration
+    name: (name)
+    body: (declaration_list)))
+
+=========================================
 Interface declarations
 =========================================
 
@@ -280,6 +300,24 @@ namespace Be \ ta {
       (class_declaration
         name: (name)
         body: (declaration_list)))))
+
+==========================
+Reserved keyword in namespace
+==========================
+
+<?php
+
+namespace Foo\Default\Baz;
+
+---
+
+(program
+  (php_tag)
+  (namespace_definition
+    (namespace_name
+      (name)
+      (name)
+      (name))))
 
 ==========================
 Relative namespace names
@@ -592,6 +630,9 @@ Attributes
 <?php
 
 #[Test]
+const CONSTANT = 'constant value';
+
+#[Test]
 function a(#[Test] $a) {
   $c;
 }
@@ -660,6 +701,15 @@ class B {
 
 (program
   (php_tag)
+  (const_declaration
+    attributes: (attribute_list
+      (attribute_group
+        (attribute
+          (name))))
+    (const_element
+      (name)
+      (string
+        (string_content))))
   (function_definition
     attributes: (attribute_list
       (attribute_group
@@ -938,6 +988,25 @@ enum D: int
 enum E: string
 {
     case StringConcat = 'Hello ' . "World";
+
+    public const CONCAT = self::StringConcat;
+}
+
+enum NativeType: string
+{
+    case Array          = 'array';
+    case Bool           = 'bool';
+    case Callable       = 'callable';
+    case ClosedResource = 'resource (closed)';
+    case Float          = 'float';
+    case Int            = 'int';
+    case Iterable       = 'iterable';
+    case Null           = 'null';
+    case Numeric        = 'numeric';
+    case Object         = 'object';
+    case Resource       = 'resource';
+    case Scalar         = 'scalar';
+    case String         = 'string';
 }
 
 ---
@@ -1038,4 +1107,28 @@ enum E: string
           (string
             (string_content))
           (encapsed_string
-            (string_content)))))))
+            (string_content))))
+      (const_declaration
+        (visibility_modifier)
+        (const_element
+          (name)
+          (class_constant_access_expression
+            (relative_scope)
+            (name))))))
+  (enum_declaration
+    (name)
+    (primitive_type)
+    (enum_declaration_list
+      (enum_case (name) (string (string_content)))
+      (enum_case (name) (string (string_content)))
+      (enum_case (name) (string (string_content)))
+      (enum_case (name) (string (string_content)))
+      (enum_case (name) (string (string_content)))
+      (enum_case (name) (string (string_content)))
+      (enum_case (name) (string (string_content)))
+      (enum_case (name) (string (string_content)))
+      (enum_case (name) (string (string_content)))
+      (enum_case (name) (string (string_content)))
+      (enum_case (name) (string (string_content)))
+      (enum_case (name) (string (string_content)))
+      (enum_case (name) (string (string_content))))))

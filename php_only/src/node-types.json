@@ -2104,6 +2104,10 @@
       "required": false,
       "types": [
         {
+          "type": "const_declaration",
+          "named": true
+        },
+        {
           "type": "enum_case",
           "named": true
         },
@@ -5718,10 +5722,6 @@
     "named": false
   },
   {
-    "type": "callable",
-    "named": false
-  },
-  {
     "type": "case",
     "named": false
   },
@@ -5819,10 +5819,6 @@
     "named": false
   },
   {
-    "type": "false",
-    "named": false
-  },
-  {
     "type": "final",
     "named": false
   },
@@ -5848,10 +5844,6 @@
   },
   {
     "type": "foreach",
-    "named": false
-  },
-  {
-    "type": "from",
     "named": false
   },
   {
@@ -5911,19 +5903,11 @@
     "named": false
   },
   {
-    "type": "iterable",
-    "named": false
-  },
-  {
     "type": "list",
     "named": false
   },
   {
     "type": "match",
-    "named": false
-  },
-  {
-    "type": "mixed",
     "named": false
   },
   {
@@ -5940,6 +5924,10 @@
   },
   {
     "type": "null",
+    "named": false
+  },
+  {
+    "type": "object",
     "named": false
   },
   {
@@ -6023,10 +6011,6 @@
     "named": false
   },
   {
-    "type": "true",
-    "named": false
-  },
-  {
     "type": "try",
     "named": false
   },
@@ -6043,10 +6027,6 @@
     "named": true
   },
   {
-    "type": "void",
-    "named": false
-  },
-  {
     "type": "while",
     "named": false
   },
@@ -6056,6 +6036,10 @@
   },
   {
     "type": "yield",
+    "named": false
+  },
+  {
+    "type": "yield from",
     "named": false
   },
   {
