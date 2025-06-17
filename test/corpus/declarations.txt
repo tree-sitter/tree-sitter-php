@@ -988,6 +988,8 @@ enum D: int
 enum E: string
 {
     case StringConcat = 'Hello ' . "World";
+
+    public const CONCAT = self::StringConcat;
 }
 
 enum NativeType: string
@@ -1105,7 +1107,14 @@ enum NativeType: string
           (string
             (string_content))
           (encapsed_string
-            (string_content))))))
+            (string_content))))
+      (const_declaration
+        (visibility_modifier)
+        (const_element
+          (name)
+          (class_constant_access_expression
+            (relative_scope)
+            (name))))))
   (enum_declaration
     (name)
     (primitive_type)
