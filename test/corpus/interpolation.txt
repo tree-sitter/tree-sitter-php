@@ -39,7 +39,7 @@ echo "hi";
 (program
   (php_tag)
   (echo_statement (encapsed_string (string_content)))
-  (text_interpolation (text)))
+  (text_interpolation (php_end_tag) (text)))
 
 ===============================
 interpolated text in middle
@@ -61,10 +61,11 @@ echo "bye";
   (php_tag)
   (echo_statement (encapsed_string (string_content)))
   (text_interpolation
+    (php_end_tag)
     (text)
     (php_tag))
   (echo_statement (encapsed_string (string_content)))
-  (text_interpolation))
+  (text_interpolation (php_end_tag)))
 
 ==============================
 short open tag: On
@@ -80,7 +81,7 @@ Finished
 (program
   (php_tag)
   (echo_statement (encapsed_string (string_content) (escape_sequence)))
-  (text_interpolation (text)))
+  (text_interpolation (php_end_tag) (text)))
 
 ==============================
 short open tag: Off
@@ -110,15 +111,15 @@ $a = 'This gets echoed twice';
   (text)
   (php_tag)
   (expression_statement (assignment_expression (variable_name (name)) (string (string_content))))
-  (text_interpolation (php_tag))
+  (text_interpolation (php_end_tag) (php_tag))
   (expression_statement (variable_name (name)))
-  (text_interpolation (text) (php_tag))
+  (text_interpolation (php_end_tag) (text) (php_tag))
   (expression_statement (assignment_expression (variable_name (name)) (integer)))
-  (text_interpolation (php_tag))
+  (text_interpolation (php_end_tag) (php_tag))
   (echo_statement (encapsed_string (variable_name (name))))
-  (text_interpolation (php_tag))
+  (text_interpolation (php_end_tag) (php_tag))
   (expression_statement (encapsed_string (variable_name (name))))
-  (text_interpolation))
+  (text_interpolation (php_end_tag)))
 
 ======================
 Single line php comment
@@ -137,7 +138,7 @@ echo "hi";
   (text)
   (php_tag)
   (comment)
-  (text_interpolation (text) (php_tag))
+  (text_interpolation (php_end_tag) (text) (php_tag))
   (comment)
   (comment)
   (echo_statement (encapsed_string (string_content))))
@@ -212,20 +213,20 @@ if ($post) :
   (if_statement
     condition: (parenthesized_expression (variable_name (name)))
     body: (colon_block
-      (text_interpolation (php_tag))
+      (text_interpolation (php_end_tag) (php_tag))
       (if_statement
         condition: (parenthesized_expression (variable_name (name)))
         body: (compound_statement (expression_statement (variable_name (name))))
       )
     )
-    (text_interpolation (php_tag))
+    (text_interpolation (php_end_tag) (php_tag))
     alternative: (else_clause
       body: (colon_block
         (expression_statement (variable_name (name)))
       )
     )
   )
-  (text_interpolation)
+  (text_interpolation (php_end_tag))
 )
 
 ===============================
@@ -241,4 +242,4 @@ octothorpe immediately after text interpolation
   (php_tag)
   (expression_statement
     (variable_name (name)))
-  (text_interpolation (text)))
+  (text_interpolation (php_end_tag) (text)))
