@@ -159,14 +159,15 @@ module.exports = function defineGrammar(dialect) {
         return seq(
           optional($.php_tag),
           repeat($.statement),
-          optional('?>'),
+          optional($.php_end_tag),
         );
       },
 
       php_tag: _ => /<\?([pP][hH][pP]|=)?/,
+      php_end_tag: _ => '?>',
 
       text_interpolation: $ => seq(
-        '?>',
+        $.php_end_tag,
         optional($.text),
         choice($.php_tag, $._eof),
       ),

@@ -1,6 +1,6 @@
 [
   (php_tag)
-  "?>"
+  (php_end_tag)
 ] @tag
 
 ; Keywords
