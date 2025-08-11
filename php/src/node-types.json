@@ -4936,6 +4936,7 @@
   {
     "type": "text_interpolation",
     "named": true,
+    "extra": true,
     "fields": {},
     "children": {
       "multiple": true,
