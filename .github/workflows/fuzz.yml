@@ -22,7 +22,7 @@ jobs:
         language: [php, php_only]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Fuzz ${{matrix.language}} parser
         uses: tree-sitter/fuzz-action@v4
         with:
