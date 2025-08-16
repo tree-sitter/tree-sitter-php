@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "tree-sitter-php"
 description = "PHP grammar for tree-sitter"
-version = "0.24.1"
+version = "0.24.2"
 keywords = ["incremental", "parsing", "tree-sitter", "php"]
 classifiers = [
   "Intended Audience :: Developers",
@@ -18,7 +18,7 @@ authors = [
   { name = "Amaan Qureshi", email = "amaanq12@gmail.com" },
 ]
 requires-python = ">=3.10"
-license = "MIT"
+license = "LICENSE"
 readme = "README.md"
 
 [project.urls]
