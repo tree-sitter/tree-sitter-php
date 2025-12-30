@@ -1016,6 +1016,72 @@ function foo() {}
   )
 )
 
+===============================================
+Partial function application
+===============================================
+
+<?php
+
+array_map(str_replace('hello', 'hi', ?), $arr);
+ 
+$foo |> array_map(str_replace('hello', 'hi', ?), ?);
+
+stuff(1, ?, p: ?, f: 3.14, ...);
+
+foo(
+    1,
+    ?,
+    3,
+    ...,
+);
+
+---
+
+(program
+  (php_tag)
+  (expression_statement
+    (function_call_expression
+      (name)
+      (arguments
+        (argument
+          (function_call_expression
+            (name)
+            (arguments
+              (argument (string (string_content)))
+              (argument (string (string_content)))
+              (argument (argument_placeholder)))))
+        (argument (variable_name (name))))))
+  (expression_statement
+    (binary_expression
+      (variable_name (name))
+      (function_call_expression
+        (name)
+        (arguments
+          (argument
+            (function_call_expression
+              (name)
+              (arguments
+                (argument (string (string_content)))
+                (argument (string (string_content)))
+                (argument (argument_placeholder)))))
+          (argument (argument_placeholder))))))
+  (expression_statement
+    (function_call_expression
+      (name)
+      (arguments
+        (argument (integer))
+        (argument (argument_placeholder))
+        (argument (name) (argument_placeholder))
+        (argument (name) (float))
+        (variadic_placeholder))))
+  (expression_statement
+    (function_call_expression
+      (name)
+      (arguments
+        (argument (integer))
+        (argument (argument_placeholder))
+        (argument (integer))
+        (variadic_placeholder)))))
 
 ===============================================
 Match expressions
