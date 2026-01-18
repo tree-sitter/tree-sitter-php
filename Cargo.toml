@@ -16,7 +16,7 @@ autoexamples = false
 
 build = "bindings/rust/build.rs"
 include = [
-  "LICENSE",
+  "/LICENSE",
   "common",
   "bindings/rust",
   "php/grammar.js",
@@ -37,4 +37,4 @@ tree-sitter-language = "0.1"
 cc = "1.1"
 
 [dev-dependencies]
-tree-sitter = "0.25"
+tree-sitter = "0.26"

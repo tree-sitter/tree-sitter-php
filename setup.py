@@ -1,24 +1,11 @@
 from os import path
-from platform import system
 from sysconfig import get_config_var
 
 from setuptools import Extension, find_packages, setup
 from setuptools.command.build import build
+from setuptools.command.build_ext import build_ext
 from setuptools.command.egg_info import egg_info
 from wheel.bdist_wheel import bdist_wheel
-
-
-macros: list[tuple[str, str | None]] = [
-    ("PY_SSIZE_T_CLEAN", None),
-    ("TREE_SITTER_HIDE_SYMBOLS", None),
-]
-if limited_api := not get_config_var("Py_GIL_DISABLED"):
-    macros.append(("Py_LIMITED_API", "0x030A0000"))
-
-if system() != "Windows":
-    cflags = ["-std=c11", "-fvisibility=hidden"]
-else:
-    cflags = ["/std:c11", "/utf-8"]
 
 
 class Build(build):
@@ -27,6 +14,19 @@ class Build(build):
             dest = path.join(self.build_lib, "tree_sitter_php", "queries")
             self.copy_tree("queries", dest)
         super().run()
+
+
+class BuildExt(build_ext):
+    def build_extension(self, ext: Extension):
+        if self.compiler.compiler_type != "msvc":
+            ext.extra_compile_args = ["-std=c11", "-fvisibility=hidden"]
+        else:
+            ext.extra_compile_args = ["/std:c11", "/utf-8"]
+        if path.exists("src/scanner.c"):
+            ext.sources.append("src/scanner.c")
+        if ext.py_limited_api:
+            ext.define_macros.append(("Py_LIMITED_API", "0x030A0000"))
+        super().build_extension(ext)
 
 
 class BdistWheel(bdist_wheel):
@@ -41,7 +41,7 @@ class EggInfo(egg_info):
     def find_sources(self):
         super().find_sources()
         self.filelist.recursive_include("queries", "*.scm")
-        self.filelist.include("php/src/tree_sitter/*.h")
+        self.filelist.include("src/tree_sitter/*.h")
 
 
 setup(
@@ -57,19 +57,19 @@ setup(
             name="_binding",
             sources=[
                 "bindings/python/tree_sitter_php/binding.c",
-                "php/src/parser.c",
-                "php/src/scanner.c",
-                "php_only/src/parser.c",
-                "php_only/src/scanner.c",
+                "src/parser.c",
             ],
-            extra_compile_args=cflags,
-            define_macros=macros,
-            include_dirs=["php/src"],
-            py_limited_api=limited_api,
+            define_macros=[
+                ("PY_SSIZE_T_CLEAN", None),
+                ("TREE_SITTER_HIDE_SYMBOLS", None),
+            ],
+            include_dirs=["src"],
+            py_limited_api=not get_config_var("Py_GIL_DISABLED"),
         )
     ],
     cmdclass={
         "build": Build,
+        "build_ext": BuildExt,
         "bdist_wheel": BdistWheel,
         "egg_info": EggInfo,
     },
