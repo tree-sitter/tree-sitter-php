@@ -1712,4 +1712,4 @@ function ampSep1(rule) {
   return seq(rule, repeat(seq(token('&'), rule)));
 }
 
-export { defineGrammar };
+export {defineGrammar};
