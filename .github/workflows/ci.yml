@@ -1,24 +1,10 @@
----
 name: CI
 
 on:
   push:
     branches: [master]
-    paths:
-      - "scripts.js"
-      - "common/*"
-      - "*/grammar.js"
-      - "*/src/**"
-      - "bindings/**"
-      - "binding.gyp"
   pull_request:
-    paths:
-      - "scripts.js"
-      - "common/*"
-      - "*/grammar.js"
-      - "*/src/**"
-      - "bindings/**"
-      - "binding.gyp"
+    branches: [master]
 
 concurrency:
   group: ${{github.workflow}}-${{github.ref}}
@@ -31,12 +17,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-14]
+        os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+
       - name: Set up tree-sitter
         uses: tree-sitter/setup-action/cli@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{vars.NODE_VERSION}}
+
       - name: Set up examples
         run: |-
           git clone https://github.com/laravel/laravel examples/laravel --single-branch --depth=1 --filter=blob:none
@@ -45,6 +38,7 @@ jobs:
           git clone https://github.com/sebastianbergmann/phpunit examples/phpunit --single-branch --depth=1 --filter=blob:none
           git clone https://github.com/WordPress/WordPress examples/WordPress --single-branch --depth=1 --filter=blob:none
           git clone https://github.com/wikimedia/mediawiki examples/mediawiki --single-branch --depth=1 --filter=blob:none
+
       - name: Run tests
         uses: tree-sitter/parser-test-action@v3
         with:
@@ -54,6 +48,7 @@ jobs:
           test-python: false
           test-go: true
           test-swift: false
+
       - name: Parse examples
         id: test
         uses: tree-sitter/parse-action@v4

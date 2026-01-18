@@ -8,6 +8,7 @@ on:
       - php_only/src/scanner.c
       - common/scanner.h
   pull_request:
+    branches: [master]
     paths:
       - php/src/scanner.c
       - php_only/src/scanner.c
