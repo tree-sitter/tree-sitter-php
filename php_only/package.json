@@ -1,6 +1,7 @@
 {
   "main": "../bindings/node/php_only",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "tree-sitter generate",
     "prestart": "tree-sitter build --wasm",

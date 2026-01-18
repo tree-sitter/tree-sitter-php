@@ -70,7 +70,7 @@ const OTHER_RESERVED_KEYWORD_SET = [
   'never', 'null', 'object', 'string', 'true', 'void',
 ].map(r => keyword(r, false));
 
-module.exports = function defineGrammar(dialect) {
+function defineGrammar(dialect) {
   if (dialect !== 'php' && dialect !== 'php_only') {
     throw new Error(`Unknown dialect ${dialect}`);
   }
@@ -1711,3 +1711,5 @@ function pipeSep1(rule) {
 function ampSep1(rule) {
   return seq(rule, repeat(seq(token('&'), rule)));
 }
+
+export { defineGrammar };

@@ -1,3 +1,3 @@
-const defineGrammar = require('../common/define-grammar.js');
+import {defineGrammar} from '../common/define-grammar.js';
 
-module.exports = defineGrammar('php_only');
+export default defineGrammar('php_only');
