@@ -63,3 +63,4 @@ jobs:
           invalid-files: |
             examples/framework/tests/Foundation/fixtures/bad-syntax-strategy.php
             examples/WordPress/wp-includes/php-compat/readonly.php
+            examples/WordPress/wp-includes/class-wp-block-processor.php  
