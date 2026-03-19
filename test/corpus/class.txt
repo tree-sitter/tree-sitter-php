@@ -1128,3 +1128,44 @@ class User {
             (primitive_type)
             (variable_name (name))))
         (compound_statement)))))
+
+=========================================
+Asymmetric Visibility in Constructor Promotion
+=========================================
+
+<?php
+
+class User {
+    public function __construct(
+        public private(set) string $name,
+        public protected(set) int $age,
+        private(set) string $email,
+    ) {}
+}
+
+---
+
+(program
+  (php_tag)
+  (class_declaration
+    name: (name)
+    body: (declaration_list
+      (method_declaration
+        (visibility_modifier)
+        name: (name)
+        parameters: (formal_parameters
+          (property_promotion_parameter
+            visibility: (visibility_modifier)
+            visibility: (visibility_modifier (operation))
+            type: (primitive_type)
+            name: (variable_name (name)))
+          (property_promotion_parameter
+            visibility: (visibility_modifier)
+            visibility: (visibility_modifier (operation))
+            type: (primitive_type)
+            name: (variable_name (name)))
+          (property_promotion_parameter
+            visibility: (visibility_modifier (operation))
+            type: (primitive_type)
+            name: (variable_name (name))))
+        body: (compound_statement)))))
