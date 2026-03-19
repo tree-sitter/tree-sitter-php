@@ -2752,44 +2752,47 @@
           ]
         },
         {
-          "type": "FIELD",
-          "name": "visibility",
+          "type": "REPEAT1",
           "content": {
-            "type": "SYMBOL",
-            "name": "visibility_modifier"
+            "type": "FIELD",
+            "name": "visibility",
+            "content": {
+              "type": "SYMBOL",
+              "name": "visibility_modifier"
+            }
           }
         },
         {
-          "type": "FIELD",
-          "name": "readonly",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "readonly",
+              "content": {
                 "type": "SYMBOL",
                 "name": "readonly_modifier"
-              },
-              {
-                "type": "BLANK"
               }
-            ]
-          }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
-          "type": "FIELD",
-          "name": "type",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "type",
+              "content": {
                 "type": "SYMBOL",
                 "name": "type"
-              },
-              {
-                "type": "BLANK"
               }
-            ]
-          }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "FIELD",
