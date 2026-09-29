@@ -1084,6 +1084,125 @@ foo(
         (variadic_placeholder)))))
 
 ===============================================
+Clone expressions
+===============================================
+
+<?php
+
+clone $a;
+clone($a);
+clone($a)->b();
+clone (object) $a;
+
+---
+
+(program
+  (php_tag)
+  (expression_statement
+    (clone_expression (variable_name (name))))
+  (expression_statement
+    (clone_expression (parenthesized_expression (variable_name (name)))))
+  (expression_statement
+    (clone_expression
+      (member_call_expression
+        object: (parenthesized_expression (variable_name (name)))
+        name: (name)
+        arguments: (arguments))))
+  (expression_statement
+    (clone_expression
+      (cast_expression
+        type: (cast_type)
+        value: (variable_name (name))))))
+
+===============================================
+Clone with arguments
+===============================================
+
+<?php
+
+clone($a, ['b' => 1]);
+clone($a, withProperties: ['b' => 1]);
+clone(object: $a, withProperties: ['b' => 1]);
+clone(withProperties: ['b' => 1], object: $a);
+clone(object: $a);
+clone($a,);
+clone(...$args);
+clone(...);
+clone();
+clone($a, ?);
+(clone($a, ['b' => 1]))->c();
+
+---
+
+(program
+  (php_tag)
+  (expression_statement
+    (clone_expression
+      arguments: (arguments
+        (argument (variable_name (name)))
+        (argument
+          (array_creation_expression
+            (array_element_initializer (string (string_content)) (integer)))))))
+  (expression_statement
+    (clone_expression
+      arguments: (arguments
+        (argument (variable_name (name)))
+        (argument
+          name: (name)
+          (array_creation_expression
+            (array_element_initializer (string (string_content)) (integer)))))))
+  (expression_statement
+    (clone_expression
+      arguments: (arguments
+        (argument name: (name) (variable_name (name)))
+        (argument
+          name: (name)
+          (array_creation_expression
+            (array_element_initializer (string (string_content)) (integer)))))))
+  (expression_statement
+    (clone_expression
+      arguments: (arguments
+        (argument
+          name: (name)
+          (array_creation_expression
+            (array_element_initializer (string (string_content)) (integer))))
+        (argument name: (name) (variable_name (name))))))
+  (expression_statement
+    (clone_expression
+      arguments: (arguments
+        (argument name: (name) (variable_name (name))))))
+  (expression_statement
+    (clone_expression
+      arguments: (arguments
+        (argument (variable_name (name))))))
+  (expression_statement
+    (clone_expression
+      arguments: (arguments
+        (argument (variadic_unpacking (variable_name (name)))))))
+  (expression_statement
+    (clone_expression
+      arguments: (arguments (variadic_placeholder))))
+  (expression_statement
+    (clone_expression
+      arguments: (arguments)))
+  (expression_statement
+    (clone_expression
+      arguments: (arguments
+        (argument (variable_name (name)))
+        (argument (argument_placeholder)))))
+  (expression_statement
+    (member_call_expression
+      object: (parenthesized_expression
+        (clone_expression
+          arguments: (arguments
+            (argument (variable_name (name)))
+            (argument
+              (array_creation_expression
+                (array_element_initializer (string (string_content)) (integer)))))))
+      name: (name)
+      arguments: (arguments))))
+
+===============================================
 Match expressions
 ===============================================
 
