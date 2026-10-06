@@ -183331,7 +183331,7 @@ TS_PUBLIC const TSLanguage *tree_sitter_php_only(void) {
     .metadata = {
       .major_version = 0,
       .minor_version = 25,
-      .patch_version = 0,
+      .patch_version = 1,
     },
   };
   return &language;
