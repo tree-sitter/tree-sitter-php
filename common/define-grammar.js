@@ -1282,6 +1282,10 @@ module.exports = function defineGrammar(dialect) {
           $.variadic_unpacking,
           $.expression,
           $.argument_placeholder,
+          prec(-1, alias(
+            choice(...CAST_TYPES.map(type => keyword(type, false))),
+            $.name,
+          )),
         ),
       ),
 

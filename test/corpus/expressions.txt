@@ -1388,6 +1388,34 @@ array_fill(start_index: 0, num: 100, value: $val);
   )
 )
 
+===============================================
+Cast-type constants as arguments
+===============================================
+
+<?php
+
+get_post($id, OBJECT, 'edit');
+foo(array(1));
+
+---
+
+(program
+  (php_tag)
+  (expression_statement
+    (function_call_expression
+      function: (name)
+      arguments: (arguments
+        (argument (variable_name (name)))
+        (argument (name))
+        (argument (string (string_content))))))
+  (expression_statement
+    (function_call_expression
+      function: (name)
+      arguments: (arguments
+        (argument
+          (array_creation_expression
+            (array_element_initializer (integer))))))))
+
 ==========================================
 Precedence between concatenation and shift
 ==========================================
