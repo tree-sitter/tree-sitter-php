@@ -260,3 +260,98 @@ class Foo {
           (name)
           (string
             (string_content)))))))
+
+=========================================
+Reserved keywords as class constant names
+=========================================
+
+<?php
+
+class Foo {
+    const CALLABLE = 1;
+    const NAMESPACE = 2;
+    const VOID = 3;
+    const FALSE = 4;
+    const MIXED = 5;
+    const TRUE = 6;
+    const callable = 1, namespace = 2, void = 3, false = 4, mixed = 5, true = 6;
+    public const string VOID = 'void';
+}
+
+interface Bar {
+    const VOID = 'void';
+}
+
+trait Baz {
+    const MIXED = 'mixed';
+}
+
+enum Qux {
+    const TRUE = true;
+}
+
+---
+
+(program
+  (php_tag)
+  (class_declaration
+    name: (name)
+    body: (declaration_list
+      (const_declaration (const_element (name) (integer)))
+      (const_declaration (const_element (name) (integer)))
+      (const_declaration (const_element (name) (integer)))
+      (const_declaration (const_element (name) (integer)))
+      (const_declaration (const_element (name) (integer)))
+      (const_declaration (const_element (name) (integer)))
+      (const_declaration
+        (const_element (name) (integer))
+        (const_element (name) (integer))
+        (const_element (name) (integer))
+        (const_element (name) (integer))
+        (const_element (name) (integer))
+        (const_element (name) (integer)))
+      (const_declaration
+        (visibility_modifier)
+        type: (primitive_type)
+        (const_element (name) (string (string_content))))))
+  (interface_declaration
+    name: (name)
+    body: (declaration_list
+      (const_declaration (const_element (name) (string (string_content))))))
+  (trait_declaration
+    name: (name)
+    body: (declaration_list
+      (const_declaration (const_element (name) (string (string_content))))))
+  (enum_declaration
+    name: (name)
+    body: (enum_declaration_list
+      (const_declaration (const_element (name) (boolean))))))
+
+=========================================
+Type keywords as global constant names
+=========================================
+
+<?php
+
+const VOID = 1, MIXED = 2, ITERABLE = 3;
+const void = 1, mixed = 2, iterable = 3;
+const bool = 1, float = 2, int = 3, object = 4, string = 5;
+
+---
+
+(program
+  (php_tag)
+  (const_declaration
+    (const_element (name) (integer))
+    (const_element (name) (integer))
+    (const_element (name) (integer)))
+  (const_declaration
+    (const_element (name) (integer))
+    (const_element (name) (integer))
+    (const_element (name) (integer)))
+  (const_declaration
+    (const_element (name) (integer))
+    (const_element (name) (integer))
+    (const_element (name) (integer))
+    (const_element (name) (integer))
+    (const_element (name) (integer))))

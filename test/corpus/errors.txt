@@ -41,3 +41,51 @@ class Example {
               (name))
             (compound_statement))
           (comment))))))
+
+=================================================
+Callable remains reserved in global constants
+:error
+=================================================
+
+<?php
+const CALLABLE = 1;
+
+---
+
+(program)
+
+=================================================
+Namespace remains reserved in global constants
+:error
+=================================================
+
+<?php
+const NAMESPACE = 1;
+
+---
+
+(program)
+
+=================================================
+True remains reserved in global constants
+:error
+=================================================
+
+<?php
+const TRUE = 1;
+
+---
+
+(program)
+
+=================================================
+False remains reserved in global constants
+:error
+=================================================
+
+<?php
+const FALSE = 1;
+
+---
+
+(program)
