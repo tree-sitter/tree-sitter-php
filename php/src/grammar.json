@@ -705,6 +705,41 @@
           "value": "name"
         },
         {
+          "type": "ALIAS",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "binary",
+                "flags": "i"
+              },
+              {
+                "type": "PATTERN",
+                "value": "boolean",
+                "flags": "i"
+              },
+              {
+                "type": "PATTERN",
+                "value": "double",
+                "flags": "i"
+              },
+              {
+                "type": "PATTERN",
+                "value": "integer",
+                "flags": "i"
+              },
+              {
+                "type": "PATTERN",
+                "value": "real",
+                "flags": "i"
+              }
+            ]
+          },
+          "named": true,
+          "value": "name"
+        },
+        {
           "type": "RESERVED",
           "content": {
             "type": "SYMBOL",
@@ -3383,8 +3418,63 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "name"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "name"
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "PATTERN",
+                    "value": "bool",
+                    "flags": "i"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "float",
+                    "flags": "i"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "int",
+                    "flags": "i"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "iterable",
+                    "flags": "i"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "mixed",
+                    "flags": "i"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "object",
+                    "flags": "i"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "string",
+                    "flags": "i"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "void",
+                    "flags": "i"
+                  }
+                ]
+              },
+              "named": true,
+              "value": "name"
+            }
+          ]
         },
         {
           "type": "STRING",
@@ -3400,12 +3490,36 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "RESERVED",
-          "content": {
-            "type": "SYMBOL",
-            "name": "name"
-          },
-          "context_name": "nothing"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "RESERVED",
+              "content": {
+                "type": "SYMBOL",
+                "name": "name"
+              },
+              "context_name": "nothing"
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "primitive_type"
+              },
+              "named": true,
+              "value": "name"
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "namespace",
+                "flags": "i"
+              },
+              "named": true,
+              "value": "name"
+            }
+          ]
         },
         {
           "type": "STRING",
@@ -5280,6 +5394,70 @@
           "name": "name"
         },
         {
+          "type": "PREC",
+          "value": -1,
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "PATTERN",
+                  "value": "binary",
+                  "flags": "i"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "bool",
+                  "flags": "i"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "boolean",
+                  "flags": "i"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "double",
+                  "flags": "i"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "float",
+                  "flags": "i"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "int",
+                  "flags": "i"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "integer",
+                  "flags": "i"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "object",
+                  "flags": "i"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "real",
+                  "flags": "i"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "string",
+                  "flags": "i"
+                }
+              ]
+            },
+            "named": true,
+            "value": "name"
+          }
+        },
+        {
           "type": "SYMBOL",
           "name": "array_creation_expression"
         },
@@ -6740,80 +6918,6 @@
             {
               "type": "SYMBOL",
               "name": "argument_placeholder"
-            },
-            {
-              "type": "PREC",
-              "value": -1,
-              "content": {
-                "type": "ALIAS",
-                "content": {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "PATTERN",
-                      "value": "array",
-                      "flags": "i"
-                    },
-                    {
-                      "type": "PATTERN",
-                      "value": "binary",
-                      "flags": "i"
-                    },
-                    {
-                      "type": "PATTERN",
-                      "value": "bool",
-                      "flags": "i"
-                    },
-                    {
-                      "type": "PATTERN",
-                      "value": "boolean",
-                      "flags": "i"
-                    },
-                    {
-                      "type": "PATTERN",
-                      "value": "double",
-                      "flags": "i"
-                    },
-                    {
-                      "type": "PATTERN",
-                      "value": "float",
-                      "flags": "i"
-                    },
-                    {
-                      "type": "PATTERN",
-                      "value": "int",
-                      "flags": "i"
-                    },
-                    {
-                      "type": "PATTERN",
-                      "value": "integer",
-                      "flags": "i"
-                    },
-                    {
-                      "type": "PATTERN",
-                      "value": "object",
-                      "flags": "i"
-                    },
-                    {
-                      "type": "PATTERN",
-                      "value": "real",
-                      "flags": "i"
-                    },
-                    {
-                      "type": "PATTERN",
-                      "value": "string",
-                      "flags": "i"
-                    },
-                    {
-                      "type": "PATTERN",
-                      "value": "unset",
-                      "flags": "i"
-                    }
-                  ]
-                },
-                "named": true,
-                "value": "name"
-              }
             }
           ]
         }
