@@ -1396,6 +1396,7 @@ Cast-type constants as arguments
 
 get_post($id, OBJECT, 'edit');
 foo(array(1));
+foo(OBJECT | OBJECT, Integer + Double);
 
 ---
 
@@ -1414,7 +1415,105 @@ foo(array(1));
       arguments: (arguments
         (argument
           (array_creation_expression
-            (array_element_initializer (integer))))))))
+            (array_element_initializer (integer)))))))
+  (expression_statement
+    (function_call_expression
+      function: (name)
+      arguments: (arguments
+        (argument (binary_expression left: (name) right: (name)))
+        (argument (binary_expression left: (name) right: (name)))))))
+
+===============================================
+Cast-type class names as arguments
+===============================================
+
+<?php
+
+foo(Integer::create(), Double::KIND_REAL);
+foo(Binary::create(), Boolean::create(), Real::create());
+foo(new Integer(), new Double());
+foo(integer: (integer) $value, double: (double) $value);
+
+---
+
+(program
+  (php_tag)
+  (expression_statement
+    (function_call_expression
+      function: (name)
+      arguments: (arguments
+        (argument
+          (scoped_call_expression
+            scope: (name)
+            name: (name)
+            arguments: (arguments)))
+        (argument
+          (class_constant_access_expression (name) (name))))))
+  (expression_statement
+    (function_call_expression
+      function: (name)
+      arguments: (arguments
+        (argument
+          (scoped_call_expression
+            scope: (name)
+            name: (name)
+            arguments: (arguments)))
+        (argument
+          (scoped_call_expression
+            scope: (name)
+            name: (name)
+            arguments: (arguments)))
+        (argument
+          (scoped_call_expression
+            scope: (name)
+            name: (name)
+            arguments: (arguments))))))
+  (expression_statement
+    (function_call_expression
+      function: (name)
+      arguments: (arguments
+        (argument (object_creation_expression (name) (arguments)))
+        (argument (object_creation_expression (name) (arguments))))))
+  (expression_statement
+    (function_call_expression
+      function: (name)
+      arguments: (arguments
+        (argument
+          name: (name)
+          (cast_expression
+            type: (cast_type)
+            value: (variable_name (name))))
+        (argument
+          name: (name)
+          (cast_expression
+            type: (cast_type)
+            value: (variable_name (name))))))))
+
+===============================================
+Parenthesized arithmetic as constructor argument
+===============================================
+
+<?php
+
+new UTCDateTime((time() + $s) * 1000);
+
+---
+
+(program
+  (php_tag)
+  (expression_statement
+    (object_creation_expression
+      (name)
+      (arguments
+        (argument
+          (binary_expression
+            left: (parenthesized_expression
+              (binary_expression
+                left: (function_call_expression
+                  function: (name)
+                  arguments: (arguments))
+                right: (variable_name (name))))
+            right: (integer)))))))
 
 ==========================================
 Precedence between concatenation and shift
