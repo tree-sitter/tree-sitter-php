@@ -5236,6 +5236,10 @@
               "name": "primary_expression"
             },
             {
+              "type": "SYMBOL",
+              "name": "match_expression"
+            },
+            {
               "type": "FIELD",
               "name": "arguments",
               "content": {
@@ -5688,6 +5692,10 @@
                 {
                   "type": "SYMBOL",
                   "name": "error_suppression_expression"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "match_expression"
                 }
               ]
             }

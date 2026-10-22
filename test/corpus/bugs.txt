@@ -260,3 +260,72 @@ class Foo {
           (name)
           (string
             (string_content)))))))
+
+=========================================
+Match expression as cast and clone operand
+=========================================
+
+<?php
+
+$a = (int)match($u) { 1 => 1, default => 2 };
+$b = (string) match($u) { 1 => 'a', default => 'b' };
+$c = clone match($u) { 1 => $x, default => $y };
+
+---
+
+(program
+  (php_tag)
+  (expression_statement
+    (assignment_expression
+      (variable_name
+        (name))
+      (cast_expression
+        (cast_type)
+        (match_expression
+          (parenthesized_expression
+            (variable_name
+              (name)))
+          (match_block
+            (match_conditional_expression
+              (match_condition_list
+                (integer))
+              (integer))
+            (match_default_expression
+              (integer)))))))
+  (expression_statement
+    (assignment_expression
+      (variable_name
+        (name))
+      (cast_expression
+        (cast_type)
+        (match_expression
+          (parenthesized_expression
+            (variable_name
+              (name)))
+          (match_block
+            (match_conditional_expression
+              (match_condition_list
+                (integer))
+              (string
+                (string_content)))
+            (match_default_expression
+              (string
+                (string_content))))))))
+  (expression_statement
+    (assignment_expression
+      (variable_name
+        (name))
+      (clone_expression
+        (match_expression
+          (parenthesized_expression
+            (variable_name
+              (name)))
+          (match_block
+            (match_conditional_expression
+              (match_condition_list
+                (integer))
+              (variable_name
+                (name)))
+            (match_default_expression
+              (variable_name
+                (name)))))))))
