@@ -1203,6 +1203,70 @@ clone($a, ?);
       arguments: (arguments))))
 
 ===============================================
+Clone with match arguments
+===============================================
+
+<?php
+
+clone(match($u) { 1 => $x, default => $y });
+clone(match($u) { 1 => $x, default => $y }, ['value' => 30]);
+clone(
+    object: match($u) { 1 => $x, default => $y },
+    withProperties: match($u) { 1 => ['value' => 40], default => [] },
+);
+
+---
+
+(program
+  (php_tag)
+  (expression_statement
+    (clone_expression
+      (parenthesized_expression
+        (match_expression
+          condition: (parenthesized_expression (variable_name (name)))
+          body: (match_block
+            (match_conditional_expression
+              conditional_expressions: (match_condition_list (integer))
+              return_expression: (variable_name (name)))
+            (match_default_expression return_expression: (variable_name (name))))))))
+  (expression_statement
+    (clone_expression
+      arguments: (arguments
+        (argument
+          (match_expression
+            condition: (parenthesized_expression (variable_name (name)))
+            body: (match_block
+              (match_conditional_expression
+                conditional_expressions: (match_condition_list (integer))
+                return_expression: (variable_name (name)))
+              (match_default_expression return_expression: (variable_name (name))))))
+        (argument
+          (array_creation_expression
+            (array_element_initializer (string (string_content)) (integer)))))))
+  (expression_statement
+    (clone_expression
+      arguments: (arguments
+        (argument
+          name: (name)
+          (match_expression
+            condition: (parenthesized_expression (variable_name (name)))
+            body: (match_block
+              (match_conditional_expression
+                conditional_expressions: (match_condition_list (integer))
+                return_expression: (variable_name (name)))
+              (match_default_expression return_expression: (variable_name (name))))))
+        (argument
+          name: (name)
+          (match_expression
+            condition: (parenthesized_expression (variable_name (name)))
+            body: (match_block
+              (match_conditional_expression
+                conditional_expressions: (match_condition_list (integer))
+                return_expression: (array_creation_expression
+                  (array_element_initializer (string (string_content)) (integer))))
+              (match_default_expression return_expression: (array_creation_expression)))))))))
+
+===============================================
 Match expressions
 ===============================================
 
