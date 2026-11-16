@@ -57,7 +57,7 @@ jobs:
           test-swift: false
       - name: Parse examples
         id: test
-        uses: tree-sitter/parse-action@v4
+        uses: tree-sitter/parse-action@v5
         with:
           files: |
             examples/**/*.php
