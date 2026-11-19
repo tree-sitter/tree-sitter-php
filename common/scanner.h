@@ -480,7 +480,7 @@ static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
     return false;
 }
 
-static inline void *external_scanner_create() {
+static inline void *external_scanner_create(void) {
     Scanner *scanner = ts_calloc(1, sizeof(Scanner));
     array_init(&scanner->heredocs);
     return scanner;
