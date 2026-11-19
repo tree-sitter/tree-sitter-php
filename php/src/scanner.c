@@ -1,6 +1,6 @@
 #include "../../common/scanner.h"
 
-void *tree_sitter_php_external_scanner_create() {
+void *tree_sitter_php_external_scanner_create(void) {
     return external_scanner_create();
 }
 unsigned tree_sitter_php_external_scanner_serialize(void *p, char *b) {
