@@ -124,10 +124,6 @@
         "named": true
       },
       {
-        "type": "cast_expression",
-        "named": true
-      },
-      {
         "type": "class_constant_access_expression",
         "named": true
       },
@@ -726,10 +722,6 @@
         "required": true,
         "types": [
           {
-            "type": "cast_expression",
-            "named": true
-          },
-          {
             "type": "dynamic_variable_name",
             "named": true
           },
@@ -859,10 +851,6 @@
         "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": "cast_expression",
-            "named": true
-          },
           {
             "type": "dynamic_variable_name",
             "named": true
@@ -1219,10 +1207,6 @@
       "required": true,
       "types": [
         {
-          "type": "cast_expression",
-          "named": true
-        },
-        {
           "type": "dynamic_variable_name",
           "named": true
         },
@@ -1310,27 +1294,7 @@
         "required": true,
         "types": [
           {
-            "type": "clone_expression",
-            "named": true
-          },
-          {
-            "type": "error_suppression_expression",
-            "named": true
-          },
-          {
-            "type": "include_expression",
-            "named": true
-          },
-          {
-            "type": "include_once_expression",
-            "named": true
-          },
-          {
-            "type": "primary_expression",
-            "named": true
-          },
-          {
-            "type": "unary_op_expression",
+            "type": "expression",
             "named": true
           }
         ]
@@ -1388,10 +1352,6 @@
       "types": [
         {
           "type": "array_creation_expression",
-          "named": true
-        },
-        {
-          "type": "cast_expression",
           "named": true
         },
         {
@@ -1598,7 +1558,7 @@
       "required": false,
       "types": [
         {
-          "type": "primary_expression",
+          "type": "expression",
           "named": true
         }
       ]
@@ -2958,10 +2918,6 @@
             "named": true
           },
           {
-            "type": "cast_expression",
-            "named": true
-          },
-          {
             "type": "class_constant_access_expression",
             "named": true
           },
@@ -3087,10 +3043,6 @@
         "types": [
           {
             "type": "array_creation_expression",
-            "named": true
-          },
-          {
-            "type": "cast_expression",
             "named": true
           },
           {
@@ -3289,6 +3241,10 @@
         },
         {
           "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "cast_expression",
           "named": true
         },
         {
@@ -3615,10 +3571,6 @@
             "named": true
           },
           {
-            "type": "cast_expression",
-            "named": true
-          },
-          {
             "type": "class_constant_access_expression",
             "named": true
           },
@@ -3744,10 +3696,6 @@
         "types": [
           {
             "type": "array_creation_expression",
-            "named": true
-          },
-          {
-            "type": "cast_expression",
             "named": true
           },
           {
@@ -4293,10 +4241,6 @@
         "required": true,
         "types": [
           {
-            "type": "cast_expression",
-            "named": true
-          },
-          {
             "type": "dynamic_variable_name",
             "named": true
           },
@@ -4488,10 +4432,6 @@
             "named": true
           },
           {
-            "type": "cast_expression",
-            "named": true
-          },
-          {
             "type": "class_constant_access_expression",
             "named": true
           },
@@ -4603,10 +4543,6 @@
         "types": [
           {
             "type": "array_creation_expression",
-            "named": true
-          },
-          {
-            "type": "cast_expression",
             "named": true
           },
           {
@@ -5190,10 +5126,6 @@
       "required": true,
       "types": [
         {
-          "type": "cast_expression",
-          "named": true
-        },
-        {
           "type": "dynamic_variable_name",
           "named": true
         },
@@ -5244,10 +5176,6 @@
         "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": "cast_expression",
-            "named": true
-          },
           {
             "type": "dynamic_variable_name",
             "named": true
