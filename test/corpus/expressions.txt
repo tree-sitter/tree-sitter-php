@@ -124,13 +124,17 @@ Cast expressions in assignments
 (program
   (php_tag)
   (expression_statement
-    (assignment_expression
-      (cast_expression (cast_type) (variable_name (name)))
-      (cast_expression (cast_type) (variable_name (name)))))
-   (expression_statement
-    (augmented_assignment_expression
-      (cast_expression (cast_type) (variable_name (name)))
-      (integer))))
+    (cast_expression
+      (cast_type)
+      (assignment_expression
+        (variable_name (name))
+        (cast_expression (cast_type) (variable_name (name))))))
+  (expression_statement
+    (cast_expression
+      (cast_type)
+      (augmented_assignment_expression
+        (variable_name (name))
+        (integer)))))
 
 =================================
 Cast include
@@ -1265,6 +1269,254 @@ clone(
                 return_expression: (array_creation_expression
                   (array_element_initializer (string (string_content)) (integer))))
               (match_default_expression return_expression: (array_creation_expression)))))))))
+
+===============================================
+Cast and clone operand precedence
+===============================================
+
+<?php
+
+clone clone $object;
+clone (object) $array;
+clone $copy = $object;
+(int) $value + 1;
+(int) $value ** 2;
+(int) (float) $value;
+(int) $value instanceof Foo;
+clone $object instanceof Foo;
+clone $object ** 2;
+
+---
+
+(program
+  (php_tag)
+  (expression_statement
+    (clone_expression
+      (clone_expression (variable_name (name)))))
+  (expression_statement
+    (clone_expression
+      (cast_expression (cast_type) (variable_name (name)))))
+  (expression_statement
+    (clone_expression
+      (assignment_expression (variable_name (name)) (variable_name (name)))))
+  (expression_statement
+    (binary_expression
+      (cast_expression (cast_type) (variable_name (name)))
+      (integer)))
+  (expression_statement
+    (cast_expression
+      (cast_type)
+      (binary_expression (variable_name (name)) (integer))))
+  (expression_statement
+    (cast_expression
+      (cast_type)
+      (cast_expression (cast_type) (variable_name (name)))))
+  (expression_statement
+    (binary_expression
+      (cast_expression (cast_type) (variable_name (name)))
+      (name)))
+  (expression_statement
+    (binary_expression
+      (clone_expression (variable_name (name)))
+      (name)))
+  (expression_statement
+    (binary_expression
+      (clone_expression (variable_name (name)))
+      (integer))))
+
+===============================================
+Yield expressions as cast and clone operands
+===============================================
+
+<?php
+
+function values() {
+    (int) yield 1;
+    clone yield $object;
+    (int) yield from $values;
+    clone yield from $values;
+}
+
+---
+
+(program
+  (php_tag)
+  (function_definition
+    (name)
+    (formal_parameters)
+    (compound_statement
+      (expression_statement
+        (cast_expression
+          (cast_type)
+          (yield_expression (array_element_initializer (integer)))))
+      (expression_statement
+        (clone_expression
+          (yield_expression (array_element_initializer (variable_name (name))))))
+      (expression_statement
+        (cast_expression
+          (cast_type)
+          (yield_expression (variable_name (name)))))
+      (expression_statement
+        (clone_expression
+          (yield_expression (variable_name (name))))))))
+
+===============================================
+Cast and clone with low-precedence operands
+===============================================
+
+<?php
+
+(int) $left ?? $right;
+clone $left ?? $right;
+clone ($left ?? $right);
+(int) $flag ? $yes : $no;
+clone $flag ? $yes : $no;
+clone ($flag ? $yes : $no);
+clone $copy =& $object;
+
+---
+
+(program
+  (php_tag)
+  (expression_statement
+    (binary_expression
+      (cast_expression (cast_type) (variable_name (name)))
+      (variable_name (name))))
+  (expression_statement
+    (binary_expression
+      (clone_expression (variable_name (name)))
+      (variable_name (name))))
+  (expression_statement
+    (clone_expression
+      (parenthesized_expression
+        (binary_expression (variable_name (name)) (variable_name (name))))))
+  (expression_statement
+    (conditional_expression
+      (cast_expression (cast_type) (variable_name (name)))
+      (variable_name (name))
+      (variable_name (name))))
+  (expression_statement
+    (conditional_expression
+      (clone_expression (variable_name (name)))
+      (variable_name (name))
+      (variable_name (name))))
+  (expression_statement
+    (clone_expression
+      (parenthesized_expression
+        (conditional_expression
+          (variable_name (name))
+          (variable_name (name))
+          (variable_name (name))))))
+  (expression_statement
+    (clone_expression
+      (reference_assignment_expression
+        (variable_name (name))
+        (variable_name (name))))))
+
+===============================================
+Cast and clone keyword-expression operands
+===============================================
+
+<?php
+
+(int) require 'fixture.php';
+(int) require_once 'fixture.php';
+clone include 'fixture.php';
+clone include_once 'fixture.php';
+(int) print 1;
+clone print 1;
+(int) throw new Exception();
+clone throw new Exception();
+
+---
+
+(program
+  (php_tag)
+  (expression_statement
+    (cast_expression
+      (cast_type)
+      (require_expression (string (string_content)))))
+  (expression_statement
+    (cast_expression
+      (cast_type)
+      (require_once_expression (string (string_content)))))
+  (expression_statement
+    (clone_expression
+      (include_expression (string (string_content)))))
+  (expression_statement
+    (clone_expression
+      (include_once_expression (string (string_content)))))
+  (expression_statement
+    (cast_expression (cast_type) (print_intrinsic (integer))))
+  (expression_statement
+    (clone_expression (print_intrinsic (integer))))
+  (expression_statement
+    (cast_expression
+      (cast_type)
+      (throw_expression (object_creation_expression (name) (arguments)))))
+  (expression_statement
+    (clone_expression
+      (throw_expression (object_creation_expression (name) (arguments))))))
+
+===============================================
+Unary operators with casts and exponentiation
+===============================================
+
+<?php
+
+(int) -$value ** 2;
+-(int) $value ** 2;
+(int) !$value;
+!(int) $value;
+(int) @$value ** 2;
+~(int) $value instanceof Foo;
+-(int) $value instanceof Foo;
++(int) $value instanceof Foo;
+!(int) $value instanceof Foo;
+
+---
+
+(program
+  (php_tag)
+  (expression_statement
+    (cast_expression
+      (cast_type)
+      (unary_op_expression
+        (binary_expression (variable_name (name)) (integer)))))
+  (expression_statement
+    (unary_op_expression
+      (cast_expression
+        (cast_type)
+        (binary_expression (variable_name (name)) (integer)))))
+  (expression_statement
+    (cast_expression (cast_type) (unary_op_expression (variable_name (name)))))
+  (expression_statement
+    (unary_op_expression (cast_expression (cast_type) (variable_name (name)))))
+  (expression_statement
+    (cast_expression
+      (cast_type)
+      (error_suppression_expression
+        (binary_expression (variable_name (name)) (integer)))))
+  (expression_statement
+    (binary_expression
+      (unary_op_expression
+        (cast_expression (cast_type) (variable_name (name))))
+      (name)))
+  (expression_statement
+    (binary_expression
+      (unary_op_expression
+        (cast_expression (cast_type) (variable_name (name))))
+      (name)))
+  (expression_statement
+    (binary_expression
+      (unary_op_expression
+        (cast_expression (cast_type) (variable_name (name))))
+      (name)))
+  (expression_statement
+    (unary_op_expression
+      (binary_expression
+        (cast_expression (cast_type) (variable_name (name)))
+        (name)))))
 
 ===============================================
 Match expressions

@@ -12,7 +12,6 @@
 
 const PREC = {
   COMMA: -1,
-  CAST: -1,
   LOGICAL_OR_2: 1,
   LOGICAL_XOR: 2,
   LOGICAL_AND_2: 3,
@@ -31,15 +30,17 @@ const PREC = {
   SHIFT: 16,
   PLUS: 17,
   TIMES: 18,
-  EXPONENTIAL: 19,
-  NEG: 20,
-  INSTANCEOF: 21,
-  INC: 22,
-  SCOPE: 23,
-  NEW: 24,
-  CALL: 25,
-  MEMBER: 26,
-  DEREF: 27,
+  NEG: 19,
+  INSTANCEOF: 20,
+  CAST: 21,
+  EXPONENTIAL: 22,
+  CLONE: 23,
+  INC: 24,
+  SCOPE: 25,
+  NEW: 26,
+  CALL: 27,
+  MEMBER: 28,
+  DEREF: 29,
 };
 
 /**
@@ -1010,20 +1011,22 @@ module.exports = function defineGrammar(dialect) {
         $.cast_expression,
       ),
 
-      unary_op_expression: $ => prec.left(PREC.NEG, seq(
-        field('operator', choice('+', '-', '~', '!')),
-        field('argument', $.expression),
-      )),
+      unary_op_expression: $ => choice(
+        ...['+', '-', '~', '!'].map(operator => prec.left(
+          operator === '!' ? PREC.NEG : PREC.CAST,
+          seq(field('operator', operator), field('argument', $.expression)),
+        )),
+      ),
 
-      error_suppression_expression: $ => prec(PREC.INC, seq('@', $.expression)),
+      error_suppression_expression: $ => prec.right(PREC.CAST, seq('@', $.expression)),
 
-      clone_expression: $ => seq(
+      clone_expression: $ => prec.right(PREC.CLONE, seq(
         keyword('clone'),
         choice(
-          $.primary_expression,
+          $.expression,
           field('arguments', $.arguments),
         ),
-      ),
+      )),
 
       primary_expression: $ => choice(
         $._variable,
@@ -1105,21 +1108,11 @@ module.exports = function defineGrammar(dialect) {
         ));
       },
 
-      cast_expression: $ => prec(PREC.CAST, seq(
+      cast_expression: $ => prec.right(PREC.CAST, seq(
         '(',
         field('type', $.cast_type),
         ')',
-        field('value', choice(
-          $._unary_expression,
-          $.include_expression,
-          $.include_once_expression,
-          $.error_suppression_expression,
-        )),
-      )),
-
-      cast_variable: $ => prec(PREC.CAST, seq(
-        '(', field('type', $.cast_type), ')',
-        field('value', $._variable),
+        field('value', $.expression),
       )),
 
       assignment_expression: $ => prec.right(PREC.ASSIGNMENT, seq(
@@ -1170,7 +1163,6 @@ module.exports = function defineGrammar(dialect) {
       )),
 
       _variable: $ => choice(
-        alias($.cast_variable, $.cast_expression),
         $._new_variable,
         $._callable_variable,
         $.scoped_property_access_expression,
@@ -1598,7 +1590,7 @@ module.exports = function defineGrammar(dialect) {
 
       binary_expression: $ => choice(
         prec(PREC.INSTANCEOF, seq(
-          field('left', $._unary_expression),
+          field('left', $.expression),
           field('operator', keyword('instanceof')),
           field('right', $._class_name_reference),
         )),
